@@ -24,7 +24,7 @@ export class ElsaStudioDashboard {
         ['workflow-definitions', 'Workflow Definitions'],
         ['workflow-instances', 'Workflow Instances'],
         ['workflow-registry', 'Workflow Registry'],
-        ['function-definition', 'Function Definitions'],
+        ['function-definitions', 'Function Definitions'],
       ],
       routes: [
         ['', 'elsa-studio-home', true],
@@ -35,6 +35,8 @@ export class ElsaStudioDashboard {
         ['workflow-instances', 'elsa-studio-workflow-instances-list', true],
         ['workflow-instances/:id', 'elsa-studio-workflow-instances-view'],
         ['oauth2-authorized', 'elsa-oauth2-authorized', true],
+        ['function-definitions', 'elsa-studio-function-definitions-list', true],
+        //['function-definitions/:id', 'elsa-studio-function-definitions-edit'],
       ]
     }
   };

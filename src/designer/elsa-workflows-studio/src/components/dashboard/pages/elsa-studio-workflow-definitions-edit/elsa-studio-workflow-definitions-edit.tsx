@@ -11,6 +11,7 @@ export class ElsaStudioWorkflowDefinitionsEdit {
   id?: string;
 
   componentWillLoad() {
+    console.log("ahihi da vao willload")
     let id = this.match.params.id;
 
     if (!!id && id.toLowerCase() == 'new')

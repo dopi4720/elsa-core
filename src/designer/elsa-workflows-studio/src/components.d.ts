@@ -234,6 +234,12 @@ export namespace Components {
         "basePath": string;
         "culture": string;
     }
+    interface ElsaStudioFunctionDefinitionsList {
+        "basePath": string;
+        "culture": string;
+        "history": RouterHistory;
+        "serverUrl": string;
+    }
     interface ElsaStudioHome {
         "culture": string;
         "serverVersion": string;
@@ -649,6 +655,12 @@ declare global {
         prototype: HTMLElsaStudioDashboardElement;
         new (): HTMLElsaStudioDashboardElement;
     };
+    interface HTMLElsaStudioFunctionDefinitionsListElement extends Components.ElsaStudioFunctionDefinitionsList, HTMLStencilElement {
+    }
+    var HTMLElsaStudioFunctionDefinitionsListElement: {
+        prototype: HTMLElsaStudioFunctionDefinitionsListElement;
+        new (): HTMLElsaStudioFunctionDefinitionsListElement;
+    };
     interface HTMLElsaStudioHomeElement extends Components.ElsaStudioHome, HTMLStencilElement {
     }
     var HTMLElsaStudioHomeElement: {
@@ -896,6 +908,7 @@ declare global {
         "elsa-secrets-picker-modal": HTMLElsaSecretsPickerModalElement;
         "elsa-single-line-property": HTMLElsaSingleLinePropertyElement;
         "elsa-studio-dashboard": HTMLElsaStudioDashboardElement;
+        "elsa-studio-function-definitions-list": HTMLElsaStudioFunctionDefinitionsListElement;
         "elsa-studio-home": HTMLElsaStudioHomeElement;
         "elsa-studio-root": HTMLElsaStudioRootElement;
         "elsa-studio-webhook-definitions-edit": HTMLElsaStudioWebhookDefinitionsEditElement;
@@ -1159,6 +1172,12 @@ declare namespace LocalJSX {
         "basePath"?: string;
         "culture"?: string;
     }
+    interface ElsaStudioFunctionDefinitionsList {
+        "basePath"?: string;
+        "culture"?: string;
+        "history"?: RouterHistory;
+        "serverUrl"?: string;
+    }
     interface ElsaStudioHome {
         "culture"?: string;
         "serverVersion"?: string;
@@ -1393,6 +1412,7 @@ declare namespace LocalJSX {
         "elsa-secrets-picker-modal": ElsaSecretsPickerModal;
         "elsa-single-line-property": ElsaSingleLineProperty;
         "elsa-studio-dashboard": ElsaStudioDashboard;
+        "elsa-studio-function-definitions-list": ElsaStudioFunctionDefinitionsList;
         "elsa-studio-home": ElsaStudioHome;
         "elsa-studio-root": ElsaStudioRoot;
         "elsa-studio-webhook-definitions-edit": ElsaStudioWebhookDefinitionsEdit;
@@ -1470,6 +1490,7 @@ declare module "@stencil/core" {
             "elsa-secrets-picker-modal": LocalJSX.ElsaSecretsPickerModal & JSXBase.HTMLAttributes<HTMLElsaSecretsPickerModalElement>;
             "elsa-single-line-property": LocalJSX.ElsaSingleLineProperty & JSXBase.HTMLAttributes<HTMLElsaSingleLinePropertyElement>;
             "elsa-studio-dashboard": LocalJSX.ElsaStudioDashboard & JSXBase.HTMLAttributes<HTMLElsaStudioDashboardElement>;
+            "elsa-studio-function-definitions-list": LocalJSX.ElsaStudioFunctionDefinitionsList & JSXBase.HTMLAttributes<HTMLElsaStudioFunctionDefinitionsListElement>;
             "elsa-studio-home": LocalJSX.ElsaStudioHome & JSXBase.HTMLAttributes<HTMLElsaStudioHomeElement>;
             "elsa-studio-root": LocalJSX.ElsaStudioRoot & JSXBase.HTMLAttributes<HTMLElsaStudioRootElement>;
             "elsa-studio-webhook-definitions-edit": LocalJSX.ElsaStudioWebhookDefinitionsEdit & JSXBase.HTMLAttributes<HTMLElsaStudioWebhookDefinitionsEditElement>;
