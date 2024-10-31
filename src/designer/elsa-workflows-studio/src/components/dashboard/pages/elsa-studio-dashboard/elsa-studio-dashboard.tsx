@@ -24,6 +24,7 @@ export class ElsaStudioDashboard {
         ['workflow-definitions', 'Workflow Definitions'],
         ['workflow-instances', 'Workflow Instances'],
         ['workflow-registry', 'Workflow Registry'],
+        ['function-definition', 'Function Definitions'],
       ],
       routes: [
         ['', 'elsa-studio-home', true],
@@ -45,7 +46,7 @@ export class ElsaStudioDashboard {
 
   render() {
 
-    const logoPath = getAssetPath('./assets/logo.png');
+    const logoPath = getAssetPath('./assets/images/logo.png');
     const basePath = this.basePath || '';
     const IntlMessage = GetIntlMessage(this.i18next);
 

@@ -2,7 +2,7 @@ export const resources = {
   'en': {
     'default': {
       'Welcome': 'Welcome to {{title}}',
-      'Tagline': 'Use the dashboard app to manage all the things.'
+      'Tagline': 'Use workflow to do anything ❤︎'
     }
   },
   'zh-CN': {
