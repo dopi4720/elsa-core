@@ -1,3 +1,4 @@
+using Elsa.Client.Functions.Services;
 using Elsa.Client.Services;
 using Elsa.Client.Webhooks.Services;
 
@@ -12,7 +13,8 @@ namespace Elsa.Client
             IWorkflowInstancesApi workflowInstances,
             IWorkflowsApi workflows,
             IWebhookDefinitionsApi webhookDefinitions,
-            IScriptingApi scriptingApi
+            IScriptingApi scriptingApi,
+            IFunctionDefinitionsApi functionDefinitions
             )
         {
             Activities = activities;
@@ -22,6 +24,7 @@ namespace Elsa.Client
             WebhookDefinitions = webhookDefinitions;
             Scripting = scriptingApi;
             Workflows = workflows;
+            FunctionDefinitions = functionDefinitions;
         }
 
         public IActivitiesApi Activities { get; }
@@ -31,5 +34,6 @@ namespace Elsa.Client
         public IWorkflowsApi Workflows { get; }
         public IWebhookDefinitionsApi WebhookDefinitions { get; }
         public IScriptingApi Scripting { get; }
+        public IFunctionDefinitionsApi FunctionDefinitions { get; }
     }
 }

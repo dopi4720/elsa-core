@@ -91,6 +91,5 @@ namespace Elsa.Server.Api.Endpoints.WorkflowDefinitions
             var splitIds = ids.Split(',', StringSplitOptions.RemoveEmptyEntries);
             return new ManyWorkflowDefinitionIdsSpecification(splitIds, version);
         }
-
     }
 }

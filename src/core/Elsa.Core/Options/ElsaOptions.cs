@@ -25,6 +25,7 @@ namespace Elsa.Options
         internal ElsaOptions()
         {
             WorkflowDefinitionStoreFactory = sp => ActivatorUtilities.CreateInstance<InMemoryWorkflowDefinitionStore>(sp);
+            FunctionDefinitionStoreFactory = sp => ActivatorUtilities.CreateInstance<InMemoryFunctionDefinitionStore>(sp);
             WorkflowInstanceStoreFactory = sp => ActivatorUtilities.CreateInstance<InMemoryWorkflowInstanceStore>(sp);
             WorkflowExecutionLogStoreFactory = sp => ActivatorUtilities.CreateInstance<InMemoryWorkflowExecutionLogStore>(sp);
             BookmarkStoreFactory = sp => ActivatorUtilities.CreateInstance<InMemoryBookmarkStore>(sp);
@@ -73,6 +74,7 @@ namespace Elsa.Options
         public bool UseTenantSignaler { get; set; } = false;
 
         internal Func<IServiceProvider, IWorkflowDefinitionStore> WorkflowDefinitionStoreFactory { get; set; }
+        internal Func<IServiceProvider, IFunctionDefinitionStore> FunctionDefinitionStoreFactory { get; set; }
         internal Func<IServiceProvider, IWorkflowInstanceStore> WorkflowInstanceStoreFactory { get; set; }
         internal Func<IServiceProvider, IWorkflowExecutionLogStore> WorkflowExecutionLogStoreFactory { get; set; }
         internal Func<IServiceProvider, IBookmarkStore> BookmarkStoreFactory { get; set; }

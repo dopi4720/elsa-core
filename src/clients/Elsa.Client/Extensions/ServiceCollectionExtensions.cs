@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using Elsa.Client.Converters;
+using Elsa.Client.Functions.Services;
 using Elsa.Client.Options;
 using Elsa.Client.Services;
 using Elsa.Client.Webhooks.Services;
@@ -31,7 +32,8 @@ namespace Elsa.Client.Extensions
                 .AddApiClient<IWorkflowRegistryApi>(refitSettings, httpClientFactory)
                 .AddApiClient<IWorkflowInstancesApi>(refitSettings, httpClientFactory)
                 .AddApiClient<IWebhookDefinitionsApi>(refitSettings, httpClientFactory)
-                .AddApiClient<IScriptingApi>(refitSettings, httpClientFactory);
+                .AddApiClient<IScriptingApi>(refitSettings, httpClientFactory)
+                .AddApiClient<IFunctionDefinitionsApi>(refitSettings, httpClientFactory);
 
             return services
                 .AddTransient<IElsaClient, ElsaClient>();

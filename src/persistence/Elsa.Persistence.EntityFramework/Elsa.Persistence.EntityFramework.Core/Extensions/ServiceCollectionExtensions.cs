@@ -3,6 +3,7 @@ using Elsa.Options;
 using Elsa.Persistence.EntityFramework.Core.Services;
 using Elsa.Persistence.EntityFramework.Core.StartupTasks;
 using Elsa.Persistence.EntityFramework.Core.Stores;
+using Elsa.Persistence.EntityFramework.Core.Stores.FunctionDefinitions;
 using Elsa.Runtime;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -216,6 +217,7 @@ namespace Elsa.Persistence.EntityFramework.Core.Extensions
             elsa.Services
                 .AddSingleton<IElsaContextFactory, ElsaContextFactory<TElsaContext>>()
                 .AddScoped<EntityFrameworkWorkflowDefinitionStore>()
+                .AddScoped<EntityFrameworkFunctionDefinitionStore>()
                 .AddScoped<EntityFrameworkWorkflowInstanceStore>()
                 .AddScoped<EntityFrameworkWorkflowExecutionLogRecordStore>()
                 .AddScoped<EntityFrameworkBookmarkStore>()
@@ -226,6 +228,7 @@ namespace Elsa.Persistence.EntityFramework.Core.Extensions
 
             return elsa
                 .UseWorkflowDefinitionStore(sp => sp.GetRequiredService<EntityFrameworkWorkflowDefinitionStore>())
+                .UseFunctionDefinitionStore(sp => sp.GetRequiredService<EntityFrameworkFunctionDefinitionStore>())
                 .UseWorkflowInstanceStore(sp => sp.GetRequiredService<EntityFrameworkWorkflowInstanceStore>())
                 .UseWorkflowExecutionLogStore(sp => sp.GetRequiredService<EntityFrameworkWorkflowExecutionLogRecordStore>())
                 .UseBookmarkStore(sp => sp.GetRequiredService<EntityFrameworkBookmarkStore>())
