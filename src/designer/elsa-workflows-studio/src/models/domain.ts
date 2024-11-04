@@ -21,6 +21,14 @@ export interface WorkflowDefinition {
   tag?: string;
   channel?: string;
 }
+export interface FunctionDefinition {
+  id?: string;
+  definitionId?: string;
+  name?: string;
+  displayName?: string;
+  source?: string;
+  
+}
 
 export interface WorkflowDefinitionSummary {
   id?: string;
