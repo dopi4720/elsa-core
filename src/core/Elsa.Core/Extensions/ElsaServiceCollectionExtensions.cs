@@ -68,6 +68,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services
                 .AddSingleton(options)
                 .AddScoped(options.WorkflowDefinitionStoreFactory)
+                .AddScoped(options.FunctionDefinitionStoreFactory)
                 .AddScoped(options.WorkflowInstanceStoreFactory)
                 .AddScoped(options.WorkflowExecutionLogStoreFactory)
                 .AddScoped(options.BookmarkStoreFactory)
@@ -98,6 +99,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services
                 .Decorate<IWorkflowDefinitionStore, InitializingWorkflowDefinitionStore>()
                 .Decorate<IWorkflowDefinitionStore, EventPublishingWorkflowDefinitionStore>()
+                .Decorate<IFunctionDefinitionStore, EventPublishingFunctionDefinitionStore>()
+                .Decorate<IFunctionDefinitionStore, EventPublishingFunctionDefinitionStore>()
                 .Decorate<IWorkflowInstanceStore, EventPublishingWorkflowInstanceStore>()
                 .Decorate<IWorkflowInstanceExecutor, LockingWorkflowInstanceExecutor>()
                 .Decorate<IWorkflowInstanceCanceller, LockingWorkflowInstanceCanceller>()

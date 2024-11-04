@@ -26,16 +26,16 @@
 ### Graph
 ```mermaid
 graph TD;
-  elsa-studio-workflow-definitions-list --> stencil-route-link
-  elsa-studio-workflow-definitions-list --> elsa-workflow-definitions-list-screen
-  elsa-studio-workflow-definitions-list --> context-consumer
+  elsa-studio-function-definitions-list --> stencil-route-link
+  elsa-studio-function-definitions-list --> elsa-workflow-definitions-list-screen
+  elsa-studio-function-definitions-list --> context-consumer
   elsa-workflow-definitions-list-screen --> stencil-route-link
   elsa-workflow-definitions-list-screen --> elsa-context-menu
   elsa-workflow-definitions-list-screen --> elsa-pager
   elsa-workflow-definitions-list-screen --> elsa-confirm-dialog
   elsa-workflow-definitions-list-screen --> context-consumer
   elsa-confirm-dialog --> elsa-modal-dialog
-  style elsa-studio-workflow-definitions-list fill:#f9f,stroke:#333,stroke-width:4px
+  style elsa-studio-function-definitions-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

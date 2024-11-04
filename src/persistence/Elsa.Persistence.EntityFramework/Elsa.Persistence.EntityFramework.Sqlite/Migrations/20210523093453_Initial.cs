@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Elsa.Persistence.EntityFramework.Sqlite.Migrations
@@ -54,6 +54,30 @@ namespace Elsa.Persistence.EntityFramework.Sqlite.Migrations
                 {
                     table.PrimaryKey("PK_WorkflowDefinitions", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "FunctionDefinitions",
+                schema: "Elsa",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    DisplayName = table.Column<string>(type: "TEXT", nullable: false),
+                    FunctionType = table.Column<string>(type: "TEXT", nullable: false),
+                    Catalog = table.Column<string>(type: "TEXT", nullable: false),
+                    Source = table.Column<string>(type: "TEXT", nullable: false),
+                    Binary = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    Pdb = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    Version = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsPublish = table.Column<bool>(type: "INTEGER", nullable: false),
+                    LastUpdate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    SampleInput = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FunctionDefinitions", x => x.Id);
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "WorkflowExecutionLogRecords",
@@ -310,6 +334,10 @@ namespace Elsa.Persistence.EntityFramework.Sqlite.Migrations
 
             migrationBuilder.DropTable(
                 name: "WorkflowDefinitions",
+                schema: "Elsa");
+
+            migrationBuilder.DropTable(
+                name: "FunctionDefinitions",
                 schema: "Elsa");
 
             migrationBuilder.DropTable(

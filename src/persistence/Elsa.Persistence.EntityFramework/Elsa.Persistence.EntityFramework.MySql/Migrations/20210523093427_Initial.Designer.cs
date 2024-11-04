@@ -156,6 +156,61 @@ namespace Elsa.Persistence.EntityFramework.MySql.Migrations
                     b.ToTable("WorkflowDefinitions");
                 });
 
+            modelBuilder.Entity("Elsa.Models.FunctionDefinition", b =>
+            {
+                b.Property<string>("FunctionId")
+                    .HasColumnType("TEXT")
+                    .IsRequired();
+
+                b.Property<string>("Name")
+                    .HasColumnType("TEXT")
+                    .IsRequired();
+
+                b.Property<string>("DisplayName")
+                    .HasColumnType("TEXT")
+                    .IsRequired();
+
+                b.Property<string>("Type")
+                    .HasColumnType("TEXT")
+                    .IsRequired();
+
+                b.Property<string>("Catalog")
+                    .HasColumnType("TEXT")
+                    .IsRequired();
+
+                b.Property<string>("Source")
+                    .HasColumnType("TEXT")
+                    .IsRequired();
+
+                b.Property<byte[]>("Binary")
+                    .HasColumnType("BLOB")
+                    .IsRequired();
+
+                b.Property<byte[]>("Pdb")
+                    .HasColumnType("BLOB")
+                    .IsRequired();
+
+                b.Property<int>("Version")
+                    .HasColumnType("INTEGER")
+                    .IsRequired();
+
+                b.Property<bool>("IsPublish")
+                    .HasColumnType("INTEGER")
+                    .IsRequired();
+
+                b.Property<DateTime>("LastUpdate")
+                    .HasColumnType("TEXT")
+                    .IsRequired();
+
+                b.Property<string>("SampleInput")
+                    .HasColumnType("TEXT")
+                    .IsRequired();
+
+                b.HasKey("FunctionId");
+
+                b.ToTable("function_definitions");
+            });
+
             modelBuilder.Entity("Elsa.Models.WorkflowExecutionLogRecord", b =>
                 {
                     b.Property<string>("Id")

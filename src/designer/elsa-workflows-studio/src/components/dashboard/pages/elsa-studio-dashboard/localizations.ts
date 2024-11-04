@@ -2,12 +2,14 @@ export const resources = {
   'en': {
     default: {
       'WorkflowDefinitions': 'Workflow Definitions',
+      'FunctionDefinitions': 'Function Definitions',
       'WorkflowInstances': 'Workflow Instances',
       'WorkflowRegistry': 'Workflow Registry',
       'WebhookDefinitions': 'Webhook Definitions',
     },
     menuItems: {
       'workflow-definitions': 'Workflow Definitions',
+      'function-definitions': 'Function Definitions',
       'workflow-instances': 'Workflow Instances',
       'workflow-registry': 'Workflow Registry',
     }

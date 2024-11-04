@@ -185,6 +185,12 @@ namespace Elsa.Options
             return this;
         }
 
+        public ElsaOptionsBuilder UseFunctionDefinitionStore(Func<IServiceProvider, IFunctionDefinitionStore> factory)
+        {
+            ElsaOptions.FunctionDefinitionStoreFactory = factory;
+            return this;
+        }
+
         public ElsaOptionsBuilder UseWorkflowInstanceStore(Func<IServiceProvider, IWorkflowInstanceStore> factory)
         {
             ElsaOptions.WorkflowInstanceStoreFactory = factory;

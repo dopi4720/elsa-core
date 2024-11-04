@@ -52,6 +52,7 @@ namespace Elsa.Persistence.MongoDb
 
             elsa
                 .UseWorkflowDefinitionStore(sp => sp.GetRequiredService<MongoDbWorkflowDefinitionStore>())
+                .UseFunctionDefinitionStore(sp => sp.GetRequiredService<MongoDbFunctionDefinitionStore>())
                 .UseWorkflowInstanceStore(sp => sp.GetRequiredService<MongoDbWorkflowInstanceStore>())
                 .UseWorkflowExecutionLogStore(sp => sp.GetRequiredService<MongoDbWorkflowExecutionLogStore>())
                 .UseBookmarkStore(sp => sp.GetRequiredService<MongoDbBookmarkStore>())
