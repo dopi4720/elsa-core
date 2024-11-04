@@ -78,6 +78,7 @@ namespace Elsa.Samples.Server.Host
                 typeof(WorkflowSettings.Persistence.YesSql.MySqlStartup),
                 typeof(WorkflowSettings.Persistence.YesSql.PostgreSqlStartup),
                 typeof(Secrets.Persistence.EntityFramework.Sqlite.Startup),
+                typeof(Secrets.Persistence.EntityFramework.SqlServer.Startup),
                 typeof(Secrets.Persistence.EntityFramework.MySql.Startup),
                 typeof(Secrets.Sql.Startup),
                 typeof(Secrets.Http.Startup),

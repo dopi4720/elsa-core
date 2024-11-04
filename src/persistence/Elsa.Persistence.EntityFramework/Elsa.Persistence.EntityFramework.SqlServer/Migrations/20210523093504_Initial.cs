@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Elsa.Persistence.EntityFramework.Core;
 using Microsoft.EntityFrameworkCore.Migrations;
 
@@ -60,6 +60,31 @@ namespace Elsa.Persistence.EntityFramework.SqlServer.Migrations
                 {
                     table.PrimaryKey("PK_WorkflowDefinitions", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "FunctionDefinitions",
+                schema: "Elsa",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "NVARCHAR(450)", nullable: false), // NVARCHAR(450) để phù hợp với PK trong SQL Server
+                    Name = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
+                    DisplayName = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
+                    FunctionType = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
+                    Catalog = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
+                    Source = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
+                    Binary = table.Column<byte[]>(type: "VARBINARY(MAX)", nullable: false),
+                    Pdb = table.Column<byte[]>(type: "VARBINARY(MAX)", nullable: false),
+                    Version = table.Column<int>(type: "INT", nullable: false),
+                    IsPublish = table.Column<bool>(type: "BIT", nullable: false),
+                    LastUpdate = table.Column<DateTime>(type: "DATETIME2", nullable: false),
+                    SampleInput = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FunctionDefinitions", x => x.Id);
+                }
+            );
+
 
             migrationBuilder.CreateTable(
                 name: "WorkflowExecutionLogRecords",
