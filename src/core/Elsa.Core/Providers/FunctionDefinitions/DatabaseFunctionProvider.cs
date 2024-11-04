@@ -32,7 +32,7 @@ namespace Elsa.Providers.Functions
 
         public override async ValueTask<FunctionDefinition?> FindAsync(string FunctionId, CancellationToken cancellationToken = default)
         {
-            var function = await _functionDefinitionStore.FindAsync(FunctionId, cancellationToken);
+    var function =await        _functionDefinitionStore.FindAsync(new FunctionDefinitionIdSpecification(FunctionId), cancellationToken);
             return function;
         }
 

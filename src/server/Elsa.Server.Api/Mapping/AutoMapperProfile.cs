@@ -1,5 +1,6 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Elsa.Models;
+using Elsa.Server.Api.Endpoints.FunctionDefinitions;
 using Elsa.Server.Api.Endpoints.WorkflowDefinitions;
 using Elsa.Server.Api.Endpoints.WorkflowInstances;
 using Elsa.Server.Api.Endpoints.WorkflowRegistry;
@@ -19,6 +20,8 @@ namespace Elsa.Server.Api.Mapping
             CreateMap<WorkflowInstance, WorkflowInstanceSummaryModel>();
             CreateMap<WorkflowDefinition, WorkflowDefinitionSummaryModel>();
             CreateMap<WorkflowDefinition, WorkflowDefinitionVersionModel>();
+            CreateMap<FunctionDefinition, FunctionDefinitionSummaryModelWithSource>();
+            CreateMap<FunctionDefinition, FunctionDefinitionSummaryModelWithoutSource>();
         }
     }
 }

@@ -75,7 +75,5 @@ namespace Elsa.Persistence.Decorators
 
             return functionDefinition;
         }
-
-        public Task<FunctionDefinition?> FindAsync(string FunctionId, CancellationToken cancellationToken = default) => _store.FindAsync(FunctionId, cancellationToken);
     }
 }

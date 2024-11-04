@@ -7,6 +7,5 @@ namespace Elsa.Persistence
 {
     public interface IFunctionDefinitionStore : IStore<FunctionDefinition>
     {
-        Task<FunctionDefinition?> FindAsync(string FunctionId, CancellationToken cancellationToken = default);
     }
 }

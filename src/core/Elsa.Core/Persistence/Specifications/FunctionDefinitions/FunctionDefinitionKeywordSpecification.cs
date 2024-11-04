@@ -22,9 +22,23 @@ public class FunctionDefinitionKeywordSpecification : Specification<FunctionDefi
 
     public override Expression<Func<FunctionDefinition, bool>> ToExpression()
     {
-        Expression<Func<FunctionDefinition, bool>> predicate = x => x.DisplayName.Contains(DisplayName);
-        predicate = predicate.Or(x => x.Name.Contains(Name));
-        predicate = predicate.Or(x => x.Source.Contains(SourceKeyword));
+        Expression<Func<FunctionDefinition, bool>> predicate = x => true; // Bắt đầu với điều kiện mặc định là true
+
+        if (!string.IsNullOrWhiteSpace(DisplayName))
+        {
+            predicate = predicate.And(x => x.DisplayName.ToLower().Contains(DisplayName.ToLower()));
+        }
+
+        if (!string.IsNullOrWhiteSpace(Name))
+        {
+            predicate = predicate.And(x => x.Name.ToLower().Contains(Name.ToLower()));
+        }
+
+        if (!string.IsNullOrWhiteSpace(SourceKeyword))
+        {
+            predicate = predicate.And(x => x.Source.ToLower().Contains(SourceKeyword.ToLower()));
+        }
+
         return predicate;
     }
 }

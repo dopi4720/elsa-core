@@ -39,7 +39,7 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedList<FunctionDefinitionSummaryModel>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedList<FunctionDefinitionSummaryModelWithoutSource>))]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(FunctionDefinitionPagedListExample))]
         [SwaggerOperation(
             Summary = "Returns a list of function definitions.",
@@ -47,7 +47,7 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
             OperationId = "FunctionDefinitions.List",
             Tags = new[] { "FunctionDefinitions" })
         ]
-        public async Task<ActionResult<PagedList<FunctionDefinitionSummaryModel>>> Handle(
+        public async Task<ActionResult<PagedList<FunctionDefinitionSummaryModelWithoutSource>>> Handle(
             [FromQuery] string? DisplayName = "",
             [FromQuery] string? Name = "",
             [FromQuery] string? SourceKeyword = "",
@@ -60,8 +60,8 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
             var totalCount = await _functionDefinitionStore.CountAsync(specification, cancellationToken);
             var paging = page == null || pageSize == null ? default : Paging.Page(page.Value, pageSize.Value);
             var items = await _functionDefinitionStore.FindManyAsync(specification, default, paging, cancellationToken);
-            var summaries = _mapper.Map<IList<FunctionDefinition>>(items);
-            var pagedList = new PagedList<FunctionDefinition>(summaries, page, pageSize, totalCount);
+            var summaries = _mapper.Map<IList<FunctionDefinitionSummaryModelWithoutSource>>(items);
+            var pagedList = new PagedList<FunctionDefinitionSummaryModelWithoutSource>(summaries, page, pageSize, totalCount);
             
             return Json(pagedList, SerializationHelper.GetSettingsForEndpoint(new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
         }

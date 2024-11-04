@@ -18,7 +18,7 @@ public class FunctionDefinitionDisplayNameSpecification : Specification<Function
 
     public override Expression<Func<FunctionDefinition, bool>> ToExpression()
     {
-        Expression<Func<FunctionDefinition, bool>> predicate = x => x.DisplayName.Contains(DisplayName);
+        Expression<Func<FunctionDefinition, bool>> predicate = x => x.DisplayName.ToLower().Contains(DisplayName.ToLower());
         return predicate;
     }
 }

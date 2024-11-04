@@ -76,10 +76,5 @@ namespace Elsa.Persistence.EntityFramework.Core.Stores.FunctionDefinitions
             //entity.LastUpdate = data.LastUpdate;
             //entity.SampleInput = data.SampleInput;
         }
-
-        public Task<FunctionDefinition?> FindAsync(string FunctionId, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

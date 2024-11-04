@@ -90,7 +90,5 @@ namespace Elsa.Persistence.Decorators
             await _store.UpdateAsync(entity, cancellationToken);
             await _mediator.Publish(new FunctionDefinitionSaved(entity), cancellationToken);
         }
-
-        public Task<FunctionDefinition?> FindAsync(string FunctionId, CancellationToken cancellationToken = default) => _store.FindAsync(FunctionId, cancellationToken);
     }
 }
