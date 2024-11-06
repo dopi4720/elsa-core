@@ -30,7 +30,12 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Compile Remove="Endpoints\FunctionDefinitions\Models\Save.Request.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <None Include="Endpoints\FunctionDefinitions\Models\Save.Request.cs" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
