@@ -9,6 +9,7 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
 {
     public record FunctionDefinitionSummaryModelWithoutSource(
         string Id,
+        string FunctionId,
         string? Name,
         string? DisplayName,
         int? Version,

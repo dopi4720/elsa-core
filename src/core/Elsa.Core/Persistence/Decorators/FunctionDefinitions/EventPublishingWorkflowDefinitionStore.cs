@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
 using Elsa.Events;
@@ -21,7 +22,11 @@ namespace Elsa.Persistence.Decorators
             _mediator = mediator;
         }
 
-        public Task<int> CountAsync(ISpecification<FunctionDefinition> specification, CancellationToken cancellationToken = default) => _store.CountAsync(specification, cancellationToken);
+        public async Task<int> CountAsync(ISpecification<FunctionDefinition> specification, CancellationToken cancellationToken = default) {
+            return await _store.FindManyAsync(specification, cancellationToken: cancellationToken)
+                    .GroupBy(x => x.FunctionId)
+                    .Select(g => g.OrderByDescending(x => x.Version).First()).Count();
+        } 
 
         public async Task DeleteAsync(FunctionDefinition entity, CancellationToken cancellationToken = default)
         {
@@ -54,25 +59,32 @@ namespace Elsa.Persistence.Decorators
 
         public Task<FunctionDefinition?> FindAsync(ISpecification<FunctionDefinition> specification, CancellationToken cancellationToken = default) => _store.FindAsync(specification, cancellationToken);
 
-        public Task<IEnumerable<FunctionDefinition>> FindManyAsync(ISpecification<FunctionDefinition> specification, IOrderBy<FunctionDefinition>? orderBy = null, IPaging? paging = null, CancellationToken cancellationToken = default)
-            => _store.FindManyAsync(specification, orderBy, paging, cancellationToken);
+        public async Task<IEnumerable<FunctionDefinition>> FindManyAsync(ISpecification<FunctionDefinition> specification, IOrderBy<FunctionDefinition>? orderBy = null, IPaging? paging = null, CancellationToken cancellationToken = default)
+        {
+            return await _store
+                .FindManyAsync(specification, orderBy, paging, cancellationToken)
+                .GroupBy(x => x.FunctionId)
+                .Select(g => g.OrderByDescending(x => x.Version).First());
+        }
 
         public async Task SaveAsync(FunctionDefinition entity, CancellationToken cancellationToken = default)
         {
-            await _mediator.Publish(new FunctionDefinitionSaving(entity), cancellationToken);
+            //await _mediator.Publish(new FunctionDefinitionSaving(entity), cancellationToken);
             await _store.SaveAsync(entity, cancellationToken);
-            await _mediator.Publish(new FunctionDefinitionSaved(entity), cancellationToken);
+            //await _mediator.Publish(new FunctionDefinitionSaved(entity), cancellationToken);
         }
 
         public async Task AddAsync(FunctionDefinition entity, CancellationToken cancellationToken = default)
         {
-            await _mediator.Publish(new FunctionDefinitionSaving(entity), cancellationToken);
+            //await _mediator.Publish(new FunctionDefinitionSaving(entity), cancellationToken);
             await _store.AddAsync(entity, cancellationToken);
-            await _mediator.Publish(new FunctionDefinitionSaved(entity), cancellationToken);
+            //await _mediator.Publish(new FunctionDefinitionSaved(entity), cancellationToken);
         }
 
         public async Task AddManyAsync(IEnumerable<FunctionDefinition> entities, CancellationToken cancellationToken = default)
         {
+            await Task.Delay(0);
+            return;
             var list = entities.ToList();
 
             foreach (var entity in list)
@@ -86,9 +98,9 @@ namespace Elsa.Persistence.Decorators
 
         public async Task UpdateAsync(FunctionDefinition entity, CancellationToken cancellationToken = default)
         {
-            await _mediator.Publish(new FunctionDefinitionSaving(entity), cancellationToken);
+            //await _mediator.Publish(new FunctionDefinitionSaving(entity), cancellationToken);
             await _store.UpdateAsync(entity, cancellationToken);
-            await _mediator.Publish(new FunctionDefinitionSaved(entity), cancellationToken);
+            //await _mediator.Publish(new FunctionDefinitionSaved(entity), cancellationToken);
         }
     }
 }

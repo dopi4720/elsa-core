@@ -7,6 +7,7 @@ namespace Elsa.Models
 {
     public class FunctionDefinition : Entity
     {
+        public string FunctionId { get; set; } = default!;
         public string Name { get; set; } = null!;
         public string DisplayName { get; set; } = null!;
         public string FunctionType { get; set; } = null!;

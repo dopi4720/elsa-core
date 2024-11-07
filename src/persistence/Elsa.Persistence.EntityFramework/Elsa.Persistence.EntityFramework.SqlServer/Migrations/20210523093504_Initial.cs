@@ -67,6 +67,7 @@ namespace Elsa.Persistence.EntityFramework.SqlServer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "NVARCHAR(450)", nullable: false), // NVARCHAR(450) để phù hợp với PK trong SQL Server
+                    FunctionId = table.Column<string>(type: "NVARCHAR(450)", nullable: false),
                     Name = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
                     DisplayName = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
                     FunctionType = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false),
@@ -76,7 +77,7 @@ namespace Elsa.Persistence.EntityFramework.SqlServer.Migrations
                     Pdb = table.Column<byte[]>(type: "VARBINARY(MAX)", nullable: false),
                     Version = table.Column<int>(type: "INT", nullable: false),
                     IsPublish = table.Column<bool>(type: "BIT", nullable: false),
-                    LastUpdate = table.Column<DateTime>(type: "DATETIME2", nullable: false),
+                    LastUpdate = table.Column<DateTime>(type: "DATETIME", nullable: false),
                     SampleInput = table.Column<string>(type: "NVARCHAR(MAX)", nullable: false)
                 },
                 constraints: table =>
