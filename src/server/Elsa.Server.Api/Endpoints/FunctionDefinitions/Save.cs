@@ -1,6 +1,7 @@
 using Elsa.Models;
 using Elsa.Persistence;
 using Elsa.Server.Api.Endpoints.FunctionDefinitions.Models;
+using Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -39,7 +40,22 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
         ]
         public async Task<IActionResult> Handle([FromBody] SaveFunctionDefinitionRequest request, CancellationToken cancellationToken)
         {
-            //TODO: Handle compile source code
+          var compiled=  DynamicCompiler.Compile(request.Source ?? throw new Exception("Source cannot be empty"));
+            FunctionDefinition function = new()
+            {
+                Source = request.Source,
+                Binary = compiled.DllBytes,
+                Catalog = request.Catalog ?? "Function",
+                DisplayName = request.DisplayName ?? throw new Exception("Display name cannot be empty"),
+                FunctionType = request.FunctionType ?? throw new Exception("Function Type cannot be empty"),
+                IsPublish = true,
+                Id = request.Id ?? "",
+                FunctionId = request.FunctionId ?? "",
+                LastUpdate = DateTime.Now,
+                Name = request.Name ?? throw new Exception("Name cannot be empty"),
+                Pdb = compiled.PdbBytes,
+                SampleInput = request.SampleInput ?? "{}"
+            };
             return Ok();
         }
     }
