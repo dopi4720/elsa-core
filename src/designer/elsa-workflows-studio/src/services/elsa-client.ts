@@ -7,6 +7,7 @@ import {
   ActivityDescriptor,
   ConnectionDefinition,
   EventTypes,
+  FunctionDefinitionSummaryModelWithoutSource,
   getVersionOptionsString, IntellisenseContext, ListModel,
   OrderBy,
   PagedList,
@@ -25,6 +26,7 @@ import {
   WorkflowStatus,
   WorkflowStorageDescriptor
 } from "../models";
+import { interpolateGnBu } from "d3";
 
 let _httpClient: AxiosInstance = null;
 let _elsaClient: ElsaClient = null;
@@ -155,6 +157,30 @@ export const createElsaClient = async function (serverUrl: string): Promise<Elsa
           }
         });
       }
+    },
+    functionDefinitionsApi:{
+      list: async (page?: number, pageSize?: number, searchTerm?: string) => {
+        const queryString = {};
+        console.log("tao da vao functiondefinitions")
+
+        if (!!searchTerm)
+          queryString['name'] = searchTerm;
+        queryString['searchTerm'] = "";
+        queryString['displayName'] = "";
+        queryString['sourceKeyword'] = "";
+
+        if (!!page || page === 0)
+          queryString['page'] = page;
+
+        if (!!pageSize)
+          queryString['pageSize'] = pageSize;
+
+        const queryStringItems = collection.map(queryString, (v, k) => `${k}=${v}`);
+        const queryStringText = queryStringItems.length > 0 ? `?${queryStringItems.join('&')}` : '';
+        const response = await httpClient.get<PagedList<FunctionDefinitionSummaryModelWithoutSource>>(`v1/function-definitions${queryStringText}`);
+
+        return response.data;
+      },
     },
     workflowTestApi: {
       execute: async (request) => {
@@ -361,6 +387,7 @@ export const createElsaClient = async function (serverUrl: string): Promise<Elsa
 export interface ElsaClient {
   activitiesApi: ActivitiesApi;
   workflowDefinitionsApi: WorkflowDefinitionsApi;
+  functionDefinitionsApi: FunctionDefinitionsApi;
   workflowRegistryApi: WorkflowRegistryApi;
   workflowInstancesApi: WorkflowInstancesApi;
   workflowExecutionLogApi: WorkflowExecutionLogApi;
@@ -390,6 +417,10 @@ export interface FeaturesApi {
 
 export interface VersionApi {
   get(): Promise<string>;
+}
+
+export interface FunctionDefinitionsApi{
+  list(page?: number, pageSize?: number, searchTerm?: string):Promise<PagedList<FunctionDefinitionSummaryModelWithoutSource>>;
 }
 
 export interface WorkflowDefinitionsApi {

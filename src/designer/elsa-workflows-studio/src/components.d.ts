@@ -126,6 +126,13 @@ export namespace Components {
         "silent": boolean;
         "updateCounter": number;
     }
+    interface ElsaFunctionDefinitionsListScreen {
+        "basePath": string;
+        "culture": string;
+        "history"?: RouterHistory;
+        "loadFunctionDefinitions": () => Promise<void>;
+        "serverUrl": string;
+    }
     interface ElsaInputTags {
         "fieldId"?: string;
         "fieldName"?: string;
@@ -553,6 +560,12 @@ declare global {
         prototype: HTMLElsaFlyoutPanelElement;
         new (): HTMLElsaFlyoutPanelElement;
     };
+    interface HTMLElsaFunctionDefinitionsListScreenElement extends Components.ElsaFunctionDefinitionsListScreen, HTMLStencilElement {
+    }
+    var HTMLElsaFunctionDefinitionsListScreenElement: {
+        prototype: HTMLElsaFunctionDefinitionsListScreenElement;
+        new (): HTMLElsaFunctionDefinitionsListScreenElement;
+    };
     interface HTMLElsaInputTagsElement extends Components.ElsaInputTags, HTMLStencilElement {
     }
     var HTMLElsaInputTagsElement: {
@@ -891,6 +904,7 @@ declare global {
         "elsa-dropdown-property": HTMLElsaDropdownPropertyElement;
         "elsa-expression-editor": HTMLElsaExpressionEditorElement;
         "elsa-flyout-panel": HTMLElsaFlyoutPanelElement;
+        "elsa-function-definitions-list-screen": HTMLElsaFunctionDefinitionsListScreenElement;
         "elsa-input-tags": HTMLElsaInputTagsElement;
         "elsa-input-tags-dropdown": HTMLElsaInputTagsDropdownElement;
         "elsa-json-property": HTMLElsaJsonPropertyElement;
@@ -1057,6 +1071,12 @@ declare namespace LocalJSX {
         "hidden"?: boolean;
         "silent"?: boolean;
         "updateCounter"?: number;
+    }
+    interface ElsaFunctionDefinitionsListScreen {
+        "basePath"?: string;
+        "culture"?: string;
+        "history"?: RouterHistory;
+        "serverUrl"?: string;
     }
     interface ElsaInputTags {
         "fieldId"?: string;
@@ -1395,6 +1415,7 @@ declare namespace LocalJSX {
         "elsa-dropdown-property": ElsaDropdownProperty;
         "elsa-expression-editor": ElsaExpressionEditor;
         "elsa-flyout-panel": ElsaFlyoutPanel;
+        "elsa-function-definitions-list-screen": ElsaFunctionDefinitionsListScreen;
         "elsa-input-tags": ElsaInputTags;
         "elsa-input-tags-dropdown": ElsaInputTagsDropdown;
         "elsa-json-property": ElsaJsonProperty;
@@ -1473,6 +1494,7 @@ declare module "@stencil/core" {
             "elsa-dropdown-property": LocalJSX.ElsaDropdownProperty & JSXBase.HTMLAttributes<HTMLElsaDropdownPropertyElement>;
             "elsa-expression-editor": LocalJSX.ElsaExpressionEditor & JSXBase.HTMLAttributes<HTMLElsaExpressionEditorElement>;
             "elsa-flyout-panel": LocalJSX.ElsaFlyoutPanel & JSXBase.HTMLAttributes<HTMLElsaFlyoutPanelElement>;
+            "elsa-function-definitions-list-screen": LocalJSX.ElsaFunctionDefinitionsListScreen & JSXBase.HTMLAttributes<HTMLElsaFunctionDefinitionsListScreenElement>;
             "elsa-input-tags": LocalJSX.ElsaInputTags & JSXBase.HTMLAttributes<HTMLElsaInputTagsElement>;
             "elsa-input-tags-dropdown": LocalJSX.ElsaInputTagsDropdown & JSXBase.HTMLAttributes<HTMLElsaInputTagsDropdownElement>;
             "elsa-json-property": LocalJSX.ElsaJsonProperty & JSXBase.HTMLAttributes<HTMLElsaJsonPropertyElement>;

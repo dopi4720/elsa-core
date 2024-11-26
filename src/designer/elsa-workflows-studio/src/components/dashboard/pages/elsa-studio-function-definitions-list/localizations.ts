@@ -1,7 +1,7 @@
 export const resources = {
   'en': {
     default: {
-      'Title': 'Workflow Definitions',
+      'Title': 'Function Definitions',
       'CreateButton': 'Create Function',
     }
   },

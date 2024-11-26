@@ -11,6 +11,7 @@ import { leave, toggle } from 'el-transition'
 
 @Component({
   tag: 'elsa-studio-function-definitions-list',
+  //elsa-studio-workflow-definitions-list
   shadow: false,
 })
 export class ElsaStudioFunctionDefinitionsList {
@@ -19,19 +20,11 @@ export class ElsaStudioFunctionDefinitionsList {
   @Prop() basePath: string;
   @Prop({ attribute: 'server-url' }) serverUrl: string;
   private i18next: i18n;
-  private fileInput: HTMLInputElement;
-  private workflowDefinitionsListScreen: HTMLElsaWorkflowDefinitionsListScreenElement
+  private functionDefinitionsListScreen: HTMLElsaFunctionDefinitionsListScreenElement
   private menu: HTMLElement;
 
   async componentWillLoad() {
     this.i18next = await loadTranslations(this.culture, resources);
-  }
-
-  restoreWorkflows = async (e: Event) => {
-    e.preventDefault();
-    this.fileInput.value = null;
-    this.fileInput.click();
-    toggle(this.menu);
   }
 
   toggleMenu(e?: Event) {
@@ -60,7 +53,7 @@ export class ElsaStudioFunctionDefinitionsList {
           </div>
         </div>
 
-        <elsa-workflow-definitions-list-screen ref={el => this.workflowDefinitionsListScreen = el} />
+        <elsa-function-definitions-list-screen ref={el => this.functionDefinitionsListScreen = el} />
       </div>
     );
   }
