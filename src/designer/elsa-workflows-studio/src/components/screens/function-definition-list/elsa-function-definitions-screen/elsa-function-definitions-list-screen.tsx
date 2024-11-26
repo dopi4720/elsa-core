@@ -154,18 +154,15 @@ export class ElsaFunctionDefinitionsListScreen {
                         <thead>
                             <tr class="elsa-border-t elsa-border-gray-200">
                                 <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-200 elsa-bg-gray-50 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
-                                    <span class="lg:elsa-pl-2"><IntlMessage label="Name" /></span>
+                                    <span class="lg:elsa-pl-2"><IntlMessage label="FunctionId" /></span>
                                 </th>
                                 <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-200 elsa-bg-gray-50 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
-                                    <IntlMessage label="Instances" />
+                                    <span class="lg:elsa-pl-2"><IntlMessage label="Name" /></span>
                                 </th>
                                 <th class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-200 elsa-bg-gray-50 elsa-text-right elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
                                     <IntlMessage label="LatestVersion" />
                                 </th>
-                                <th class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-200 elsa-bg-gray-50 elsa-text-right elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
-                                    <IntlMessage label="PublishedVersion" />
-                                </th>
-                                <th class="elsa-pr-6 elsa-py-3 elsa-border-b elsa-border-gray-200 elsa-bg-gray-50 elsa-text-right elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider" />
+                                <th class="elsa-pr-6 elsa-py-3 elsa-border-b elsa-border-gray-200 elsa-bg-gray-50 elsa-text-right elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">action</th>
                             </tr>
                         </thead>
                         <tbody class="elsa-bg-white elsa-divide-y elsa-divide-gray-100">
@@ -175,6 +172,7 @@ export class ElsaFunctionDefinitionsListScreen {
                                 const publishedVersion: FunctionDefinitionSummaryModelWithoutSource = isPublish ? functionDefinition : publishedDefinitions.find(x => x.functionId == functionDefinition.functionId);
                                 const publishedVersionNumber = !!publishedVersion ? publishedVersion.version : '-';
                                 let functionDisplayName = functionDefinition.displayName;
+                                let functionId = functionDefinition.functionId;
 
                                 if (!functionDisplayName || functionDisplayName.trim().length == 0)
                                     functionDisplayName = functionDefinition.name;
@@ -220,6 +218,11 @@ export class ElsaFunctionDefinitionsListScreen {
                                     <tr>
                                         <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-900">
                                             <div class="elsa-flex elsa-items-center elsa-space-x-3 lg:elsa-pl-2">
+                                                <stencil-route-link url={editUrl} anchorClass="elsa-truncate hover:elsa-text-gray-600"><span>{functionId}</span></stencil-route-link>
+                                            </div>
+                                        </td>
+                                        <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-900">
+                                            <div class="elsa-flex elsa-items-center elsa-space-x-3 lg:elsa-pl-2">
                                                 <stencil-route-link url={editUrl} anchorClass="elsa-truncate hover:elsa-text-gray-600"><span>{functionDisplayName}</span></stencil-route-link>
                                             </div>
                                         </td>
@@ -231,7 +234,6 @@ export class ElsaFunctionDefinitionsListScreen {
                                         </td> */}
 
                                         <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-500 elsa-text-right">{latestVersionNumber}</td>
-                                        <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-500 elsa-text-right">{publishedVersionNumber}</td>
                                         <td class="elsa-pr-6">
                                             <elsa-context-menu history={this.history} menuItems={[
                                                 { text: i18next.t('Edit'), anchorUrl: editUrl, icon: editIcon },

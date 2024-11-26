@@ -3,6 +3,7 @@ export const resources = {
     'default': {
       'Name': 'Name',
       'Instances': 'Instances',
+      'FunctionId': 'Id',
       'LatestVersion': 'Latest Version',
       'PublishedVersion': 'Published Version',
       'Edit': 'Edit',
