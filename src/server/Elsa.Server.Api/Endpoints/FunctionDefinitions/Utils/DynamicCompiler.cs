@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,9 +36,14 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
                 // Thêm các tham chiếu từ danh sách đường dẫn DLL được truyền vào
                 foreach (var dllPath in FunctionDefinitionConfigs.NeedDllFiles)
                 {
+                    string RuntimePath = Path.Combine(RuntimeEnvironment.GetRuntimeDirectory(), dllPath);
                     if (File.Exists(dllPath))
                     {
                         references.Add(MetadataReference.CreateFromFile(dllPath));
+                    }
+                    else if (File.Exists(RuntimePath))
+                    {
+                        references.Add(MetadataReference.CreateFromFile(RuntimePath));
                     }
                     else
                     {

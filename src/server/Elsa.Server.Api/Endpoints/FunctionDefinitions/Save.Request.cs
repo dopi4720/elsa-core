@@ -18,6 +18,7 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
             public string? SampleInput { get; init; }
             public string? Catalog { get; init; }
             public string? FunctionType { get; init; }
+            public bool IsPublish { get; init; }
         }
     }
 }

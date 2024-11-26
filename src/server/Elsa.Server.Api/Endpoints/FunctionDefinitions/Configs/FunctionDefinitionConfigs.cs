@@ -8,6 +8,14 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Configs
 {
     public class FunctionDefinitionConfigs
     {
-        public static List<string> NeedDllFiles = new List<string>();
+        public static List<string> NeedDllFiles = new List<string>()
+        {
+            "System.Runtime.dll",
+            "System.Threading.Tasks.dll",
+            "System.Linq.dll",
+            "System.Collections.dll",
+            "System.Console.dll",
+            "System.IO.dll"
+        };
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.Filters;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -40,8 +41,13 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
         ]
         public async Task<IActionResult> Handle(string functionId, CancellationToken cancellationToken = default)
         {
-            var function = await _functionDefinitionStore.FindAsync(new FunctionDefinitionIdSpecification(functionId), cancellationToken);
-           var FunctionSummary = _mapper.Map<FunctionDefinitionSummaryModelWithSource>(function);
+            var functions = await _functionDefinitionStore.FindManyAsync(new FunctionDefinitionFunctionIdSpecification(functionId), cancellationToken: cancellationToken);
+            if (functions == null || !functions.Any())
+            {
+                return NotFound();
+            }
+            var function = functions.OrderByDescending(x => x.Version).First();
+            var FunctionSummary = _mapper.Map<FunctionDefinitionSummaryModelWithSource>(function);
             return function == null ? NotFound() : Json(FunctionSummary, SerializationHelper.GetSettingsForEndpoint(new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
         }
     }

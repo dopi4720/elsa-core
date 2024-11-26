@@ -1,5 +1,6 @@
 using Elsa.Models;
 using Elsa.Persistence;
+using Elsa.Persistence.Specifications.FunctionDefinitions;
 using Elsa.Server.Api.Endpoints.FunctionDefinitions.Models;
 using Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils;
 using Microsoft.AspNetCore.Http;
@@ -40,23 +41,62 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
         ]
         public async Task<IActionResult> Handle([FromBody] SaveFunctionDefinitionRequest request, CancellationToken cancellationToken)
         {
-          var compiled=  DynamicCompiler.Compile(request.Source ?? throw new Exception("Source cannot be empty"));
-            FunctionDefinition function = new()
+            try
             {
-                Source = request.Source,
-                Binary = compiled.DllBytes,
-                Catalog = request.Catalog ?? "Function",
-                DisplayName = request.DisplayName ?? throw new Exception("Display name cannot be empty"),
-                FunctionType = request.FunctionType ?? throw new Exception("Function Type cannot be empty"),
-                IsPublish = true,
-                Id = request.Id ?? "",
-                FunctionId = request.FunctionId ?? "",
-                LastUpdate = DateTime.Now,
-                Name = request.Name ?? throw new Exception("Name cannot be empty"),
-                Pdb = compiled.PdbBytes,
-                SampleInput = request.SampleInput ?? "{}"
-            };
-            return Ok();
+                var compiled = DynamicCompiler.Compile(request.Source ?? throw new Exception("Source cannot be empty"));
+                if (!compiled.IsCompiled)
+                {
+                    return BadRequest(new FunctionGeneralView()
+                    {
+                        IsSuccess = false,
+                        Message = compiled.CompileMessage,
+                        Data = null
+                    });
+                }
+
+                var CurrentFunctions = await _functionDefinitionStore.FindManyAsync(new FunctionDefinitionFunctionIdSpecification(request.FunctionId ?? ""));
+                var CurrentFunction = CurrentFunctions.OrderByDescending(x => x.Version).FirstOrDefault();
+
+                int CurrentVersion = 1;
+                if (CurrentFunction != null)
+                {
+                    CurrentVersion = CurrentFunction.Version + 1;
+                }
+
+                FunctionDefinition function = new()
+                {
+                    Source = request.Source,
+                    Binary = compiled.DllBytes,
+                    Catalog = !string.IsNullOrEmpty(request.Catalog) ? request.Catalog : "Function",
+                    DisplayName = request.DisplayName ?? throw new Exception("Display name cannot be empty"),
+                    FunctionType = request.FunctionType ?? throw new Exception("Function Type cannot be empty"),
+                    IsPublish = request.IsPublish,
+                    Id = string.IsNullOrEmpty(request.Id) ? Guid.NewGuid().ToString() : request.Id,
+                    FunctionId = string.IsNullOrEmpty(request.FunctionId) ? Guid.NewGuid().ToString() : request.FunctionId,
+                    LastUpdate = DateTime.Now,
+                    Name = request.Name ?? throw new Exception("Name cannot be empty"),
+                    Pdb = compiled.PdbBytes,
+                    SampleInput = request.SampleInput ?? "{}",
+                    Version = CurrentVersion
+                };
+
+                await _functionDefinitionStore.SaveAsync(function, cancellationToken);
+                return Ok(new FunctionGeneralView()
+                {
+                    IsSuccess = true,
+                    Message = "Save function successfully",
+                    Data = null
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new FunctionGeneralView()
+                {
+                    IsSuccess = false,
+                    Message = ex.Message,
+                    Data = null
+                });
+            }
         }
     }
 }

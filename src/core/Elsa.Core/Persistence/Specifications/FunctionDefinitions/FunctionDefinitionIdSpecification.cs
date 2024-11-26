@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Elsa.Persistence.Specifications.FunctionDefinitions
 {
-  public  class FunctionDefinitionIdSpecification : Specification<FunctionDefinition>
+    public class FunctionDefinitionIdSpecification : Specification<FunctionDefinition>
     {
         public FunctionDefinitionIdSpecification(string functionId)
         {

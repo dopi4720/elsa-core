@@ -25,23 +25,24 @@ namespace Elsa.Persistence.EntityFramework.Core.Stores.FunctionDefinitions
 
         protected override void OnSaving(ElsaContext dbContext, FunctionDefinition entity)
         {
-            var data = new
-            {
-                entity.Name,
-                entity.DisplayName,
-                entity.FunctionType,
-                entity.Catalog,
-                entity.Source,
-                entity.Binary,
-                entity.Pdb,
-                entity.Version,
-                entity.IsPublish,
-                entity.LastUpdate,
-                entity.SampleInput
-            };
+            //var data = new
+            //{
+            //    entity.Name,
+            //    entity.DisplayName,
+            //    entity.FunctionType,
+            //    entity.Catalog,
+            //    entity.Source,
+            //    entity.Binary,
+            //    entity.Pdb,
+            //    entity.Version,
+            //    entity.IsPublish,
+            //    entity.LastUpdate,
+            //    entity.SampleInput
+            //};
 
-            var json = _contentSerializer.Serialize(data);
-            dbContext.Entry(entity).Property("Data").CurrentValue = json;
+            //var json = _contentSerializer.Serialize(data);
+            //dbContext.Entry(entity).Property("Data").CurrentValue = json;
+            base.OnSaving(dbContext, entity);
         }
 
         protected override void OnLoading(ElsaContext dbContext, FunctionDefinition entity)
