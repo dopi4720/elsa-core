@@ -68,7 +68,7 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
                     Source = request.Source,
                     Binary = compiled.DllBytes,
                     Catalog = !string.IsNullOrEmpty(request.Catalog) ? request.Catalog : "Function",
-                    DisplayName = request.DisplayName ?? throw new Exception("Display name cannot be empty"),
+                    DisplayName = request.Name ?? throw new Exception("Display name cannot be empty"),
                     FunctionType = request.FunctionType ?? throw new Exception("Function Type cannot be empty"),
                     IsPublish = request.IsPublish,
                     Id = string.IsNullOrEmpty(request.Id) ? Guid.NewGuid().ToString() : request.Id,

@@ -11,9 +11,9 @@ public class FunctionDefinitionKeywordSpecification : Specification<FunctionDefi
 {
     public FunctionDefinitionKeywordSpecification(string displayName, string name, string source)
     {
-        DisplayName = displayName;
-        Name = name;
-        SourceKeyword = source;
+        DisplayName = displayName.ToLower();
+        Name = name.ToLower();
+        SourceKeyword = source.ToLower();
     }
 
     public string DisplayName { get; set; }
@@ -26,17 +26,17 @@ public class FunctionDefinitionKeywordSpecification : Specification<FunctionDefi
 
         if (!string.IsNullOrWhiteSpace(DisplayName))
         {
-            predicate = predicate.And(x => x.DisplayName.ToLower().Contains(DisplayName.ToLower()));
+            predicate = predicate.And(x => x.DisplayName.ToLower().Contains(DisplayName));
         }
 
         if (!string.IsNullOrWhiteSpace(Name))
         {
-            predicate = predicate.And(x => x.Name.ToLower().Contains(Name.ToLower()));
+            predicate = predicate.And(x => x.Name.ToLower().Contains(Name));
         }
 
         if (!string.IsNullOrWhiteSpace(SourceKeyword))
         {
-            predicate = predicate.And(x => x.Source.ToLower().Contains(SourceKeyword.ToLower()));
+            predicate = predicate.And(x => x.Source.ToLower().Contains(SourceKeyword));
         }
 
         return predicate;
