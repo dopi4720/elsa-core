@@ -2,10 +2,10 @@ import {Component, Prop, h} from '@stencil/core';
 import {MatchResults} from '@stencil/router';
 
 @Component({
-  tag: 'elsa-studio-workflow-definitions-edit',
+  tag: 'elsa-studio-function-definitions-edit',
   shadow: false,
 })
-export class ElsaStudioWorkflowDefinitionsEdit {
+export class ElsaStudioFunctionDefinitionsEdit {
   @Prop() match: MatchResults;
   
   id?: string;
@@ -23,7 +23,7 @@ export class ElsaStudioWorkflowDefinitionsEdit {
     const id = this.id;
 
     return <div>
-      <elsa-workflow-definition-editor-screen workflow-definition-id={id} />
+      <elsa-function-definition-editor-screen function-definition-id={id} />
     </div>;
   }
 }

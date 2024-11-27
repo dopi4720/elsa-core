@@ -36,7 +36,7 @@ export class ElsaStudioDashboard {
         ['workflow-instances/:id', 'elsa-studio-workflow-instances-view'],
         ['oauth2-authorized', 'elsa-oauth2-authorized', true],
         ['function-definitions', 'elsa-studio-function-definitions-list', true],
-        //['function-definitions/:id', 'elsa-studio-function-definitions-edit'],
+        ['function-definitions/:id', 'elsa-studio-function-definitions-edit'],
       ]
     }
   };

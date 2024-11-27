@@ -22,7 +22,7 @@ export class ElsaStudioHome {
   }
 
   render() {
-    const visualPath = getAssetPath('./assets/undraw_breaking_barriers_vnf3.svg');
+    const visualPath = getAssetPath('./assets/images/logo.png');
     const IntlMessage = GetIntlMessage(this.i18next);
     const serverVersion = this.serverVersion;
 
@@ -34,7 +34,7 @@ export class ElsaStudioHome {
               <div class="elsa-px-4 sm:elsa-px-6 sm:elsa-text-center md:elsa-max-w-2xl md:elsa-mx-auto lg:elsa-col-span-6 lg:elsa-text-left lg:flex lg:elsa-items-center">
                 <div class="elsa-home-caption-wrapper">
                   <h1 class="elsa-mt-4 elsa-text-4xl elsa-tracking-tight elsa-font-extrabold elsa-text-white sm:elsa-mt-5 sm:elsa-leading-none lg:elsa-mt-6 lg:elsa-text-5xl xl:elsa-text-6xl">
-                    <span class="md:elsa-block"><IntlMessage label="Welcome" dangerous title={`<span class='elsa-text-teal-400 md:elsa-block'>Intelligent DR Platform</span> <span>${serverVersion}</span>`}/></span>
+                    <span class="md:elsa-block"><IntlMessage label="Welcome" dangerous title={`<span class='elsa-text-teal-400 md:elsa-block'>DRP - DR Platform</span>`}/></span>
                   </h1>
                   <p class="tagline elsa-mt-3 elsa-text-base elsa-text-gray-300 sm:elsa-mt-5 sm:elsa-text-xl lg:elsa-text-lg xl:elsa-text-xl">
                     <IntlMessage label="Tagline"/>
@@ -43,7 +43,7 @@ export class ElsaStudioHome {
               </div>
               <div class="elsa-mt-16 sm:elsa-mt-24 lg:elsa-mt-0 lg:elsa-col-span-6">
                 <div class="sm:elsa-max-w-md sm:elsa-w-full sm:elsa-mx-auto sm:elsa-rounded-lg sm:elsa-overflow-hidden">
-                  <div class="elsa-px-4 elsa-py-8 sm:elsa-px-10">
+                  <div class="elsa-px-4 sm:elsa-px-10">
                     <img class="elsa-home-visual" src={visualPath} alt="" width={400}/>
                   </div>
                 </div>

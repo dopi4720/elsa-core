@@ -18,7 +18,11 @@ export class ElsaMonaco {
   @Prop({ attribute: 'monaco-lib-path' }) monacoLibPath: string;
   @Prop({ attribute: 'editor-height', reflect: true }) editorHeight: string = '5em';
   @Prop() value: string;
+  @Prop() theme: string;
   @Prop() language: string;
+  @Prop() suggestions: any;
+  @Prop() renderLineHighlight: string;
+  @Prop() isEnabledMinimap: boolean;
   @Prop({ attribute: 'single-line', reflect: true }) singleLineMode: boolean = false;
   @Prop() padding: string;
   @Event({ eventName: 'valueChanged' }) valueChanged: EventEmitter<MonacoValueChangedArgs>;
@@ -59,14 +63,14 @@ export class ElsaMonaco {
     if (oldModel)
       oldModel.dispose();
 
-    const newModel = monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(libUri));    
-    
+    const newModel = monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(libUri));
+
     const matches = libSource.matchAll(/declare const (\w+): (string|number)/g);
 
     EditorVariables.splice(0, EditorVariables.length);
-    
-    for(const match of matches) {
-      EditorVariables.push({variableName: match[1], type: match[2] });
+
+    for (const match of matches) {
+      EditorVariables.push({ variableName: match[1], type: match[2] });
     }
   }
 
@@ -79,6 +83,33 @@ export class ElsaMonaco {
     const monaco = this.monaco;
     const language = this.language;
 
+    if (this.language === "csharp") {
+      var suggestions = this.suggestions;
+      console.log(this.suggestions);
+      // Đăng ký ngôn ngữ và nhắc lệnh cho C#
+      monaco.languages.register({ id: 'csharp' });
+      monaco.languages.registerCompletionItemProvider('csharp', {
+        provideCompletionItems: function (model, position) {
+          // Lấy thông tin từ hiện tại (nếu có)
+          const wordInfo = model.getWordUntilPosition(position);
+          const currentWord = wordInfo.word; // Từ hiện tại tại vị trí con trỏ
+      
+          // Kết hợp gợi ý mặc định và gợi ý dựa trên từ hiện tại
+          const combinedSuggestions = suggestions.map(s => ({
+            label: s.label,
+            kind: monaco.languages.CompletionItemKind[s.kind || 'Text'], // Loại gợi ý
+            insertText: s.insertText || s.label, // Văn bản được chèn khi chọn
+            detail: s.detail || 'Suggested item',
+            sortText: currentWord ? `${currentWord}${s.label}` : s.label, // Sắp xếp theo mức độ liên quan
+          }));
+      
+          // Trả về danh sách gợi ý
+          return {
+            suggestions: combinedSuggestions,
+          };
+        }
+      });
+    }
     // Validation settings.
     monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
       noSemanticValidation: true,
@@ -98,13 +129,13 @@ export class ElsaMonaco {
       value: this.value,
       language: language,
       fontFamily: "Roboto Mono, monospace",
-      renderLineHighlight: 'none',
+      renderLineHighlight: this.renderLineHighlight ? this.renderLineHighlight : 'none',
       minimap: {
-        enabled: false
+        enabled: this.isEnabledMinimap ? this.isEnabledMinimap : false
       },
       automaticLayout: true,
       lineNumbers: "on",
-      theme: "vs",
+      theme: this.theme ? this.theme : "vs",
       roundedSelection: true,
       scrollBeyondLastLine: false,
       readOnly: false,
@@ -112,7 +143,12 @@ export class ElsaMonaco {
       overviewRulerBorder: false,
       lineDecorationsWidth: 0,
       hideCursorInOverviewRuler: true,
-      glyphMargin: false
+      glyphMargin: false,
+      suggest: {
+        filterGraceful: true,  // Hiển thị gợi ý ngay cả khi không khớp hoàn hảo
+        snippetsPreventQuickSuggestions: false, // Không ngăn nhắc lệnh nhanh khi dùng snippets
+        insertMode: 'insert',  // 'insert' hoặc 'replace' khi chọn gợi ý
+      }
     };
 
     let options = defaultOptions;

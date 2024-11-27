@@ -126,6 +126,13 @@ export namespace Components {
         "silent": boolean;
         "updateCounter": number;
     }
+    interface ElsaFunctionDefinitionEditorScreen {
+        "culture": string;
+        "functionDefinitionId": string;
+        "monacoLibPath": string;
+        "provideCompletionItems": () => Promise<any>;
+        "serverUrl": string;
+    }
     interface ElsaFunctionDefinitionsListScreen {
         "basePath": string;
         "culture": string;
@@ -159,11 +166,15 @@ export namespace Components {
     interface ElsaMonaco {
         "addJavaScriptLib": (libSource: string, libUri: string) => Promise<void>;
         "editorHeight": string;
+        "isEnabledMinimap": boolean;
         "language": string;
         "monacoLibPath": string;
         "padding": string;
+        "renderLineHighlight": string;
         "setValue": (value: string) => Promise<void>;
         "singleLineMode": boolean;
+        "suggestions": any;
+        "theme": string;
         "value": string;
     }
     interface ElsaMultiExpressionEditor {
@@ -240,6 +251,9 @@ export namespace Components {
     interface ElsaStudioDashboard {
         "basePath": string;
         "culture": string;
+    }
+    interface ElsaStudioFunctionDefinitionsEdit {
+        "match": MatchResults;
     }
     interface ElsaStudioFunctionDefinitionsList {
         "basePath": string;
@@ -560,6 +574,12 @@ declare global {
         prototype: HTMLElsaFlyoutPanelElement;
         new (): HTMLElsaFlyoutPanelElement;
     };
+    interface HTMLElsaFunctionDefinitionEditorScreenElement extends Components.ElsaFunctionDefinitionEditorScreen, HTMLStencilElement {
+    }
+    var HTMLElsaFunctionDefinitionEditorScreenElement: {
+        prototype: HTMLElsaFunctionDefinitionEditorScreenElement;
+        new (): HTMLElsaFunctionDefinitionEditorScreenElement;
+    };
     interface HTMLElsaFunctionDefinitionsListScreenElement extends Components.ElsaFunctionDefinitionsListScreen, HTMLStencilElement {
     }
     var HTMLElsaFunctionDefinitionsListScreenElement: {
@@ -667,6 +687,12 @@ declare global {
     var HTMLElsaStudioDashboardElement: {
         prototype: HTMLElsaStudioDashboardElement;
         new (): HTMLElsaStudioDashboardElement;
+    };
+    interface HTMLElsaStudioFunctionDefinitionsEditElement extends Components.ElsaStudioFunctionDefinitionsEdit, HTMLStencilElement {
+    }
+    var HTMLElsaStudioFunctionDefinitionsEditElement: {
+        prototype: HTMLElsaStudioFunctionDefinitionsEditElement;
+        new (): HTMLElsaStudioFunctionDefinitionsEditElement;
     };
     interface HTMLElsaStudioFunctionDefinitionsListElement extends Components.ElsaStudioFunctionDefinitionsList, HTMLStencilElement {
     }
@@ -904,6 +930,7 @@ declare global {
         "elsa-dropdown-property": HTMLElsaDropdownPropertyElement;
         "elsa-expression-editor": HTMLElsaExpressionEditorElement;
         "elsa-flyout-panel": HTMLElsaFlyoutPanelElement;
+        "elsa-function-definition-editor-screen": HTMLElsaFunctionDefinitionEditorScreenElement;
         "elsa-function-definitions-list-screen": HTMLElsaFunctionDefinitionsListScreenElement;
         "elsa-input-tags": HTMLElsaInputTagsElement;
         "elsa-input-tags-dropdown": HTMLElsaInputTagsDropdownElement;
@@ -922,6 +949,7 @@ declare global {
         "elsa-secrets-picker-modal": HTMLElsaSecretsPickerModalElement;
         "elsa-single-line-property": HTMLElsaSingleLinePropertyElement;
         "elsa-studio-dashboard": HTMLElsaStudioDashboardElement;
+        "elsa-studio-function-definitions-edit": HTMLElsaStudioFunctionDefinitionsEditElement;
         "elsa-studio-function-definitions-list": HTMLElsaStudioFunctionDefinitionsListElement;
         "elsa-studio-home": HTMLElsaStudioHomeElement;
         "elsa-studio-root": HTMLElsaStudioRootElement;
@@ -1072,6 +1100,12 @@ declare namespace LocalJSX {
         "silent"?: boolean;
         "updateCounter"?: number;
     }
+    interface ElsaFunctionDefinitionEditorScreen {
+        "culture"?: string;
+        "functionDefinitionId"?: string;
+        "monacoLibPath"?: string;
+        "serverUrl"?: string;
+    }
     interface ElsaFunctionDefinitionsListScreen {
         "basePath"?: string;
         "culture"?: string;
@@ -1105,11 +1139,15 @@ declare namespace LocalJSX {
     }
     interface ElsaMonaco {
         "editorHeight"?: string;
+        "isEnabledMinimap"?: boolean;
         "language"?: string;
         "monacoLibPath"?: string;
         "onValueChanged"?: (event: CustomEvent<MonacoValueChangedArgs>) => void;
         "padding"?: string;
+        "renderLineHighlight"?: string;
         "singleLineMode"?: boolean;
+        "suggestions"?: any;
+        "theme"?: string;
         "value"?: string;
     }
     interface ElsaMultiExpressionEditor {
@@ -1191,6 +1229,9 @@ declare namespace LocalJSX {
     interface ElsaStudioDashboard {
         "basePath"?: string;
         "culture"?: string;
+    }
+    interface ElsaStudioFunctionDefinitionsEdit {
+        "match"?: MatchResults;
     }
     interface ElsaStudioFunctionDefinitionsList {
         "basePath"?: string;
@@ -1415,6 +1456,7 @@ declare namespace LocalJSX {
         "elsa-dropdown-property": ElsaDropdownProperty;
         "elsa-expression-editor": ElsaExpressionEditor;
         "elsa-flyout-panel": ElsaFlyoutPanel;
+        "elsa-function-definition-editor-screen": ElsaFunctionDefinitionEditorScreen;
         "elsa-function-definitions-list-screen": ElsaFunctionDefinitionsListScreen;
         "elsa-input-tags": ElsaInputTags;
         "elsa-input-tags-dropdown": ElsaInputTagsDropdown;
@@ -1433,6 +1475,7 @@ declare namespace LocalJSX {
         "elsa-secrets-picker-modal": ElsaSecretsPickerModal;
         "elsa-single-line-property": ElsaSingleLineProperty;
         "elsa-studio-dashboard": ElsaStudioDashboard;
+        "elsa-studio-function-definitions-edit": ElsaStudioFunctionDefinitionsEdit;
         "elsa-studio-function-definitions-list": ElsaStudioFunctionDefinitionsList;
         "elsa-studio-home": ElsaStudioHome;
         "elsa-studio-root": ElsaStudioRoot;
@@ -1494,6 +1537,7 @@ declare module "@stencil/core" {
             "elsa-dropdown-property": LocalJSX.ElsaDropdownProperty & JSXBase.HTMLAttributes<HTMLElsaDropdownPropertyElement>;
             "elsa-expression-editor": LocalJSX.ElsaExpressionEditor & JSXBase.HTMLAttributes<HTMLElsaExpressionEditorElement>;
             "elsa-flyout-panel": LocalJSX.ElsaFlyoutPanel & JSXBase.HTMLAttributes<HTMLElsaFlyoutPanelElement>;
+            "elsa-function-definition-editor-screen": LocalJSX.ElsaFunctionDefinitionEditorScreen & JSXBase.HTMLAttributes<HTMLElsaFunctionDefinitionEditorScreenElement>;
             "elsa-function-definitions-list-screen": LocalJSX.ElsaFunctionDefinitionsListScreen & JSXBase.HTMLAttributes<HTMLElsaFunctionDefinitionsListScreenElement>;
             "elsa-input-tags": LocalJSX.ElsaInputTags & JSXBase.HTMLAttributes<HTMLElsaInputTagsElement>;
             "elsa-input-tags-dropdown": LocalJSX.ElsaInputTagsDropdown & JSXBase.HTMLAttributes<HTMLElsaInputTagsDropdownElement>;
@@ -1512,6 +1556,7 @@ declare module "@stencil/core" {
             "elsa-secrets-picker-modal": LocalJSX.ElsaSecretsPickerModal & JSXBase.HTMLAttributes<HTMLElsaSecretsPickerModalElement>;
             "elsa-single-line-property": LocalJSX.ElsaSingleLineProperty & JSXBase.HTMLAttributes<HTMLElsaSingleLinePropertyElement>;
             "elsa-studio-dashboard": LocalJSX.ElsaStudioDashboard & JSXBase.HTMLAttributes<HTMLElsaStudioDashboardElement>;
+            "elsa-studio-function-definitions-edit": LocalJSX.ElsaStudioFunctionDefinitionsEdit & JSXBase.HTMLAttributes<HTMLElsaStudioFunctionDefinitionsEditElement>;
             "elsa-studio-function-definitions-list": LocalJSX.ElsaStudioFunctionDefinitionsList & JSXBase.HTMLAttributes<HTMLElsaStudioFunctionDefinitionsListElement>;
             "elsa-studio-home": LocalJSX.ElsaStudioHome & JSXBase.HTMLAttributes<HTMLElsaStudioHomeElement>;
             "elsa-studio-root": LocalJSX.ElsaStudioRoot & JSXBase.HTMLAttributes<HTMLElsaStudioRootElement>;

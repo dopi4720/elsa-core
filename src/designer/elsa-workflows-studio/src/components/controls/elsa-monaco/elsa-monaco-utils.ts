@@ -7,6 +7,7 @@ export interface Monaco {
   languages: any;
   KeyCode: any;
   Uri: any;
+  theme : any;
 }
 
 export interface EditorVariable {

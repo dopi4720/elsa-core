@@ -2,7 +2,7 @@ export const resources = {
   'en': {
     'default': {
       'Welcome': 'Welcome to {{title}}',
-      'Tagline': 'Use workflow to do anything ❤︎'
+      'Tagline': 'Use Workflow and Code Dynamic Compile System to do anything in anywhere ❤︎'
     }
   },
   'zh-CN': {
