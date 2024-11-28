@@ -27,6 +27,7 @@ export class ElsaStudioRoot {
 
   @Prop({attribute: 'server-url', reflect: true}) serverUrl: string;
   @Prop({attribute: 'monaco-lib-path', reflect: true}) monacoLibPath: string;
+  @Prop({attribute: 'suggestion-server-url', reflect: true}) suggestionBaseUrl: string;
   @Prop({attribute: 'culture', reflect: true}) culture: string;
   @Prop({attribute: 'base-path', reflect: true}) basePath: string = '';
   @Prop({attribute: 'use-x6-graphs', reflect: true}) useX6Graphs: boolean = false;
@@ -140,7 +141,8 @@ export class ElsaStudioRoot {
       serverFeatures: this.elsaStudio.serverFeatures,
       serverVersion: this.elsaStudio.serverVersion,
       culture,
-      monacoLibPath: this.monacoLibPath
+      monacoLibPath: this.monacoLibPath,
+      suggestionBaseUrl:this.suggestionBaseUrl
     };
 
     return (

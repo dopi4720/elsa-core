@@ -8,6 +8,7 @@ export interface DashboardState {
   monacoLibPath: string;
   serverFeatures: Array<string>;
   serverVersion: string;
+  suggestionBaseUrl: string;
 }
 
 export default createProviderConsumer<DashboardState>(
@@ -17,7 +18,8 @@ export default createProviderConsumer<DashboardState>(
     culture: null,
     monacoLibPath: null,
     serverFeatures: [],
-    serverVersion: null
+    serverVersion: null,
+    suggestionBaseUrl: null
   },
   (subscribe, child) => (<context-consumer subscribe={subscribe} renderer={child}/>)
 );

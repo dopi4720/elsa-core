@@ -12,7 +12,7 @@ import { loadTranslations } from '../../../i18n/i18n-loader';
 import { resources } from './localizations';
 import * as collection from 'lodash/collection';
 import { tr } from 'cronstrue/dist/i18n/locales/tr';
-import { Monaco,initializeMonacoWorker } from "../../../controls/elsa-monaco/elsa-monaco-utils";
+import { Monaco, initializeMonacoWorker } from "../../../controls/elsa-monaco/elsa-monaco-utils";
 
 @Component({
   tag: 'elsa-function-definition-editor-screen',
@@ -23,29 +23,41 @@ export class ElsaFunctionDefinitionEditorScreen {
   @Prop({ attribute: 'function-definition-id', reflect: true }) functionDefinitionId: string;
   @Prop({ attribute: 'server-url', reflect: true }) serverUrl: string;
   @Prop({ attribute: 'monaco-lib-path', reflect: true }) monacoLibPath: string;
+  @Prop({ attribute: 'suggestion-server-url', reflect: true }) suggestionBaseUrl: string;
   @Prop() culture: string;
   render() {
     return (
-      <div>
-        <elsa-monaco
-          value=""
-          language="csharp"
-          theme="vs-dark"
-          renderLineHighlight="all"
-          isEnabledMinimap={true}
-          editor-height="80vh"
-          single-line={false}
-          suggestions={this.suggestions}
-          onValueChanged={e => {
-            monacoEditorDialogService.currentValue = e.detail.value;
-          }}
-          ref={el => (monacoEditorDialogService.monacoEditor = el)}
-        />
+      <div class="elsa-flex elsa-h-full">
+        <div class="elsa-w-9/12">
+          <p class="elsa-text-center">
+            <drp-monaco-editor
+              value="1\n2\n3\n4"
+              theme="vs-dark"
+              renderLineHighlight="all"
+              editor-height="100vh"
+              single-line={false}
+              padding="elsa-p-1"
+            />
+          </p>
+        </div>
+
+        {/* <!-- Cột bên phải --> */}
+        <div class="elsa-w-3/12 elsa-flex elsa-flex-col">
+          {/* <!-- Phần trên --> */}
+          <div class="elsa-flex-1 elsa-bg-green-200">
+            <p class="elsa-text-center">Phần trên (5 phần)</p>
+          </div>
+
+          {/* <!-- Phần dưới --> */}
+          <div class="elsa-flex-1 elsa-bg-yellow-200">
+            <p class="elsa-text-center">Phần dưới (5 phần)</p>
+          </div>
+        </div>
       </div>
     );
   }
   private monaco: Monaco;
-  suggestions:any
+  suggestions: any
   i18next: i18n;
   el: HTMLElement;
   async componentWillLoad() {
@@ -53,52 +65,12 @@ export class ElsaFunctionDefinitionEditorScreen {
     this.i18next = await loadTranslations(this.culture, resources);
     await this.monacoLibPathChangedHandler(this.monacoLibPath);
     this.monaco = await initializeMonacoWorker(monacoLibPath);
-    this.suggestions =await this. provideCompletionItems();
   }
-  
   @Watch('monacoLibPath')
   async monacoLibPathChangedHandler(newValue: string) {
     state.monacoLibPath = newValue;
   }
-
-  @Method()
-  async provideCompletionItems() {
-    try {
-      // Fetch data from the API
-      const response = await fetch('https://localhost:7026/api/Suggestions/exported-types');
-      const rawSuggestions = await response.json();
-
-      // Parse data into Monaco format
-      const parsedSuggestions = rawSuggestions.map(item => ({
-        label: item.label,
-        kind: this.mapKindToMonacoKind(item.kind), // Map kind from server to Monaco kind
-        insertText: item.insertText,
-        insertTextRules: this.monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-        documentation: item.documentation,
-      }));
-
-      return parsedSuggestions;
-    } catch (error) {
-      console.error('Error fetching suggestions:', error);
-      return { suggestions: [] };
-    }
-  }
-
-  mapKindToMonacoKind(kind: number) {
-    switch (kind) {
-      case 1: // Function
-        return this.monaco.languages.CompletionItemKind.Function;
-      case 2: // Variable
-        return this.monaco.languages.CompletionItemKind.Variable;
-      case 3: // Class
-        return this.monaco.languages.CompletionItemKind.Class;
-      case 4: // Interface
-        return this.monaco.languages.CompletionItemKind.Interface;
-      default:
-        return this.monaco.languages.CompletionItemKind.Text; // Default kind
-    }
-  }
 }
 
 injectHistory(ElsaFunctionDefinitionEditorScreen);
-DashboardTunnel.injectProps(ElsaFunctionDefinitionEditorScreen, ['serverUrl', 'culture', 'monacoLibPath', 'basePath', 'serverFeatures']);
+DashboardTunnel.injectProps(ElsaFunctionDefinitionEditorScreen, ['serverUrl', 'culture', 'monacoLibPath', 'basePath', 'serverFeatures', 'suggestionBaseUrl']);

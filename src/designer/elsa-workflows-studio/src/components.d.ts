@@ -18,6 +18,15 @@ import { ToastNotificationOptions } from "./components/shared/elsa-toast-notific
 import { WebhookDefinition } from "./modules/elsa-webhooks/models";
 import { ActivityStats } from ".";
 export namespace Components {
+    interface DrpMonacoEditor {
+        "editorHeight": string;
+        "monacoLibPath": string;
+        "padding": string;
+        "renderLineHighlight": string;
+        "setValue": (value: string) => Promise<void>;
+        "theme": string;
+        "value": string;
+    }
     interface ElsaActivityEditorModal {
         "culture": string;
     }
@@ -130,8 +139,8 @@ export namespace Components {
         "culture": string;
         "functionDefinitionId": string;
         "monacoLibPath": string;
-        "provideCompletionItems": () => Promise<any>;
         "serverUrl": string;
+        "suggestionBaseUrl": string;
     }
     interface ElsaFunctionDefinitionsListScreen {
         "basePath": string;
@@ -274,6 +283,7 @@ export namespace Components {
         "features": any;
         "monacoLibPath": string;
         "serverUrl": string;
+        "suggestionBaseUrl": string;
         "useX6Graphs": boolean;
     }
     interface ElsaStudioWebhookDefinitionsEdit {
@@ -460,6 +470,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLDrpMonacoEditorElement extends Components.DrpMonacoEditor, HTMLStencilElement {
+    }
+    var HTMLDrpMonacoEditorElement: {
+        prototype: HTMLDrpMonacoEditorElement;
+        new (): HTMLDrpMonacoEditorElement;
+    };
     interface HTMLElsaActivityEditorModalElement extends Components.ElsaActivityEditorModal, HTMLStencilElement {
     }
     var HTMLElsaActivityEditorModalElement: {
@@ -911,6 +927,7 @@ declare global {
         new (): HTMLX6DesignerElement;
     };
     interface HTMLElementTagNameMap {
+        "drp-monaco-editor": HTMLDrpMonacoEditorElement;
         "elsa-activity-editor-modal": HTMLElsaActivityEditorModalElement;
         "elsa-activity-editor-panel": HTMLElsaActivityEditorPanelElement;
         "elsa-activity-picker-modal": HTMLElsaActivityPickerModalElement;
@@ -989,6 +1006,14 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface DrpMonacoEditor {
+        "editorHeight"?: string;
+        "monacoLibPath"?: string;
+        "padding"?: string;
+        "renderLineHighlight"?: string;
+        "theme"?: string;
+        "value"?: string;
+    }
     interface ElsaActivityEditorModal {
         "culture"?: string;
     }
@@ -1105,6 +1130,7 @@ declare namespace LocalJSX {
         "functionDefinitionId"?: string;
         "monacoLibPath"?: string;
         "serverUrl"?: string;
+        "suggestionBaseUrl"?: string;
     }
     interface ElsaFunctionDefinitionsListScreen {
         "basePath"?: string;
@@ -1252,6 +1278,7 @@ declare namespace LocalJSX {
         "onInitialized"?: (event: CustomEvent<ElsaStudio>) => void;
         "onInitializing"?: (event: CustomEvent<ElsaStudio>) => void;
         "serverUrl"?: string;
+        "suggestionBaseUrl"?: string;
         "useX6Graphs"?: boolean;
     }
     interface ElsaStudioWebhookDefinitionsEdit {
@@ -1437,6 +1464,7 @@ declare namespace LocalJSX {
         "selectedActivityIds"?: Array<string>;
     }
     interface IntrinsicElements {
+        "drp-monaco-editor": DrpMonacoEditor;
         "elsa-activity-editor-modal": ElsaActivityEditorModal;
         "elsa-activity-editor-panel": ElsaActivityEditorPanel;
         "elsa-activity-picker-modal": ElsaActivityPickerModal;
@@ -1518,6 +1546,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "drp-monaco-editor": LocalJSX.DrpMonacoEditor & JSXBase.HTMLAttributes<HTMLDrpMonacoEditorElement>;
             "elsa-activity-editor-modal": LocalJSX.ElsaActivityEditorModal & JSXBase.HTMLAttributes<HTMLElsaActivityEditorModalElement>;
             "elsa-activity-editor-panel": LocalJSX.ElsaActivityEditorPanel & JSXBase.HTMLAttributes<HTMLElsaActivityEditorPanelElement>;
             "elsa-activity-picker-modal": LocalJSX.ElsaActivityPickerModal & JSXBase.HTMLAttributes<HTMLElsaActivityPickerModalElement>;

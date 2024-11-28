@@ -83,33 +83,6 @@ export class ElsaMonaco {
     const monaco = this.monaco;
     const language = this.language;
 
-    if (this.language === "csharp") {
-      var suggestions = this.suggestions;
-      console.log(this.suggestions);
-      // Đăng ký ngôn ngữ và nhắc lệnh cho C#
-      monaco.languages.register({ id: 'csharp' });
-      monaco.languages.registerCompletionItemProvider('csharp', {
-        provideCompletionItems: function (model, position) {
-          // Lấy thông tin từ hiện tại (nếu có)
-          const wordInfo = model.getWordUntilPosition(position);
-          const currentWord = wordInfo.word; // Từ hiện tại tại vị trí con trỏ
-      
-          // Kết hợp gợi ý mặc định và gợi ý dựa trên từ hiện tại
-          const combinedSuggestions = suggestions.map(s => ({
-            label: s.label,
-            kind: monaco.languages.CompletionItemKind[s.kind || 'Text'], // Loại gợi ý
-            insertText: s.insertText || s.label, // Văn bản được chèn khi chọn
-            detail: s.detail || 'Suggested item',
-            sortText: currentWord ? `${currentWord}${s.label}` : s.label, // Sắp xếp theo mức độ liên quan
-          }));
-      
-          // Trả về danh sách gợi ý
-          return {
-            suggestions: combinedSuggestions,
-          };
-        }
-      });
-    }
     // Validation settings.
     monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
       noSemanticValidation: true,

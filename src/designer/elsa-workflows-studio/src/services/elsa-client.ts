@@ -161,7 +161,6 @@ export const createElsaClient = async function (serverUrl: string): Promise<Elsa
     functionDefinitionsApi:{
       list: async (page?: number, pageSize?: number, searchTerm?: string) => {
         const queryString = {};
-        console.log("tao da vao functiondefinitions")
 
         if (!!searchTerm)
           queryString['displayName'] = searchTerm;
