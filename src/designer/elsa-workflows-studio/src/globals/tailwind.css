@@ -2559,6 +2559,10 @@ select {
   margin-right: 0.75rem;
 }
 
+.elsa-me-3 {
+  margin-right: 0.75rem;
+}
+
 .elsa-mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -12134,6 +12138,16 @@ svg.jtk-connector.jtk-hover path {
 .hover\:elsa-bg-gray-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+
+.hover\:elsa-bg-pink-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(190 24 93 / var(--tw-bg-opacity));
+}
+
+.hover\:elsa-bg-green-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(21 128 61 / var(--tw-bg-opacity));
 }
 
 .hover\:elsa-bg-gray-50:hover {

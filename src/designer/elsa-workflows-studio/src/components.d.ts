@@ -265,6 +265,7 @@ export namespace Components {
         "culture": string;
     }
     interface ElsaStudioFunctionDefinitionsEdit {
+        "culture": string;
         "match": MatchResults;
     }
     interface ElsaStudioFunctionDefinitionsList {
@@ -1262,6 +1263,7 @@ declare namespace LocalJSX {
         "culture"?: string;
     }
     interface ElsaStudioFunctionDefinitionsEdit {
+        "culture"?: string;
         "match"?: MatchResults;
     }
     interface ElsaStudioFunctionDefinitionsList {
