@@ -2,3 +2,7 @@
     height: 2rem;
     vertical-align: top;
  }
+
+ .h-full-minus-header{
+  height: calc(100vh - 64px);
+ }

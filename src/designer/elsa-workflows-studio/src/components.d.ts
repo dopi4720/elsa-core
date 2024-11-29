@@ -20,6 +20,9 @@ import { ActivityStats } from ".";
 export namespace Components {
     interface DrpMonacoEditor {
         "editorHeight": string;
+        "formatCSharpCode": (sourceCode: string) => Promise<string>;
+        "language": string;
+        "lineNumbers": string;
         "monacoLibPath": string;
         "padding": string;
         "renderLineHighlight": string;
@@ -1008,6 +1011,8 @@ declare global {
 declare namespace LocalJSX {
     interface DrpMonacoEditor {
         "editorHeight"?: string;
+        "language"?: string;
+        "lineNumbers"?: string;
         "monacoLibPath"?: string;
         "padding"?: string;
         "renderLineHighlight"?: string;

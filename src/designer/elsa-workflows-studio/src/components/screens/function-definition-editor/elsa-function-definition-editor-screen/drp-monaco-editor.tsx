@@ -2,7 +2,6 @@ import { Component, Event, EventEmitter, h, Host, Method, Prop, Watch } from '@s
 import { initializeMonacoWorker, Monaco, EditorVariables } from "../../../controls/elsa-monaco/elsa-monaco-utils";
 import state from '../../../../utils/store';
 
-
 @Component({
     tag: 'drp-monaco-editor',
     styleUrl: 'drp-monaco-editor.css',
@@ -16,6 +15,8 @@ export class DRPMonaco {
     @Prop() theme: string;
     @Prop() renderLineHighlight: string;
     @Prop() padding: string;
+    @Prop() lineNumbers: string;
+    @Prop() language: string;
     container: HTMLElement;
     editor: any;
 
@@ -27,7 +28,10 @@ export class DRPMonaco {
         const model = this.editor.getModel();
         model.setValue(value || '');
     }
-
+    @Method()
+    async formatCSharpCode(sourceCode: string) {
+        return sourceCode;
+    }
     async componentWillLoad() {
         const monacoLibPath = this.monacoLibPath ?? state.monacoLibPath;
         this.monaco = await initializeMonacoWorker(monacoLibPath);
@@ -37,14 +41,14 @@ export class DRPMonaco {
 
         const options = {
             value: this.value,
-            language: "csharp",
+            language: this.language || "csharp",
             fontFamily: "Roboto Mono, monospace",
             renderLineHighlight: this.renderLineHighlight ? this.renderLineHighlight : 'none',
             minimap: {
                 enabled: false
             },
             automaticLayout: true,
-            lineNumbers: "on",
+            lineNumbers: this.lineNumbers || "on",
             theme: this.theme ? this.theme : "vs",
             roundedSelection: true,
             scrollBeyondLastLine: false,
@@ -56,8 +60,26 @@ export class DRPMonaco {
             glyphMargin: false
         };
 
-        this.editor = monaco.editor.create(this.container, options);
+        if (this.language === "csharp") {
+            monaco.languages.registerDocumentFormattingEditProvider('csharp', {
+                provideDocumentFormattingEdits: function (model, options, token) {
+                    return this.formatCSharpCode(model.getValue()).then((formattedText) => {
+                        return [
+                            {
+                                range: model.getFullModelRange(),
+                                text: formattedText,
+                            },
+                        ];
+                    });
+                },
+            });
+        }
 
+        this.editor = monaco.editor.create(this.container, options);
+        this.editor.updateOptions({
+            formatOnType: true,  // Format khi gõ (ví dụ: enter, `;`)
+            formatOnPaste: true, // Format khi paste code
+        });
     }
     render() {
         const padding = this.padding || 'elsa-pt-1.5 elsa-pl-1';

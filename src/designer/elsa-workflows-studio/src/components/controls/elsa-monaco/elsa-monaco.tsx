@@ -88,6 +88,10 @@ export class ElsaMonaco {
       noSemanticValidation: true,
       noSyntaxValidation: false,
     });
+    
+    if(this.language === "csharp"){
+      
+    }
 
     // Compiler options.
     monaco.languages.typescript.javascriptDefaults.setCompilerOptions({

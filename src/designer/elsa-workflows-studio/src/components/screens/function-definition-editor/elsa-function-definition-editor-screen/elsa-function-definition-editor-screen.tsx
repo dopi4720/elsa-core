@@ -28,29 +28,48 @@ export class ElsaFunctionDefinitionEditorScreen {
   render() {
     return (
       <div class="elsa-flex elsa-h-full">
-        <div class="elsa-w-9/12">
-          <p class="elsa-text-center">
-            <drp-monaco-editor
-              value="1\n2\n3\n4"
-              theme="vs-dark"
-              renderLineHighlight="all"
-              editor-height="100vh"
-              single-line={false}
-              padding="elsa-p-1"
+        <div class="elsa-w-9/12 col-1 h-full-minus-header">
+          <drp-monaco-editor
+            value="1\n2\n3\n4"
+            theme="vs-dark"
+            renderLineHighlight="all"
+            editor-height="100%"
+            single-line={false}
+            padding="elsa-p-1"
+            language="csharp"
             />
-          </p>
         </div>
 
         {/* <!-- Cột bên phải --> */}
-        <div class="elsa-w-3/12 elsa-flex elsa-flex-col">
+        <div class="elsa-w-3/12 elsa-flex elsa-flex-col h-full-minus-header">
           {/* <!-- Phần trên --> */}
-          <div class="elsa-flex-1 elsa-bg-green-200">
-            <p class="elsa-text-center">Phần trên (5 phần)</p>
+          <div class="elsa-h-1/3 elsa-p-1">
+            <drp-monaco-editor
+              id="sample-input"
+              value=""
+              theme="vs-dark"
+              renderLineHighlight="none"
+              editor-height="100%"
+              single-line={false}
+              padding="elsa-p-0"
+              language="json"
+              lineNumbers="off"
+            />
           </div>
 
           {/* <!-- Phần dưới --> */}
-          <div class="elsa-flex-1 elsa-bg-yellow-200">
-            <p class="elsa-text-center">Phần dưới (5 phần)</p>
+          <div class="elsa-h-2/3 elsa-p-1">
+            <drp-monaco-editor
+              id="output"
+              value=""
+              theme="vs-dark"
+              renderLineHighlight="none"
+              editor-height="100%"
+              single-line={false}
+              padding="elsa-p-0"
+              language="json"
+              lineNumbers="off"
+            />
           </div>
         </div>
       </div>
