@@ -14,7 +14,6 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Configs
             "System.Threading.Tasks.dll",
             "System.Linq.dll",
             "System.Collections.dll",
-            "System.Console.dll",
             "System.IO.dll"
         };
     }

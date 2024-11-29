@@ -40,11 +40,14 @@ export class ElsaStudioFunctionDefinitionsEdit {
             </h1>
           </div>
           <div class="elsa-flex elsa-gap-4">
-            <button id="complie" type="button" class="elsa-me-3 elsa-bg-green-500 elsa-text-white elsa-px-4 elsa-py-2 elsa-rounded hover:elsa-bg-green-700 hover:elsa-shadow-lg">
-              Compile
+            <button id="complie" type="button" class="elsa-me-3 elsa-bg-orange elsa-text-white elsa-px-4 elsa-py-2 elsa-rounded hover:elsa-bg-orange hover:elsa-shadow-lg">
+              Compile Function
             </button>
             <button id="beautify" type="button" class="elsa-me-3 elsa-bg-pink-500 elsa-text-white elsa-px-4 elsa-py-2 elsa-rounded hover:elsa-bg-pink-700 hover:elsa-shadow-lg">
-              Beautify
+              Format Code
+            </button>
+            <button id="beautify" type="button" class="elsa-me-3 elsa-bg-green-500 elsa-text-white elsa-px-4 elsa-py-2 elsa-rounded hover:elsa-bg-green-700 hover:elsa-shadow-lg">
+              Run Function
             </button>
             <button id="save" type="button" class="elsa-bg-blue-500 elsa-text-white elsa-px-4 elsa-py-2 elsa-rounded hover:elsa-bg-blue-700 hover:elsa-shadow-lg">
               Save & Publish

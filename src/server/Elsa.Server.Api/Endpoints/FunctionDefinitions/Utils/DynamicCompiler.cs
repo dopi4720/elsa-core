@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
 {
-    internal class DynamicCompiler
+    public class DynamicCompiler
     {
         public static CompiledFunction Compile(string sourceCode, string SharedClassName = "")
         {
@@ -85,8 +85,26 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
                 function.PdbBytes = File.ReadAllBytes(pdbPath);
 
                 //Delete the temporary files
-                File.Delete(OutputPath);
-                File.Delete(pdbPath);
+                if (File.Exists(OutputPath) && File.Exists(pdbPath) && function.IsCompiled && !string.IsNullOrEmpty(SharedClassName))
+                {
+                    //Save dll and pdb file if the class is shared
+                    if (!Directory.Exists("SharedClasses"))
+                    {
+                        Directory.CreateDirectory("SharedClasses");
+                    }
+
+                    string sharedDllPath = Path.Combine("SharedClasses", SharedClassName + ".dll");
+                    string sharedPdbPath = Path.Combine("SharedClasses", SharedClassName + ".pdb");
+
+                    File.Move(OutputPath, sharedDllPath, true);
+                    File.Move(pdbPath, sharedPdbPath, true);
+                    ReloadNeededDllFiles();
+                }
+                else
+                {
+                    File.Delete(OutputPath);
+                    File.Delete(pdbPath);
+                }
 
                 return function;
             }
@@ -96,5 +114,26 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
             }
         }
 
+        public static void ReloadNeededDllFiles()
+        {
+            FunctionDefinitionConfigs.NeedDllFiles = new List<string>()
+            {
+                "System.Runtime.dll",
+                "System.Threading.Tasks.dll",
+                "System.Linq.dll",
+                "System.Collections.dll",
+                "System.IO.dll"
+            };
+
+            if (!Directory.Exists("SharedClasses"))
+            {
+                return;
+            }
+
+            foreach (var item in Directory.GetFiles(Path.GetFullPath("SharedClasses")))
+            {
+                FunctionDefinitionConfigs.NeedDllFiles.Add(item);
+            }
+        }
     }
 }

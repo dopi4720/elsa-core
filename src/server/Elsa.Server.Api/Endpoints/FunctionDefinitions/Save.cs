@@ -10,6 +10,7 @@ using Swashbuckle.AspNetCore.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,6 +42,16 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
         ]
         public async Task<IActionResult> Handle([FromBody] SaveFunctionDefinitionRequest request, CancellationToken cancellationToken)
         {
+            if (string.IsNullOrEmpty(request.FunctionType) || (!request.FunctionType.Equals("Function") && !request.FunctionType.Equals("SharedUtility")))
+            {
+                return BadRequest(new FunctionGeneralView()
+                {
+                    IsSuccess = false,
+                    Message = "Missing Function Type",
+                    Data = null
+                });
+            }
+
             try
             {
                 var compiled = DynamicCompiler.Compile(request.Source ?? throw new Exception("Source cannot be empty"));

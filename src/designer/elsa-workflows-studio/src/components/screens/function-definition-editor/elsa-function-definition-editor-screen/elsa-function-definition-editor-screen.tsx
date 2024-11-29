@@ -43,24 +43,27 @@ export class ElsaFunctionDefinitionEditorScreen {
         {/* <!-- Cột bên phải --> */}
         <div class="elsa-w-3/12 elsa-flex elsa-flex-col h-full-minus-header">
           {/* <!-- Phần trên --> */}
-          <div class="elsa-h-1/3 elsa-p-1">
+          <div class="elsa-h-1/3 elsa-p-1 elsa-flex elsa-flex-col">
             <span>Sample Input</span>
-            <drp-monaco-editor
-              id="sample-input"
-              value=""
-              theme="vs-dark"
-              renderLineHighlight="none"
-              editor-height="100%"
-              single-line={false}
-              padding="elsa-p-0"
-              language="json"
-              lineNumbers="off"
-            />
+            <div class="elsa-flex-1">
+              <drp-monaco-editor
+                id="sample-input"
+                value=""
+                theme="vs-dark"
+                renderLineHighlight="none"
+                editor-height="100%"
+                single-line={false}
+                padding="elsa-p-0"
+                language="json"
+                lineNumbers="off"
+              />
+            </div>
           </div>
 
           {/* <!-- Phần dưới --> */}
-          <div class="elsa-h-2/3 elsa-p-1">
+          <div class="elsa-h-2/3 elsa-p-1 elsa-flex elsa-flex-col">
             <span>Output</span>
+            <div class="elsa-flex-1">
             <drp-monaco-editor
               id="output"
               value=""
@@ -72,6 +75,7 @@ export class ElsaFunctionDefinitionEditorScreen {
               language="json"
               lineNumbers="off"
             />
+          </div>
           </div>
         </div>
       </div>

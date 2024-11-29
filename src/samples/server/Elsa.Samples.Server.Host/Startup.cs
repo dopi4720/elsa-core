@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using NodaTime;
 using NodaTime.Serialization.JsonNet;
 using Elsa.Retention.Specifications;
+using Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils;
 
 namespace Elsa.Samples.Server.Host
 {
@@ -130,6 +131,8 @@ namespace Elsa.Samples.Server.Host
 
         public void Configure(IApplicationBuilder app)
         {
+            DynamicCompiler.ReloadNeededDllFiles();
+
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

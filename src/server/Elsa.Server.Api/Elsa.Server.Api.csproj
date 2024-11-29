@@ -54,4 +54,8 @@
         <ProjectReference Include="..\Elsa.Server.Core\Elsa.Server.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Endpoints\CodeCompletes\" />
+    </ItemGroup>
+
 </Project>

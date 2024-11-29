@@ -6207,6 +6207,11 @@ select {
   background-color: rgb(37 99 235 / var(--tw-bg-opacity));
 }
 
+.elsa-bg-orange {
+  --tw-bg-opacity: 1;
+  background-color: #f97316;
+}
+
 .elsa-bg-green-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(22 163 74 / var(--tw-bg-opacity));
@@ -12158,6 +12163,11 @@ svg.jtk-connector.jtk-hover path {
 .hover\:elsa-bg-blue-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+}
+
+.hover\:elsa-bg-orange:hover {
+  --tw-bg-opacity: 1;
+  background-color: #e06713;
 }
 
 .hover\:elsa-bg-green-500:hover {
