@@ -13,6 +13,7 @@ using NodaTime;
 using NodaTime.Serialization.JsonNet;
 using Elsa.Retention.Specifications;
 using Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils;
+using System.Linq;
 
 namespace Elsa.Samples.Server.Host
 {
@@ -29,6 +30,8 @@ namespace Elsa.Samples.Server.Host
 
         public void ConfigureServices(IServiceCollection services)
         {
+            DynamicCompiler.ReloadNeededDllFiles(Configuration.GetSection("DllPaths").Get<System.Collections.Generic.List<string>>() ?? throw new System.Exception("Missing DllPaths value"));
+
             var elsaSection = Configuration.GetSection("Elsa");
 
             // TODO: Determine startup types based on project references, similar to Orchard Core's Targets.props for Applications and Modules.
@@ -92,17 +95,17 @@ namespace Elsa.Samples.Server.Host
                     .AddFeatures(startups, Configuration)
                     .ConfigureWorkflowChannels(options => elsaSection.GetSection("WorkflowChannels").Bind(options))
 
-                    // Optionally opt-out of indexing workflows stored in the database.
-                    // These will be indexed when published/unpublished/deleted, so no need to do it during startup.
-                    // Unless you have existing workflow definitions in the DB for which no triggers have yet been created.
-                    //.ExcludeWorkflowProviderFromStartupIndexing<DatabaseWorkflowProvider>()
-                    
-                    // For distributed hosting, configure Rebus with a real message broker such as RabbitMQ or Azure Service Bus.
-                    //.UseRabbitMq(Configuration.GetConnectionString("RabbitMq"))
-                
-                    // When testing a distributed on your local machine, make sure each instance has a unique "container" name.
-                    // This name is used to create unique input queues for pub/sub messaging where the competing consumer pattern is undesirable in order to deliver a message to each subscriber.
-                    //.WithContainerName(Configuration.GetValue<string>("ContainerName") ?? System.Environment.MachineName)
+                // Optionally opt-out of indexing workflows stored in the database.
+                // These will be indexed when published/unpublished/deleted, so no need to do it during startup.
+                // Unless you have existing workflow definitions in the DB for which no triggers have yet been created.
+                //.ExcludeWorkflowProviderFromStartupIndexing<DatabaseWorkflowProvider>()
+
+                // For distributed hosting, configure Rebus with a real message broker such as RabbitMQ or Azure Service Bus.
+                //.UseRabbitMq(Configuration.GetConnectionString("RabbitMq"))
+
+                // When testing a distributed on your local machine, make sure each instance has a unique "container" name.
+                // This name is used to create unique input queues for pub/sub messaging where the competing consumer pattern is undesirable in order to deliver a message to each subscriber.
+                //.WithContainerName(Configuration.GetValue<string>("ContainerName") ?? System.Environment.MachineName)
                 )
                 .AddRetentionServices(options =>
                 {
@@ -131,8 +134,6 @@ namespace Elsa.Samples.Server.Host
 
         public void Configure(IApplicationBuilder app)
         {
-            DynamicCompiler.ReloadNeededDllFiles();
-
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

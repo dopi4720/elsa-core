@@ -51,6 +51,12 @@ export interface FunctionDefinitionSummaryModelWithoutSource {
     isPublish: boolean
 }
 
+export interface ApiResult{
+    isSuccess:boolean,
+    message: string,
+    data: any
+}
+
 export interface WorkflowDefinitionSummary {
     id?: string;
     definitionId?: string;

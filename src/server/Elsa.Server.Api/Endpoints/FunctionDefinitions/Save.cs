@@ -5,6 +5,7 @@ using Elsa.Server.Api.Endpoints.FunctionDefinitions.Models;
 using Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.Filters;
 using System;
@@ -78,16 +79,16 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
                 {
                     Source = request.Source,
                     Binary = compiled.DllBytes,
-                    Catalog = !string.IsNullOrEmpty(request.Catalog) ? request.Catalog : "Function",
-                    DisplayName = request.Name ?? throw new Exception("Display name cannot be empty"),
+                    Catalog = !string.IsNullOrWhiteSpace(request.Catalog) ? request.Catalog : "Function",
+                    DisplayName = compiled.ClassName ?? throw new Exception("Display name cannot be empty"),
                     FunctionType = request.FunctionType ?? throw new Exception("Function Type cannot be empty"),
-                    IsPublish = request.IsPublish,
-                    Id = string.IsNullOrEmpty(request.Id) ? Guid.NewGuid().ToString() : request.Id,
-                    FunctionId = string.IsNullOrEmpty(request.FunctionId) ? Guid.NewGuid().ToString() : request.FunctionId,
+                    IsPublish = true,
+                    Id = Guid.NewGuid().ToString(),
+                    FunctionId = string.IsNullOrWhiteSpace(request.FunctionId) ? Guid.NewGuid().ToString() : request.FunctionId,
                     LastUpdate = DateTime.Now,
-                    Name = request.Name ?? throw new Exception("Name cannot be empty"),
+                    Name = compiled.ClassName ?? throw new Exception("Name cannot be empty"),
                     Pdb = compiled.PdbBytes,
-                    SampleInput = request.SampleInput ?? "{}",
+                    SampleInput = !string.IsNullOrWhiteSpace(request.SampleInput)? JToken.Parse(request.SampleInput).ToString(Newtonsoft.Json.Formatting.None) : "{}",
                     Version = CurrentVersion
                 };
 

@@ -9,8 +9,8 @@ export const resources = {
       'Edit': 'Edit',
       'Delete': 'Delete',
       'DeleteConfirmationModel': {
-        'Title': 'Delete Workflow Definition',
-        'Message': 'Are you sure you wish to permanently delete this workflow, including all of its workflow instances?'
+        'Title': 'Delete Function Definition',
+        'Message': 'Are you sure you wish to permanently delete this function? This action can\'t revert!!!'
       }
     }
   },

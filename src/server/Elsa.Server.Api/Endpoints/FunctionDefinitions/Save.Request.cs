@@ -11,14 +11,10 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
         public sealed record SaveFunctionDefinitionRequest
         {
             public string? Source { get; init; }
-            public string? Name { get; init; }
-            public string? DisplayName { get; init; }
-            public string? Id { get; init; }
             public string? FunctionId { get; init; }
             public string? SampleInput { get; init; }
             public string? Catalog { get; init; }
             public string? FunctionType { get; init; }
-            public bool IsPublish { get; init; }
         }
     }
 }

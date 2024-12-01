@@ -5,12 +5,14 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { DrpMonacoValueChangedArgs } from "./components/screens/function-definition-editor/elsa-function-definition-editor-screen/drp-monaco-editor";
 import { ActivityDefinitionProperty, ActivityDeletedArgs, ActivityDescriptor, ActivityModel, ActivityPropertyDescriptor, ElsaStudio, IntellisenseContext, OrderBy, SelectListItem, VersionOptions, WorkflowBlueprint, WorkflowDefinition, WorkflowDefinitionVersion, WorkflowExecutionLogRecord, WorkflowFault, WorkflowInstance, WorkflowModel, WorkflowStatus } from "./models";
 import { LocationSegments, MatchResults, RouterHistory } from "@stencil/router";
 import { MenuItem } from "./components/controls/elsa-context-menu/models";
 import { VNode } from "@stencil/core";
 import { ActivityContextMenuState, LayoutDirection, WorkflowDesignerMode } from "./components/designers/tree/elsa-designer-tree/models";
 import { DropdownButtonItem, DropdownButtonOrigin } from "./components/controls/elsa-dropdown-button/models";
+import { DrpMonacoValueChangedArgs as DrpMonacoValueChangedArgs1 } from "./components/screens/function-definition-editor/elsa-function-definition-editor-screen/drp-monaco-editor";
 import { MonacoValueChangedArgs } from "./components/controls/elsa-monaco/elsa-monaco";
 import { Map } from "./utils/utils";
 import { PagerData } from "./components/controls/elsa-pager/elsa-pager";
@@ -139,11 +141,24 @@ export namespace Components {
         "updateCounter": number;
     }
     interface ElsaFunctionDefinitionEditorScreen {
+        "LoadSourceCodeIntoEditor": () => Promise<void>;
+        "OnCompileFunctionClick": (e: any) => Promise<void>;
+        "OnFormatFunctionClick": (e: any) => Promise<void>;
+        "OnRunFunctionClick": (e: any) => Promise<void>;
+        "OnSaveFunctionClick": (e: any) => Promise<void>;
+        "compileFunction": (requestData: any) => Promise<any>;
         "culture": string;
+        "formatFunction": (requestData: any) => Promise<any>;
         "functionDefinitionId": string;
+        "getDetailFunction": () => Promise<any>;
+        "handleFunctionTypeSelectChange": (event: any) => Promise<void>;
         "monacoLibPath": string;
+        "onMainMonacoValueChanged": (e: DrpMonacoValueChangedArgs) => Promise<void>;
+        "onOutputMonacoValueChanged": (e: DrpMonacoValueChangedArgs) => Promise<void>;
+        "onSampleInputMonacoValueChanged": (e: DrpMonacoValueChangedArgs) => Promise<void>;
+        "runFunction": (requestData: any) => Promise<any>;
+        "saveFunction": (requestData: any) => Promise<any>;
         "serverUrl": string;
-        "suggestionBaseUrl": string;
     }
     interface ElsaFunctionDefinitionsListScreen {
         "basePath": string;
@@ -287,7 +302,6 @@ export namespace Components {
         "features": any;
         "monacoLibPath": string;
         "serverUrl": string;
-        "suggestionBaseUrl": string;
         "useX6Graphs": boolean;
     }
     interface ElsaStudioWebhookDefinitionsEdit {
@@ -1015,6 +1029,7 @@ declare namespace LocalJSX {
         "language"?: string;
         "lineNumbers"?: string;
         "monacoLibPath"?: string;
+        "onValueChanged"?: (event: CustomEvent<DrpMonacoValueChangedArgs>) => void;
         "padding"?: string;
         "renderLineHighlight"?: string;
         "theme"?: string;
@@ -1136,7 +1151,6 @@ declare namespace LocalJSX {
         "functionDefinitionId"?: string;
         "monacoLibPath"?: string;
         "serverUrl"?: string;
-        "suggestionBaseUrl"?: string;
     }
     interface ElsaFunctionDefinitionsListScreen {
         "basePath"?: string;
@@ -1285,7 +1299,6 @@ declare namespace LocalJSX {
         "onInitialized"?: (event: CustomEvent<ElsaStudio>) => void;
         "onInitializing"?: (event: CustomEvent<ElsaStudio>) => void;
         "serverUrl"?: string;
-        "suggestionBaseUrl"?: string;
         "useX6Graphs"?: boolean;
     }
     interface ElsaStudioWebhookDefinitionsEdit {

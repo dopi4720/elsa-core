@@ -32,7 +32,6 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [elsa-studio-function-definitions-list](../../../dashboard/pages/elsa-studio-function-definitions-list)
  - [elsa-studio-workflow-definitions-list](../../../dashboard/pages/elsa-studio-workflow-definitions-list)
 
 ### Depends on
@@ -52,7 +51,6 @@ graph TD;
   elsa-workflow-definitions-list-screen --> elsa-confirm-dialog
   elsa-workflow-definitions-list-screen --> context-consumer
   elsa-confirm-dialog --> elsa-modal-dialog
-  elsa-studio-function-definitions-list --> elsa-workflow-definitions-list-screen
   elsa-studio-workflow-definitions-list --> elsa-workflow-definitions-list-screen
   style elsa-workflow-definitions-list-screen fill:#f9f,stroke:#333,stroke-width:4px
 ```

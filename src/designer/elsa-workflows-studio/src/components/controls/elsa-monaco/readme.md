@@ -7,14 +7,18 @@
 
 ## Properties
 
-| Property         | Attribute         | Description | Type      | Default     |
-| ---------------- | ----------------- | ----------- | --------- | ----------- |
-| `editorHeight`   | `editor-height`   |             | `string`  | `'5em'`     |
-| `language`       | `language`        |             | `string`  | `undefined` |
-| `monacoLibPath`  | `monaco-lib-path` |             | `string`  | `undefined` |
-| `padding`        | `padding`         |             | `string`  | `undefined` |
-| `singleLineMode` | `single-line`     |             | `boolean` | `false`     |
-| `value`          | `value`           |             | `string`  | `undefined` |
+| Property              | Attribute               | Description | Type      | Default     |
+| --------------------- | ----------------------- | ----------- | --------- | ----------- |
+| `editorHeight`        | `editor-height`         |             | `string`  | `'5em'`     |
+| `isEnabledMinimap`    | `is-enabled-minimap`    |             | `boolean` | `undefined` |
+| `language`            | `language`              |             | `string`  | `undefined` |
+| `monacoLibPath`       | `monaco-lib-path`       |             | `string`  | `undefined` |
+| `padding`             | `padding`               |             | `string`  | `undefined` |
+| `renderLineHighlight` | `render-line-highlight` |             | `string`  | `undefined` |
+| `singleLineMode`      | `single-line`           |             | `boolean` | `false`     |
+| `suggestions`         | `suggestions`           |             | `any`     | `undefined` |
+| `theme`               | `theme`                 |             | `string`  | `undefined` |
+| `value`               | `value`                 |             | `string`  | `undefined` |
 
 
 ## Events

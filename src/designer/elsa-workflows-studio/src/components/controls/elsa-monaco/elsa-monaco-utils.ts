@@ -1,4 +1,4 @@
-﻿import { Mutex } from "async-mutex";
+﻿import { Mutex } from 'async-mutex';
 import axios from 'axios';
 
 const win = window as any;
@@ -23,29 +23,33 @@ let isInitialized: boolean;
 const mutex = new Mutex();
 
 export async function initializeMonacoWorker(libPath?: string): Promise<Monaco> {
-
   return await mutex.runExclusive(async () => {
-
     if (isInitialized) {
-
       return win.monaco;
     }
 
     const origin = document.location.origin;
     const baseUrl = libPath.startsWith('http') ? libPath : `${origin}/${libPath}`;
 
-    require.config({ paths: { 'vs': `${baseUrl}/vs` } });
+    require.config({ paths: { vs: `${baseUrl}/vs` } });
     win.MonacoEnvironment = { getWorkerUrl: () => proxy };
 
-    let proxy = URL.createObjectURL(new Blob([`
+    let proxy = URL.createObjectURL(
+      new Blob(
+        [
+          `
 	self.MonacoEnvironment = {
 		baseUrl: '${baseUrl}'
 	};
 	importScripts('${baseUrl}/vs/base/worker/workerMain.js');
-`], { type: 'text/javascript' }));
+`,
+        ],
+        { type: 'text/javascript' },
+      ),
+    );
 
     return new Promise(resolve => {
-      require(["vs/editor/editor.main"], () => {
+      require(['vs/editor/editor.main'], () => {
         isInitialized = true;
         registerLiquid(win.monaco);
         registerSql(win.monaco);
@@ -54,8 +58,6 @@ export async function initializeMonacoWorker(libPath?: string): Promise<Monaco> 
       });
     });
   });
-
-
 }
 
 function registerLiquid(monaco: any) {
@@ -64,74 +66,179 @@ function registerLiquid(monaco: any) {
   monaco.languages.registerCompletionItemProvider('liquid', {
     provideCompletionItems: () => {
       const autocompleteProviderItems = [];
-      const keywords = ['assign', 'capture', 'endcapture', 'increment', 'decrement',
-        'if', 'else', 'elsif', 'endif', 'for', 'endfor', 'break',
-        'continue', 'limit', 'offset', 'range', 'reversed', 'cols',
-        'case', 'endcase', 'when', 'block', 'endblock', 'true', 'false',
-        'in', 'unless', 'endunless', 'cycle', 'tablerow', 'endtablerow',
-        'contains', 'startswith', 'endswith', 'comment', 'endcomment',
-        'raw', 'endraw', 'editable', 'endentitylist', 'endentityview', 'endinclude',
-        'endmarker', 'entitylist', 'entityview', 'forloop', 'image', 'include',
-        'marker', 'outputcache', 'plugin', 'style', 'text', 'widget',
-        'abs', 'append', 'at_least', 'at_most', 'capitalize', 'ceil', 'compact',
-        'concat', 'date', 'default', 'divided_by', 'downcase', 'escape',
-        'escape_once', 'first', 'floor', 'join', 'last', 'lstrip', 'map',
-        'minus', 'modulo', 'newline_to_br', 'plus', 'prepend', 'remove',
-        'remove_first', 'replace', 'replace_first', 'reverse', 'round',
-        'rstrip', 'size', 'slice', 'sort', 'sort_natural', 'split', 'strip',
-        'strip_html', 'strip_newlines', 'times', 'truncate', 'truncatewords',
-        'uniq', 'upcase', 'url_decode', 'url_encode'];
+      const keywords = [
+        'assign',
+        'capture',
+        'endcapture',
+        'increment',
+        'decrement',
+        'if',
+        'else',
+        'elsif',
+        'endif',
+        'for',
+        'endfor',
+        'break',
+        'continue',
+        'limit',
+        'offset',
+        'range',
+        'reversed',
+        'cols',
+        'case',
+        'endcase',
+        'when',
+        'block',
+        'endblock',
+        'true',
+        'false',
+        'in',
+        'unless',
+        'endunless',
+        'cycle',
+        'tablerow',
+        'endtablerow',
+        'contains',
+        'startswith',
+        'endswith',
+        'comment',
+        'endcomment',
+        'raw',
+        'endraw',
+        'editable',
+        'endentitylist',
+        'endentityview',
+        'endinclude',
+        'endmarker',
+        'entitylist',
+        'entityview',
+        'forloop',
+        'image',
+        'include',
+        'marker',
+        'outputcache',
+        'plugin',
+        'style',
+        'text',
+        'widget',
+        'abs',
+        'append',
+        'at_least',
+        'at_most',
+        'capitalize',
+        'ceil',
+        'compact',
+        'concat',
+        'date',
+        'default',
+        'divided_by',
+        'downcase',
+        'escape',
+        'escape_once',
+        'first',
+        'floor',
+        'join',
+        'last',
+        'lstrip',
+        'map',
+        'minus',
+        'modulo',
+        'newline_to_br',
+        'plus',
+        'prepend',
+        'remove',
+        'remove_first',
+        'replace',
+        'replace_first',
+        'reverse',
+        'round',
+        'rstrip',
+        'size',
+        'slice',
+        'sort',
+        'sort_natural',
+        'split',
+        'strip',
+        'strip_html',
+        'strip_newlines',
+        'times',
+        'truncate',
+        'truncatewords',
+        'uniq',
+        'upcase',
+        'url_decode',
+        'url_encode',
+      ];
 
       for (let i = 0; i < keywords.length; i++) {
-        autocompleteProviderItems.push({ 'label': keywords[i], kind: monaco.languages.CompletionItemKind.Keyword });
+        autocompleteProviderItems.push({ label: keywords[i], kind: monaco.languages.CompletionItemKind.Keyword });
       }
 
       return { suggestions: autocompleteProviderItems };
-    }
+    },
   });
 }
 
 function registerSql(monaco: any) {
-
   monaco.languages.registerCompletionItemProvider('sql', {
-    triggerCharacters: ["@"],
+    triggerCharacters: ['@'],
     provideCompletionItems: (model, position) => {
-
-      const word = model.getWordUntilPosition(position)
+      const word = model.getWordUntilPosition(position);
 
       const autocompleteProviderItems = [];
       for (const varible of EditorVariables) {
         autocompleteProviderItems.push({
           label: `${varible.variableName}: ${varible.type}`,
           kind: monaco.languages.CompletionItemKind.Variable,
-          insertText: varible.variableName
+          insertText: varible.variableName,
         });
       }
 
       return { suggestions: autocompleteProviderItems };
-    }
+    },
   });
-
 }
 
 async function sendRequest(type, request) {
-  let endPoint:string = "http://localhost:5280";
+  // let endPoint: string = window.location.origin;
+  let endPoint = 'https://localhost:11000'; // URL gốc
+
+  // Xác định endpoint dựa trên loại request
   switch (type) {
-    case 'complete': endPoint += '/completion/complete'; break;
-    case 'signature': endPoint += '/completion/signature'; break;
-    case 'hover': endPoint += '/completion/hover'; break;
-    case 'codeCheck': endPoint += '/completion/codeCheck'; break;
+    case 'complete':
+      endPoint += '/v1/code-analysis/complete';
+      break;
+    case 'signature':
+      endPoint += '/v1/code-analysis/signature';
+      break;
+    case 'hover':
+      endPoint += '/v1/code-analysis/hover';
+      break;
+    case 'codeCheck':
+      endPoint += '/v1/code-analysis/codeCheck';
+      break;
+    default:
+      throw new Error('Invalid request type');
   }
-  return await axios.post(endPoint, JSON.stringify(request))
+
+  // Gửi request với axios
+  try {
+    const response = await axios.post(endPoint, request, {
+      headers: {
+        'Content-Type': 'application/json', // Đảm bảo gửi request dưới dạng JSON
+      },
+    });
+    return response; // Trả về dữ liệu từ response
+  } catch (error) {
+    console.error('Request failed:', error.response ? error.response.data : error.message);
+    throw error; // Ném lỗi ra ngoài nếu cần xử lý
+  }
 }
 
 function registerCsharpProvider(monaco: any) {
-
-  var assemblies = ['.\\bin\\Debug\\net8.0\\System.Text.Json.dll'];
-
   // Register CompletionItemProvider
   monaco.languages.registerCompletionItemProvider('csharp', {
-    triggerCharacters: [".", " "],
+    triggerCharacters: ['.', ' '],
     provideCompletionItems: async (model, position) => {
       // Check if the model language is 'csharp'
       if (model.getLanguageId() !== 'csharp') {
@@ -143,30 +250,30 @@ function registerCsharpProvider(monaco: any) {
       let request = {
         Code: model.getValue(),
         Position: model.getOffsetAt(position),
-        Assemblies: assemblies
+        Assemblies: [],
       };
 
-      let resultQ = await sendRequest("complete", request);
+      let resultQ = await sendRequest('complete', request);
 
       for (let elem of resultQ.data) {
         suggestions.push({
           label: {
-            label: elem.Suggestion,
-            description: elem.Description
+            label: elem.suggestion,
+            description: elem.description,
           },
           kind: monaco.languages.CompletionItemKind.Function,
-          insertText: elem.Suggestion
+          insertText: elem.suggestion,
         });
       }
 
       return { suggestions: suggestions };
-    }
+    },
   });
 
   // Register SignatureHelpProvider
   monaco.languages.registerSignatureHelpProvider('csharp', {
-    signatureHelpTriggerCharacters: ["("],
-    signatureHelpRetriggerCharacters: [","],
+    signatureHelpTriggerCharacters: ['('],
+    signatureHelpRetriggerCharacters: [','],
 
     provideSignatureHelp: async (model, position, token, context) => {
       // Check if the model language is 'csharp'
@@ -177,39 +284,39 @@ function registerCsharpProvider(monaco: any) {
       let request = {
         Code: model.getValue(),
         Position: model.getOffsetAt(position),
-        Assemblies: assemblies
+        Assemblies: [],
       };
 
-      let resultQ = await sendRequest("signature", request);
+      let resultQ = await sendRequest('signature', request);
       if (!resultQ.data) return;
 
       let signatures = [];
-      for (let signature of resultQ.data.Signatures) {
+      for (let signature of resultQ.data.signatures) {
         let params = [];
-        for (let param of signature.Parameters) {
+        for (let param of signature.parameters) {
           params.push({
-            label: param.Label,
-            documentation: param.Documentation ?? ""
+            label: param.label,
+            documentation: param.documentation ?? '',
           });
         }
 
         signatures.push({
-          label: signature.Label,
-          documentation: signature.Documentation ?? "",
+          label: signature.label,
+          documentation: signature.documentation ?? '',
           parameters: params,
         });
       }
 
       let signatureHelp: any = {};
       signatureHelp.signatures = signatures;
-      signatureHelp.activeParameter = resultQ.data.ActiveParameter;
-      signatureHelp.activeSignature = resultQ.data.ActiveSignature;
+      signatureHelp.activeParameter = resultQ.data.activeParameter;
+      signatureHelp.activeSignature = resultQ.data.activeSignature;
 
       return {
         value: signatureHelp,
-        dispose: () => { }
+        dispose: () => {},
       };
-    }
+    },
   });
 
   // Register HoverProvider
@@ -223,25 +330,23 @@ function registerCsharpProvider(monaco: any) {
       let request = {
         Code: model.getValue(),
         Position: model.getOffsetAt(position),
-        Assemblies: assemblies
+        Assemblies: [],
       };
 
-      let resultQ = await sendRequest("hover", request);
+      let resultQ = await sendRequest('hover', request);
 
       if (resultQ.data) {
-        let posStart = model.getPositionAt(resultQ.data.OffsetFrom);
-        let posEnd = model.getPositionAt(resultQ.data.OffsetTo);
+        let posStart = model.getPositionAt(resultQ.data.offsetFrom);
+        let posEnd = model.getPositionAt(resultQ.data.offsetTo);
 
         return {
           range: new monaco.Range(posStart.lineNumber, posStart.column, posEnd.lineNumber, posEnd.column),
-          contents: [
-            { value: resultQ.data.Information }
-          ]
+          contents: [{ value: resultQ.data.information }],
         };
       }
 
       return null;
-    }
+    },
   });
 
   // Add validation logic to specific models with language 'csharp'
@@ -253,24 +358,43 @@ function registerCsharpProvider(monaco: any) {
     async function validate() {
       let request = {
         Code: model.getValue(),
-        Assemblies: assemblies
+        Assemblies: [],
       };
 
-      let resultQ = await sendRequest("codeCheck", request);
+      let resultQ = await sendRequest('codeCheck', request);
 
       let markers = [];
 
       for (let elem of resultQ.data) {
-        let posStart = model.getPositionAt(elem.OffsetFrom);
-        let posEnd = model.getPositionAt(elem.OffsetTo);
+        let posStart = model.getPositionAt(elem.offsetFrom);
+        let posEnd = model.getPositionAt(elem.offsetTo);
+
+        let severity;
+    switch (elem.severity) {
+      case 'Error':
+        severity = monaco.MarkerSeverity.Error;
+        break;
+      case 'Warning':
+        severity = monaco.MarkerSeverity.Warning;
+        break;
+      case 'Info':
+        severity = monaco.MarkerSeverity.Info;
+        break;
+      case 'Hint':
+        severity = monaco.MarkerSeverity.Hint;
+        break;
+      default:
+        severity = monaco.MarkerSeverity.Info; // Mặc định nếu không xác định được
+    }
+
         markers.push({
-          severity: elem.Severity,
+          severity: severity,
           startLineNumber: posStart.lineNumber,
           startColumn: posStart.column,
           endLineNumber: posEnd.lineNumber,
           endColumn: posEnd.column,
-          message: elem.Message,
-          code: elem.Id
+          message: elem.message,
+          code: elem.id,
         });
       }
 

@@ -1,21 +1,10 @@
 export const resources = {
   'en': {
-    'default': {
-      'Publishing': 'Publishing...',
-      'Published': 'Published',
-      "ActivityContextMenu": {
-        "Edit": "Edit",
-        "Delete": "Delete",
-        "DeleteSelected": "Delete Selected"
-      },
-      "ConnectionContextMenu": {
-        "Paste": "Paste",
-      },
-      'Restart': 'Restart',
-      'DeleteConfirmationModel': {
-        'Title': 'Delete Workflow Definition',
-        'Message': 'Are you sure you wish to permanently delete this workflow, including all of its workflow instances?'
-      }
+    default: {
+      'Title': 'Create new function',
+      'CreateButton': 'Create Workflow',
+      'BackupButton': 'Backup Workflows',
+      'RestoreButton': 'Restore Workflows'
     }
   },
   'zh-CN': {

@@ -3,6 +3,7 @@ using Elsa.Server.Api.Endpoints.FunctionDefinitions.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Emit;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,44 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
 
                 // Tạo một cây cú pháp (syntax tree) từ source code
                 SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(sourceCode);
+
+                // Lấy danh sách các lớp trong mã nguồn
+                var root = syntaxTree.GetRoot();
+
+                #region Find class name
+
+                var classDeclarations = root.DescendantNodes()
+                                            .OfType<ClassDeclarationSyntax>();
+                if (classDeclarations.Count() == 0)
+                {
+                    function.CompileMessage = "No class found in the source code.";
+                    return function;
+                }
+
+                // Kiểm tra và lấy tên lớp đầu tiên (nếu có)
+                string className = classDeclarations.FirstOrDefault()?.Identifier.Text ?? throw new Exception("Not found class name");
+
+                function.ClassName = className;
+                #endregion
+
+                #region Check Execute function is exist
+                bool IsExecuteFunctionExist = root.DescendantNodes()
+                         .OfType<MethodDeclarationSyntax>()
+                         .Any(method =>
+                             method.Identifier.Text == "Execute" && // Tên phương thức là "Execute"
+                             method.Modifiers.Any(SyntaxKind.PublicKeyword) && // Có từ khóa "public"
+                             method.Modifiers.Any(SyntaxKind.StaticKeyword) && // Có từ khóa "static"
+                             method.Modifiers.Any(SyntaxKind.AsyncKeyword) && // Có từ khóa "async"
+                             method.ReturnType is GenericNameSyntax genericName &&
+                             genericName.Identifier.Text == "ValueTask" && // Kiểu trả về là ValueTask
+                             genericName.TypeArgumentList.Arguments.FirstOrDefault() is NullableTypeSyntax nullableType &&
+                             nullableType.ElementType.ToString() == "object" // Giá trị bên trong là "object?"
+                         );
+                if (!IsExecuteFunctionExist)
+                {
+                    throw new Exception("Not found Execute Function");
+                }
+                #endregion
 
                 // Lấy đường dẫn đến thư mục của các assembly chuẩn
                 var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -88,10 +127,10 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
                 if (File.Exists(OutputPath) && File.Exists(pdbPath) && function.IsCompiled && !string.IsNullOrEmpty(SharedClassName))
                 {
                     //Save dll and pdb file if the class is shared
-                    if (!Directory.Exists("SharedClasses"))
-                    {
-                        Directory.CreateDirectory("SharedClasses");
-                    }
+                    //if (!Directory.Exists("SharedClasses"))
+                    //{
+                    //    Directory.CreateDirectory("SharedClasses");
+                    //}
 
                     string sharedDllPath = Path.Combine("SharedClasses", SharedClassName + ".dll");
                     string sharedPdbPath = Path.Combine("SharedClasses", SharedClassName + ".pdb");
@@ -114,9 +153,11 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
             }
         }
 
-        public static void ReloadNeededDllFiles()
+        public static void ReloadNeededDllFiles(List<string>? CoreDllPath = null)
         {
-            FunctionDefinitionConfigs.NeedDllFiles = new List<string>()
+            FunctionDefinitionConfigs.NeedDllFiles.Clear();
+
+            var tmp = new List<string>()
             {
                 "System.Runtime.dll",
                 "System.Threading.Tasks.dll",
@@ -125,12 +166,35 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
                 "System.IO.dll"
             };
 
+            foreach (var dllPath in tmp)
+            {
+                string RuntimePath = Path.Combine(RuntimeEnvironment.GetRuntimeDirectory(), dllPath);
+                if (File.Exists(dllPath))
+                {
+                    FunctionDefinitionConfigs.NeedDllFiles.Add(dllPath);
+                }
+                else if (File.Exists(RuntimePath))
+                {
+                    FunctionDefinitionConfigs.NeedDllFiles.Add(RuntimePath);
+                }
+            }
+
             if (!Directory.Exists("SharedClasses"))
+            {
+                Directory.CreateDirectory("SharedClasses");
+            }
+
+            foreach (var item in Directory.GetFiles(Path.GetFullPath("SharedClasses")))
+            {
+                FunctionDefinitionConfigs.NeedDllFiles.Add(item);
+            }
+
+            if (CoreDllPath == null || CoreDllPath.Count == 0)
             {
                 return;
             }
 
-            foreach (var item in Directory.GetFiles(Path.GetFullPath("SharedClasses")))
+            foreach (var item in CoreDllPath.Where(x => !string.IsNullOrWhiteSpace(x)))
             {
                 FunctionDefinitionConfigs.NeedDllFiles.Add(item);
             }

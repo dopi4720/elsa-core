@@ -14,5 +14,6 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
         string? DisplayName,
         int? Version,
         string Source,
+        string SampleInput,
         bool IsPublish);
 }

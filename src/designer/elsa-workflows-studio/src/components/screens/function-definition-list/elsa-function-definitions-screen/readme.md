@@ -17,7 +17,7 @@
 
 ## Methods
 
-### `loadWorkflowDefinitions() => Promise<void>`
+### `loadFunctionDefinitions() => Promise<void>`
 
 
 
@@ -33,7 +33,6 @@ Type: `Promise<void>`
 ### Used by
 
  - [elsa-studio-function-definitions-list](../../../dashboard/pages/elsa-studio-function-definitions-list)
- - [elsa-studio-workflow-definitions-list](../../../dashboard/pages/elsa-studio-workflow-definitions-list)
 
 ### Depends on
 
@@ -46,15 +45,14 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
-  elsa-workflow-definitions-list-screen --> stencil-route-link
-  elsa-workflow-definitions-list-screen --> elsa-context-menu
-  elsa-workflow-definitions-list-screen --> elsa-pager
-  elsa-workflow-definitions-list-screen --> elsa-confirm-dialog
-  elsa-workflow-definitions-list-screen --> context-consumer
+  elsa-function-definitions-list-screen --> stencil-route-link
+  elsa-function-definitions-list-screen --> elsa-context-menu
+  elsa-function-definitions-list-screen --> elsa-pager
+  elsa-function-definitions-list-screen --> elsa-confirm-dialog
+  elsa-function-definitions-list-screen --> context-consumer
   elsa-confirm-dialog --> elsa-modal-dialog
-  elsa-studio-function-definitions-list --> elsa-workflow-definitions-list-screen
-  elsa-studio-workflow-definitions-list --> elsa-workflow-definitions-list-screen
-  style elsa-workflow-definitions-list-screen fill:#f9f,stroke:#333,stroke-width:4px
+  elsa-studio-function-definitions-list --> elsa-function-definitions-list-screen
+  style elsa-function-definitions-list-screen fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

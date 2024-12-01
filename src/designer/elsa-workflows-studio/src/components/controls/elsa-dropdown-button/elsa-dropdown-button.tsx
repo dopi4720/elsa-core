@@ -10,7 +10,7 @@ import {DropdownButtonItem, DropdownButtonOrigin} from "./models";
 export class ElsaContextMenu {
     @Prop() text: string;
     @Prop() icon?: any;
-    @Prop() btnClass?: string = " elsa-w-full elsa-bg-white elsa-border elsa-border-gray-300 elsa-rounded-md elsa-shadow-sm elsa-px-4 elsa-py-2 elsa-inline-flex elsa-justify-center elsa-text-sm elsa-font-medium elsa-text-gray-700 hover:elsa-bg-gray-50 focus:elsa-outline-none focus:elsa-ring-2 focus:elsa-ring-offset-2 focus:elsa-ring-blue-500"
+    @Prop() btnClass?: string = " elsa-w-full elsa-bg-gray-700 elsa-border elsa-border-gray-600 elsa-rounded-md elsa-shadow-sm elsa-px-4 elsa-py-2 elsa-inline-flex elsa-justify-center elsa-text-sm elsa-font-medium elsa-text-gray-300 hover:elsa-bg-gray-500 focus:elsa-outline-none focus:elsa-ring-2 focus:elsa-ring-offset-2 focus:elsa-ring-blue-500"
     @Prop() origin: DropdownButtonOrigin = DropdownButtonOrigin.TopLeft;
     @Prop() items: Array<DropdownButtonItem> = [];
 
@@ -82,7 +82,7 @@ export class ElsaContextMenu {
                     data-transition-leave="elsa-transition elsa-ease-in elsa-duration-75"
                     data-transition-leave-start="elsa-transform elsa-opacity-100 elsa-scale-100"
                     data-transition-leave-end="elsa-transform elsa-opacity-0 elsa-scale-95"            
-                    class={`hidden ${originClass} elsa-z-10 elsa-absolute elsa-mt-2 elsa-w-56 elsa-rounded-md elsa-shadow-lg elsa-bg-white elsa-ring-1 elsa-ring-black elsa-ring-opacity-5`}>
+                    class={`hidden ${originClass} elsa-z-10 elsa-absolute elsa-mt-2 elsa-w-56 elsa-rounded-md elsa-shadow-lg elsa-bg-gray-700 elsa-ring-1 elsa-ring-black elsa-ring-opacity-5`}>
             <div class="elsa-py-1" role="menu" aria-orientation="vertical">
                 {this.renderItems()}
             </div>
@@ -91,7 +91,7 @@ export class ElsaContextMenu {
 
     renderItems() {
         return this.items.map(item => {
-            const selectedCssClass = item.isSelected ? "elsa-bg-blue-600 hover:elsa-bg-blue-700 elsa-text-white" : "hover:elsa-bg-gray-100 elsa-text-gray-700 hover:elsa-text-gray-900";
+            const selectedCssClass = item.isSelected ? "elsa-bg-blue-600 hover:elsa-bg-blue-700 elsa-text-white" : "hover:elsa-bg-gray-600 elsa-text-gray-300 hover:elsa-text-gray-300";
 
             return !!item.url
                 ? <stencil-route-link onClick={e => this.closeContextMenu()} url={item.url} anchorClass={`elsa-block elsa-px-4 elsa-py-2 elsa-text-sm ${selectedCssClass} elsa-cursor-pointer`} role="menuitem">{item.text}</stencil-route-link>

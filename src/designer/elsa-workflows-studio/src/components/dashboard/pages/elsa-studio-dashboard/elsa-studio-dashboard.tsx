@@ -23,8 +23,8 @@ export class ElsaStudioDashboard {
       menuItems: [
         ['workflow-definitions', 'Workflow Definitions'],
         ['workflow-instances', 'Workflow Instances'],
-        ['workflow-registry', 'Workflow Registry'],
         ['function-definitions', 'Function Definitions'],
+        ['workflow-registry', 'Workflow Registry'],
       ],
       routes: [
         ['', 'elsa-studio-home', true],
@@ -74,8 +74,8 @@ export class ElsaStudioDashboard {
     }
 
     return (
-      <div class="elsa-h-screen elsa-bg-gray-100">
-        <nav class="elsa-bg-gray-800">
+      <div class="elsa-h-screen elsa-bg-gray-700">
+        <nav class="elsa-bg-gray-800 elsa-border-gray-600 elsa-border-b">
           <div class="elsa-px-4 sm:elsa-px-6 lg:elsa-px-8">
             <div class="elsa-flex elsa-items-center elsa-justify-between elsa-h-16">
               <div class="elsa-flex elsa-items-center">

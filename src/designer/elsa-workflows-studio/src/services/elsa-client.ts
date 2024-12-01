@@ -5,6 +5,7 @@ import {eventBus} from './event-bus';
 import {
   ActivityDefinition,
   ActivityDescriptor,
+  ApiResult,
   ConnectionDefinition,
   EventTypes,
   FunctionDefinitionSummaryModelWithoutSource,
@@ -180,6 +181,11 @@ export const createElsaClient = async function (serverUrl: string): Promise<Elsa
 
         return response.data;
       },
+      delete: async (functionId: string): Promise<ApiResult> => {
+        const response = await httpClient.post<ApiResult>(`v1/function-definitions/delete/${functionId}`);
+
+        return response.data;
+      }
     },
     workflowTestApi: {
       execute: async (request) => {
@@ -420,6 +426,7 @@ export interface VersionApi {
 
 export interface FunctionDefinitionsApi{
   list(page?: number, pageSize?: number, searchTerm?: string):Promise<PagedList<FunctionDefinitionSummaryModelWithoutSource>>;
+  delete(functionId: string):Promise<ApiResult>;
 }
 
 export interface WorkflowDefinitionsApi {

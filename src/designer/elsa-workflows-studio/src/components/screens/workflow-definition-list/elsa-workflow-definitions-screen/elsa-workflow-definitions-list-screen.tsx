@@ -138,12 +138,12 @@ export class ElsaWorkflowDefinitionsListScreen {
     return (
       <div>
         <div
-          class="elsa-relative elsa-z-10 elsa-flex-shrink-0 elsa-flex elsa-h-16 elsa-bg-white elsa-border-b elsa-border-gray-200">
-          <div class="elsa-flex-1 elsa-px-4 elsa-flex elsa-justify-between sm:elsa-px-6 lg:elsa-px-8">
+          class="elsa-relative elsa-z-10 elsa-flex-shrink-0 elsa-flex elsa-h-16 elsa-bg-white elsa-border-b elsa-border-gray-600">
+          <div class="elsa-flex-1 elsa-px-4 elsa-flex elsa-justify-between sm:elsa-px-6 lg:elsa-px-8 elsa-bg-gray-700">
             <div class="elsa-flex-1 elsa-flex">
               <form class="elsa-w-full elsa-flex md:ml-0" onSubmit={e => this.onSearch(e)}>
                 <label htmlFor="search_field" class="elsa-sr-only">{t('Search')}</label>
-                <div class="elsa-relative elsa-w-full elsa-text-gray-400 focus-within:elsa-text-gray-600">
+                <div class="elsa-relative elsa-w-full elsa-text-gray-300 focus-within:elsa-text-gray-300">
                   <div
                     class="elsa-absolute elsa-inset-y-0 elsa-left-0 elsa-flex elsa-items-center elsa-pointer-events-none">
                     <svg class="elsa-h-5 elsa-w-5" fill="currentColor" viewBox="0 0 20 20">
@@ -152,7 +152,7 @@ export class ElsaWorkflowDefinitionsListScreen {
                     </svg>
                   </div>
                   <input name="searchTerm"
-                         class="elsa-block elsa-w-full elsa-h-full elsa-pl-8 elsa-pr-3 elsa-py-2 elsa-rounded-md elsa-text-gray-900 elsa-placeholder-gray-500 focus:elsa-placeholder-gray-400 sm:elsa-text-sm elsa-border-0 focus:elsa-outline-none focus:elsa-ring-0"
+                         class="elsa-block elsa-bg-gray-700 elsa-w-full elsa-h-full elsa-pl-8 elsa-pr-3 elsa-py-2 elsa-rounded-md elsa-text-gray-900 elsa-placeholder-gray-500 focus:elsa-placeholder-gray-400 sm:elsa-text-sm elsa-border-0 focus:elsa-outline-none focus:elsa-ring-0"
                          placeholder={t('Search')}
                          type="search"/>
                 </div>
@@ -161,26 +161,26 @@ export class ElsaWorkflowDefinitionsListScreen {
           </div>
         </div>
 
-        <div class="elsa-align-middle elsa-inline-block elsa-min-w-full elsa-border-b elsa-border-gray-200">
+        <div class="elsa-align-middle elsa-inline-block elsa-min-w-full elsa-border-b elsa-border-gray-600">
           <table class="elsa-min-w-full">
             <thead>
-            <tr class="elsa-border-t elsa-border-gray-200">
-              <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-200 elsa-bg-gray-50 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+            <tr class="elsa-border-t elsa-border-gray-600">
+              <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
                 <span class="lg:elsa-pl-2"><IntlMessage label="Name"/></span>
               </th>
-              <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-200 elsa-bg-gray-50 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+              <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
                 <IntlMessage label="Instances"/>
               </th>
-              <th class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-200 elsa-bg-gray-50 elsa-text-right elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+              <th class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-right elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
                 <IntlMessage label="LatestVersion"/>
               </th>
-              <th class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-200 elsa-bg-gray-50 elsa-text-right elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+              <th class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-right elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
                 <IntlMessage label="PublishedVersion"/>
               </th>
-              <th class="elsa-pr-6 elsa-py-3 elsa-border-b elsa-border-gray-200 elsa-bg-gray-50 elsa-text-right elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider"/>
+              <th class="elsa-pr-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-right elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider"/>
             </tr>
             </thead>
-            <tbody class="elsa-bg-white elsa-divide-y elsa-divide-gray-100">
+            <tbody class="elsa-bg-gray-700 elsa-divide-y elsa-divide-gray-600">
             {latestDefinitions.map(workflowDefinition => {
               const latestVersionNumber = workflowDefinition.version;
               const {isPublished} = workflowDefinition;
@@ -230,20 +230,20 @@ export class ElsaWorkflowDefinitionsListScreen {
 
               return (
                 <tr>
-                  <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-900">
+                  <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-300">
                     <div class="elsa-flex elsa-items-center elsa-space-x-3 lg:elsa-pl-2">
                       <stencil-route-link url={editUrl} anchorClass="elsa-truncate hover:elsa-text-gray-600"><span>{workflowDisplayName}</span></stencil-route-link>
                     </div>
                   </td>
 
-                  <td class="elsa-px-6 elsa-py-3 elsa-text-sm elsa-leading-5 elsa-text-gray-500 elsa-font-medium">
+                  <td class="elsa-px-6 elsa-py-3 elsa-text-sm elsa-leading-5 elsa-text-gray-400 elsa-font-medium">
                     <div class="elsa-flex elsa-items-center elsa-space-x-3 lg:elsa-pl-2">
                       <stencil-route-link url={instancesUrl} anchorClass="elsa-truncate hover:elsa-text-gray-600"><IntlMessage label="Instances"/></stencil-route-link>
                     </div>
                   </td>
 
-                  <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-500 elsa-text-right">{latestVersionNumber}</td>
-                  <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-500 elsa-text-right">{publishedVersionNumber}</td>
+                  <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-400 elsa-text-right">{latestVersionNumber}</td>
+                  <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-400 elsa-text-right">{publishedVersionNumber}</td>
                   <td class="elsa-pr-6">
                     <elsa-context-menu history={this.history} menuItems={[
                       {text: i18next.t('Edit'), anchorUrl: editUrl, icon: editIcon},
