@@ -1,8 +1,18 @@
 .svg-loader {
-    height: 2rem;
-    vertical-align: top;
- }
+  height: 2rem;
+  vertical-align: top;
+}
 
- .h-full-minus-header{
-  height: calc(100vh - 64px - 4rem);
- }
+.h-full-minus-header {
+  height: calc(100vh - 65px - 4rem);
+}
+
+.hover\:elsa-bg-orange:hover {
+  --tw-bg-opacity: 1;
+  background-color: #b4520f;
+}
+
+.elsa-bg-orange {
+  --tw-bg-opacity: 1;
+  background-color: #f97316;
+}

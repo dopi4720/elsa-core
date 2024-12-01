@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
     <Import Project="..\..\..\..\configureawait.props" />
 
-    <PropertyGroup>
+     <PropertyGroup>
+  <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <TargetFramework>net8.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <IsPackable>false</IsPackable>
@@ -72,6 +73,7 @@
     </ItemGroup>
 
     <ItemGroup>
+  <PackageReference Include="System.Collections" Version="4.3.0" />
         <PackageReference Include="Hangfire.InMemory" Version="0.5.1" />
         <PackageReference Include="Hangfire.SqlServer" Version="1.8.5" />
         <PackageReference Include="Quartz.Serialization.Json" Version="3.5.0" />

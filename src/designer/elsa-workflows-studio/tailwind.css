@@ -45,3 +45,13 @@ svg.jtk-connector.jtk-hover path {
 .hidden {
   display: none;
 }
+
+.hover\:elsa-bg-orange:hover {
+  --tw-bg-opacity: 1;
+  background-color: #b4520f;
+}
+
+.elsa-bg-orange {
+  --tw-bg-opacity: 1;
+  background-color: #f97316;
+}

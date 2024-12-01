@@ -3,7 +3,8 @@
     <Import Project="..\..\..\common.props"/>
     <Import Project="..\..\..\configureawait.props"/>
 
-    <PropertyGroup>
+     <PropertyGroup>
+  <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -14,6 +15,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+  <PackageReference Include="System.Collections" Version="4.3.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8"/>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.8"/>
     </ItemGroup>

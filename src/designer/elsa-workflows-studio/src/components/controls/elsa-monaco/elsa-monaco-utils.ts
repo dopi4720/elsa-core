@@ -22,7 +22,7 @@ export var EditorVariables: Array<EditorVariable> = [];
 let isInitialized: boolean;
 const mutex = new Mutex();
 
-export async function initializeMonacoWorker(libPath?: string): Promise<Monaco> {
+export async function initializeMonacoWorker(libPath?: string, serverBaseUrl:string = "https://localhost:11000"): Promise<Monaco> {
   return await mutex.runExclusive(async () => {
     if (isInitialized) {
       return win.monaco;
@@ -54,7 +54,7 @@ export async function initializeMonacoWorker(libPath?: string): Promise<Monaco> 
         registerLiquid(win.monaco);
         registerSql(win.monaco);
         resolve(win.monaco);
-        registerCsharpProvider(win.monaco);
+        registerCsharpProvider(win.monaco,serverBaseUrl);
       });
     });
   });
@@ -199,9 +199,9 @@ function registerSql(monaco: any) {
   });
 }
 
-async function sendRequest(type, request) {
+async function sendRequest(type, request,serverBaseUrl:string) {
   // let endPoint: string = window.location.origin;
-  let endPoint = 'https://localhost:11000'; // URL gốc
+  let endPoint = serverBaseUrl||'https://localhost:11000'; // URL gốc
 
   // Xác định endpoint dựa trên loại request
   switch (type) {
@@ -235,7 +235,7 @@ async function sendRequest(type, request) {
   }
 }
 
-function registerCsharpProvider(monaco: any) {
+function registerCsharpProvider(monaco: any, serverBaseUrl:string) {
   // Register CompletionItemProvider
   monaco.languages.registerCompletionItemProvider('csharp', {
     triggerCharacters: ['.', ' '],
@@ -253,7 +253,7 @@ function registerCsharpProvider(monaco: any) {
         Assemblies: [],
       };
 
-      let resultQ = await sendRequest('complete', request);
+      let resultQ = await sendRequest('complete', request,serverBaseUrl);
 
       for (let elem of resultQ.data) {
         suggestions.push({
@@ -287,7 +287,7 @@ function registerCsharpProvider(monaco: any) {
         Assemblies: [],
       };
 
-      let resultQ = await sendRequest('signature', request);
+      let resultQ = await sendRequest('signature', request,serverBaseUrl);
       if (!resultQ.data) return;
 
       let signatures = [];
@@ -333,7 +333,7 @@ function registerCsharpProvider(monaco: any) {
         Assemblies: [],
       };
 
-      let resultQ = await sendRequest('hover', request);
+      let resultQ = await sendRequest('hover', request,serverBaseUrl);
 
       if (resultQ.data) {
         let posStart = model.getPositionAt(resultQ.data.offsetFrom);
@@ -361,7 +361,7 @@ function registerCsharpProvider(monaco: any) {
         Assemblies: [],
       };
 
-      let resultQ = await sendRequest('codeCheck', request);
+      let resultQ = await sendRequest('codeCheck', request,serverBaseUrl);
 
       let markers = [];
 

@@ -85,7 +85,7 @@ export class ElsaPager {
 
       return <a href={`${getNavUrl(page - 1)}`}
                 onClick={e => self.onNavigateClick(e, page - 1)}
-                class="elsa-relative elsa-inline-flex elsa-items-center elsa-px-4 elsa-py-2 elsa-border elsa-border-gray-400 elsa-text-sm elsa-leading-5 elsa-font-medium elsa-rounded-md elsa-text-gray-400 elsa-bg-gray-500 hover:elsa-text-gray-500 focus:elsa-outline-none focus:elsa-shadow-outline-blue focus:elsa-border-blue-300 active:elsa-bg-gray-100 active:elsa-text-gray-300 elsa-transition elsa-ease-in-out elsa-duration-150">
+                class="elsa-relative elsa-inline-flex elsa-items-center elsa-py-2 elsa-border elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-400 focus:elsa-z-10 focus:elsa-outline-none active:elsa-bg-gray-100 elsa-transition elsa-ease-in-out elsa-duration-150 elsa-px-2 elsa-rounded-l-md elsa-border-gray-500 elsa-bg-gray-600 hover:elsa-text-gray-400 focus:elsa-border-blue-300 focus:elsa-shadow-outline-blue active:elsa-text-gray-500">
         {t('Previous')}
       </a>
     }

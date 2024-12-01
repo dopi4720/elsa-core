@@ -2,9 +2,11 @@ using Elsa;
 using Elsa.Activities.UserTask.Extensions;
 using Elsa.Persistence.EntityFramework.Core.Extensions;
 using Elsa.Persistence.EntityFramework.Sqlite;
+using Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils;
 using Elsa.WorkflowTesting.Api.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +25,8 @@ namespace ElsaDashboard.Samples.AspNetCore.Monolith
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            DynamicCompiler.ReloadNeededDllFiles(Configuration.GetSection("DllPaths").Get<System.Collections.Generic.List<string>>() ?? throw new System.Exception("Missing DllPaths value"));
+
             services.AddRazorPages();
 
             // Elsa Server settings.
@@ -34,12 +38,12 @@ namespace ElsaDashboard.Samples.AspNetCore.Monolith
                 typeof(Elsa.Persistence.EntityFramework.SqlServer.Startup),
                 typeof(Elsa.Secrets.Persistence.EntityFramework.Sqlite.Startup),
                 typeof(Elsa.Secrets.Persistence.EntityFramework.SqlServer.Startup),
+                typeof(Elsa.Secrets.Sql.Startup),
                 typeof(Elsa.Secrets.Http.Startup),
             };
 
             services
                 .AddElsa(options => options
-                    .UseEntityFrameworkPersistence(ef => ef.UseSqlite())
                     .AddConsoleActivities()
                     .AddHttpActivities(elsaSection.GetSection("Server").Bind)
                     .AddEmailActivities(elsaSection.GetSection("Smtp").Bind)

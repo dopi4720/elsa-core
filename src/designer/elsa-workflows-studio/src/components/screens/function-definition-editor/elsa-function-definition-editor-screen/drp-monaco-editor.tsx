@@ -16,6 +16,7 @@ export class DRPMonaco {
   private monaco: Monaco;
   @Prop({ attribute: 'monaco-lib-path' }) monacoLibPath: string;
   @Prop({ attribute: 'editor-height', reflect: true }) editorHeight: string = '5em';
+  @Prop({ attribute: 'server-base-url', reflect: true }) serverBaseUrl: string;
   @Prop() value: string;
   @Prop() theme: string;
   @Prop() renderLineHighlight: string;
@@ -40,7 +41,7 @@ export class DRPMonaco {
   }
   async componentWillLoad() {
     const monacoLibPath = this.monacoLibPath ?? state.monacoLibPath;
-    this.monaco = await initializeMonacoWorker(monacoLibPath);
+    this.monaco = await initializeMonacoWorker(monacoLibPath, this.serverBaseUrl);
   }
   componentDidLoad() {
     const monaco = this.monaco;
@@ -82,7 +83,7 @@ export class DRPMonaco {
 
     return (
       <Host
-        class="elsa-monaco-editor-host elsa-border focus:elsa-ring-blue-500 focus:elsa-border-blue-500 elsa-block elsa-w-full elsa-min-w-0 elsa-rounded-md sm:elsa-text-sm elsa-border-gray-600 elsa-p-4"
+        class="elsa-monaco-editor-host focus:elsa-ring-blue-500 focus:elsa-border-blue-500 elsa-block elsa-w-full elsa-min-w-0 elsa-rounded-md sm:elsa-text-sm elsa-border-gray-600 elsa-p-4"
         style={{ 'min-height': this.editorHeight }}
       >
         <div ref={el => (this.container = el)} class={`elsa-monaco-editor-container ${padding}`} />

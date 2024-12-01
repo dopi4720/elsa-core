@@ -3,8 +3,9 @@
     <Import Project="..\..\..\..\common.props" />
     <Import Project="..\..\..\..\configureawait.props" />
 
-    <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+     <PropertyGroup>
+  <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
         <Description>
             Elsa Retention is an optional part of Elsa Workflows that adds retention settings to the system.
         </Description>

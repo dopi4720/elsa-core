@@ -152,7 +152,7 @@ export class ElsaWorkflowDefinitionsListScreen {
                     </svg>
                   </div>
                   <input name="searchTerm"
-                         class="elsa-block elsa-bg-gray-700 elsa-w-full elsa-h-full elsa-pl-8 elsa-pr-3 elsa-py-2 elsa-rounded-md elsa-text-gray-900 elsa-placeholder-gray-500 focus:elsa-placeholder-gray-400 sm:elsa-text-sm elsa-border-0 focus:elsa-outline-none focus:elsa-ring-0"
+                         class="elsa-text-gray-300 elsa-block elsa-bg-gray-700 elsa-w-full elsa-h-full elsa-pl-8 elsa-pr-3 elsa-py-2 elsa-rounded-md elsa-text-gray-900 elsa-placeholder-gray-500 focus:elsa-placeholder-gray-400 sm:elsa-text-sm elsa-border-0 focus:elsa-outline-none focus:elsa-ring-0"
                          placeholder={t('Search')}
                          type="search"/>
                 </div>

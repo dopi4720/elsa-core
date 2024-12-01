@@ -3,9 +3,14 @@
     <Import Project="..\..\..\..\common.props" />
     <Import Project="..\..\..\..\configureawait.props" />
     
-    <PropertyGroup>
-        <TargetFrameworks>net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
+     <PropertyGroup>
+  <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
     </PropertyGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="System.Collections" Version="4.3.0" />
+    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\server\Elsa.Server.Api\Elsa.Server.Api.csproj" />

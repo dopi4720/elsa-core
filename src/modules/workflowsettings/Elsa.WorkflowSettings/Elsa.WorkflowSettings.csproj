@@ -3,8 +3,9 @@
     <Import Project="..\..\..\..\common.props" />
     <Import Project="..\..\..\..\configureawait.props" />
     
-    <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+     <PropertyGroup>
+  <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
         <Description>
             Elsa Workflow Settings is an optional part of Elsa Workflows.
             This package contains Workflow Settings.
@@ -13,6 +14,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+  <PackageReference Include="System.Collections" Version="4.3.0" />
         <PackageReference Include="System.Text.Encodings.Web" Version="8.0.0" />
     </ItemGroup>
 

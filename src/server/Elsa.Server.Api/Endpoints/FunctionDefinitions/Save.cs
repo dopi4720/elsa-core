@@ -66,6 +66,17 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
                     });
                 }
 
+                var FunctionSameName = await _functionDefinitionStore.FindAsync(new FunctionDefinitionDisplayNameSpecification(compiled.ClassName ?? throw new Exception("ClassName cannot be empty")), cancellationToken);
+                if (FunctionSameName != null)
+                {
+                    return BadRequest(new FunctionGeneralView()
+                    {
+                        IsSuccess = false,
+                        Message = "Function name already exists",
+                        Data = null
+                    });
+                }
+
                 var CurrentFunctions = await _functionDefinitionStore.FindManyAsync(new FunctionDefinitionFunctionIdSpecification(request.FunctionId ?? ""));
                 var CurrentFunction = CurrentFunctions.OrderByDescending(x => x.Version).FirstOrDefault();
 
@@ -88,7 +99,7 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
                     LastUpdate = DateTime.Now,
                     Name = compiled.ClassName ?? throw new Exception("Name cannot be empty"),
                     Pdb = compiled.PdbBytes,
-                    SampleInput = !string.IsNullOrWhiteSpace(request.SampleInput)? JToken.Parse(request.SampleInput).ToString(Newtonsoft.Json.Formatting.None) : "{}",
+                    SampleInput = !string.IsNullOrWhiteSpace(request.SampleInput) ? JToken.Parse(request.SampleInput).ToString(Newtonsoft.Json.Formatting.None) : "{}",
                     Version = CurrentVersion
                 };
 

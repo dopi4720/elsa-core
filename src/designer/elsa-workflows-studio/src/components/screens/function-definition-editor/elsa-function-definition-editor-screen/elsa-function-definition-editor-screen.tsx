@@ -153,6 +153,26 @@ export class ElsaFunctionDefinitionEditorScreen {
     return result; // Trả về kết quả, dù thành công hay thất bại
   }
   @Method()
+  async getFunctionTemplate() {
+    let result: any = null; // Biến tạm lưu trữ kết quả
+
+    try {
+      const response = await axios.get(this.serverUrl + '/v1/function-definitions/GetTemplate/' + this.functionType);
+
+      result = response.data.data; // Lưu trữ kết quả
+    } catch (error) {
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+        result = error.response.data; // Lưu lỗi từ phản hồi
+      } else {
+        console.error('Error:', error.message);
+        result = { error: error.message }; // Trả về lỗi khác
+      }
+    }
+
+    return result; // Trả về kết quả, dù thành công hay thất bại
+  }
+  @Method()
   async OnCompileFunctionClick(e) {
     const requestData: any = {
       source: this.mainMonaco.value,
@@ -325,6 +345,8 @@ export class ElsaFunctionDefinitionEditorScreen {
       this.sampleInputMonaco.setValue('From HuyNT and DRP with love <3');
 
       this.LoadSourceCodeIntoEditor();
+    }else{
+      this.mainMonaco.setValue(await this.getFunctionTemplate());
     }
   }
   @Watch('monacoLibPath')
@@ -336,6 +358,7 @@ export class ElsaFunctionDefinitionEditorScreen {
   async handleFunctionTypeSelectChange(event) {
     const selectElement = event.target as HTMLSelectElement;
     this.functionType = selectElement.value;
+    this.mainMonaco.setValue(await this.getFunctionTemplate());
   }
 
   render() {
@@ -366,7 +389,7 @@ export class ElsaFunctionDefinitionEditorScreen {
               onClick={e => this.OnCompileFunctionClick(e)}
               id="complie"
               type="button"
-              class="elsa-bg-orange elsa-text-white elsa-px-4 elsa-py-2 elsa-rounded hover:elsa-bg-orange hover:elsa-shadow-lg"
+              class="elsa-bg-orange elsa-text-gray-200 elsa-px-4 elsa-py-2 elsa-rounded hover:elsa-bg-orange hover:elsa-shadow-lg"
             >
               Compile Function
             </button>
@@ -374,7 +397,7 @@ export class ElsaFunctionDefinitionEditorScreen {
               onClick={e => this.OnFormatFunctionClick(e)}
               id=""
               type="button"
-              class="elsa-bg-pink-500 elsa-text-white elsa-px-4 elsa-py-2 elsa-rounded hover:elsa-bg-pink-700 hover:elsa-shadow-lg"
+              class="elsa-bg-pink-500 elsa-text-gray-200 elsa-px-4 elsa-py-2 elsa-rounded hover:elsa-bg-pink-700 hover:elsa-shadow-lg"
             >
               Format Code
             </button>
@@ -382,7 +405,7 @@ export class ElsaFunctionDefinitionEditorScreen {
               onClick={e => this.OnRunFunctionClick(e)}
               id=""
               type="button"
-              class="elsa-bg-green-500 elsa-text-white elsa-px-4 elsa-py-2 elsa-rounded hover:elsa-bg-green-700 hover:elsa-shadow-lg"
+              class="elsa-bg-green-500 elsa-text-gray-200 elsa-px-4 elsa-py-2 elsa-rounded hover:elsa-bg-green-700 hover:elsa-shadow-lg"
             >
               Run Function
             </button>
@@ -390,7 +413,7 @@ export class ElsaFunctionDefinitionEditorScreen {
               onClick={e => this.OnSaveFunctionClick(e)}
               id="save"
               type="button"
-              class="elsa-bg-blue-500 elsa-text-white elsa-px-4 elsa-py-2 elsa-rounded hover:elsa-bg-blue-700 hover:elsa-shadow-lg"
+              class="elsa-bg-blue-500 elsa-text-gray-200 elsa-px-4 elsa-py-2 elsa-rounded hover:elsa-bg-blue-700 hover:elsa-shadow-lg"
             >
               Save & Publish
             </button>
@@ -399,6 +422,7 @@ export class ElsaFunctionDefinitionEditorScreen {
         <div class="elsa-flex elsa-h-full">
           <div class="elsa-w-9/12 col-1 elsa-flex-1">
             <drp-monaco-editor
+              server-base-url={this.serverUrl}
               ref={el => (this.mainMonaco = el)}
               onValueChanged={e => this.onMainMonacoValueChanged(e.detail)}
               id="mainMonaco"
@@ -429,6 +453,7 @@ export class ElsaFunctionDefinitionEditorScreen {
                   padding="elsa-p-0"
                   language="json"
                   lineNumbers="off"
+                  server-base-url={this.serverUrl}
                 />
               </div>
             </div>
@@ -439,6 +464,7 @@ export class ElsaFunctionDefinitionEditorScreen {
               <div class="elsa-flex-1">
                 <drp-monaco-editor
                   id="outputMonaco"
+                  server-base-url={this.serverUrl}
                   onValueChanged={e => this.onOutputMonacoValueChanged(e.detail)}
                   ref={el => (this.outputMonaco = el)}
                   value=""

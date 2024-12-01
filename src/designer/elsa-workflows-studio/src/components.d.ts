@@ -28,6 +28,7 @@ export namespace Components {
         "monacoLibPath": string;
         "padding": string;
         "renderLineHighlight": string;
+        "serverBaseUrl": string;
         "setValue": (value: string) => Promise<void>;
         "theme": string;
         "value": string;
@@ -151,6 +152,7 @@ export namespace Components {
         "formatFunction": (requestData: any) => Promise<any>;
         "functionDefinitionId": string;
         "getDetailFunction": () => Promise<any>;
+        "getFunctionTemplate": () => Promise<any>;
         "handleFunctionTypeSelectChange": (event: any) => Promise<void>;
         "monacoLibPath": string;
         "onMainMonacoValueChanged": (e: DrpMonacoValueChangedArgs) => Promise<void>;
@@ -1032,6 +1034,7 @@ declare namespace LocalJSX {
         "onValueChanged"?: (event: CustomEvent<DrpMonacoValueChangedArgs>) => void;
         "padding"?: string;
         "renderLineHighlight"?: string;
+        "serverBaseUrl"?: string;
         "theme"?: string;
         "value"?: string;
     }

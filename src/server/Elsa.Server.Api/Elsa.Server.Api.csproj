@@ -3,8 +3,9 @@
     <Import Project="..\..\..\common.props" />
     <Import Project="..\..\..\configureawait.props" />
 
-    <PropertyGroup>
-        <TargetFrameworks>net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
+     <PropertyGroup>
+  <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
         <Description>
             Elsa is a set of workflow libraries and tools that enable lean and mean workflowing capabilities in any .NET Core application.
             This package provides API endpoints to interact with the workflow host.
@@ -50,6 +51,7 @@
         <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.3.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.2" />
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.3.0" />
+        <PackageReference Include="System.Collections" Version="4.3.0" />
         <PackageReference Include="System.Text.Encodings.Web" Version="8.0.0" />
     </ItemGroup>
 

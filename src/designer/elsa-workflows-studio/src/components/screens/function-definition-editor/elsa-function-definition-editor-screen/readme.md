@@ -97,6 +97,16 @@ Type: `Promise<any>`
 
 
 
+### `getFunctionTemplate() => Promise<any>`
+
+
+
+#### Returns
+
+Type: `Promise<any>`
+
+
+
 ### `handleFunctionTypeSelectChange(event: any) => Promise<void>`
 
 

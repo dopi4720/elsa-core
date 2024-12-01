@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
+     <PropertyGroup>
+  <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
-        <TargetFramework>net5.0</TargetFramework>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+  <PackageReference Include="System.Collections" Version="4.3.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
         <PackageReference Include="System.Text.Encodings.Web" Version="8.0.0" />
     </ItemGroup>
