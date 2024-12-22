@@ -1,7 +1,8 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Host.Mef;
 using Microsoft.CodeAnalysis.Text;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -16,29 +18,41 @@ namespace MonacoRoslynCompletionProvider
 {
     public class CompletionWorkspace
     {
-        public static MetadataReference[] DefaultMetadataReferences = new MetadataReference[]
-            {
-                MetadataReference.CreateFromFile(typeof(Console).Assembly.Location),
-                MetadataReference.CreateFromFile(Assembly.Load("System.Runtime").Location),
-                MetadataReference.CreateFromFile(typeof(List<>).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(int).Assembly.Location),
-                MetadataReference.CreateFromFile(Assembly.Load("netstandard").Location),
-                MetadataReference.CreateFromFile(typeof(DescriptionAttribute).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Dictionary<,>).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(DataSet).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(XmlDocument).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(INotifyPropertyChanged).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(System.Linq.Expressions.Expression).Assembly.Location)
-            };
+        //public static MetadataReference[] DefaultMetadataReferences = new MetadataReference[]
+        //    {
+        //        MetadataReference.CreateFromFile(typeof(Console).Assembly.Location),
+        //        MetadataReference.CreateFromFile(Assembly.Load("System.Runtime").Location),
+        //        MetadataReference.CreateFromFile(typeof(List<>).Assembly.Location),
+        //        MetadataReference.CreateFromFile(typeof(int).Assembly.Location),
+        //        MetadataReference.CreateFromFile(Assembly.Load("netstandard").Location),
+        //        MetadataReference.CreateFromFile(typeof(DescriptionAttribute).Assembly.Location),
+        //        MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+        //        MetadataReference.CreateFromFile(typeof(Dictionary<,>).Assembly.Location),
+        //        MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location),
+        //        MetadataReference.CreateFromFile(typeof(DataSet).Assembly.Location),
+        //        MetadataReference.CreateFromFile(typeof(XmlDocument).Assembly.Location),
+        //        MetadataReference.CreateFromFile(typeof(INotifyPropertyChanged).Assembly.Location),
+        //        MetadataReference.CreateFromFile(typeof(System.Linq.Expressions.Expression).Assembly.Location),
+        //        MetadataReference.CreateFromFile(typeof(DbContext).Assembly.Location),
+        //        MetadataReference.CreateFromFile(typeof(Regex).Assembly.Location),
+        //        MetadataReference.CreateFromFile(typeof(EF).Assembly.Location),
+        //        MetadataReference.CreateFromFile(typeof(IListSource).Assembly.Location),
+        //        MetadataReference.CreateFromFile(typeof(Microsoft.EntityFrameworkCore.Infrastructure.IDbContextOptions).Assembly.Location),
+        //        MetadataReference.CreateFromFile(typeof(System.Linq.AsyncEnumerable).Assembly.Location), // Quan trọng!
+
+        //    };
+        public static MetadataReference[] DefaultMetadataReferences =>
+    AppDomain.CurrentDomain.GetAssemblies()
+        .Where(a => !a.IsDynamic && !string.IsNullOrEmpty(a.Location)) // Loại bỏ assembly động
+        .Select(a => MetadataReference.CreateFromFile(a.Location))
+        .ToArray();
 
         private Project _project;
         private AdhocWorkspace _workspace;
         private List<MetadataReference> _metadataReferences;
 
-        public static CompletionWorkspace Create(params string[] assemblies) 
-        { 
+        public static CompletionWorkspace Create(params string[] assemblies)
+        {
             Assembly[] lst = new[] {
                 Assembly.Load("Microsoft.CodeAnalysis.Workspaces"),
                 Assembly.Load("Microsoft.CodeAnalysis.CSharp.Workspaces"),
@@ -79,13 +93,13 @@ namespace MonacoRoslynCompletionProvider
                     references: _metadataReferences
                 );
 
-            using(var temp = new MemoryStream())
+            using (var temp = new MemoryStream())
             {
                 var result = compilation.Emit(temp);
                 var semanticModel = compilation.GetSemanticModel(st, true);
-                
-                return new CompletionDocument(document, semanticModel, result); 
-            }            
+
+                return new CompletionDocument(document, semanticModel, result);
+            }
         }
     }
 }

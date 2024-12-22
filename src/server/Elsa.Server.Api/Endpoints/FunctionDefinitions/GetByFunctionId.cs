@@ -7,6 +7,7 @@ using Elsa.Server.Api.Swagger.Examples;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.Filters;
 using System.Linq;
@@ -47,6 +48,10 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
                 return NotFound();
             }
             var function = functions.OrderByDescending(x => x.Version).First();
+            // Parse chuỗi JSON
+            JObject parsedJson = JObject.Parse(function.SampleInput);
+            // Format JSON đẹp hơn
+            function.SampleInput = parsedJson.ToString(Formatting.Indented);
             var FunctionSummary = _mapper.Map<FunctionDefinitionSummaryModelWithSource>(function);
             return function == null ? NotFound() : Json(FunctionSummary, SerializationHelper.GetSettingsForEndpoint(new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
         }

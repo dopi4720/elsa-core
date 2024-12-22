@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Elsa.Server.Api.Endpoints.FunctionDefinitions.Configs;
 
 public class DynamicRunner
 {
@@ -69,9 +70,38 @@ public class DynamicRunner
                         throw new Exception($"Không thể chuyển đổi tham số '{paramName}' thành kiểu '{parameterInfos[i].ParameterType.Name}': {ex.Message}");
                     }
                 }
+                else if (parameterInfos[i].Name == "drpContext")
+                {
+                    string DrpContextPath = Path.Combine("DrpSystem.dll");
+                    if (File.Exists(DrpContextPath))
+                    {
+                        Assembly depAssembly = Assembly.LoadFrom(DrpContextPath);
+                        foreach (var depType in depAssembly.GetTypes())
+                        {
+                            if (depType.Name == "DrpContext")
+                            {
+                                parameterValues[i] = Activator.CreateInstance(depType);
+                                break;
+                            }
+                        }
+                    }
+                }
                 else
                 {
-                    throw new Exception($"Parameter '{parameterInfos[i].Name}' không được cung cấp trong 'parameters'.");
+                    // Gán giá trị mặc định dựa trên kiểu tham số
+                    Type paramType = parameterInfos[i].ParameterType;
+                    if (paramType == typeof(string))
+                    {
+                        parameterValues[i] = string.Empty;
+                    }
+                    else if (paramType.IsValueType) // Kiểm tra nếu là kiểu giá trị
+                    {
+                        parameterValues[i] = Activator.CreateInstance(paramType); // Giá trị mặc định cho kiểu giá trị (0 cho số, false cho bool, etc.)
+                    }
+                    else
+                    {
+                        parameterValues[i] = null; // Giá trị mặc định cho kiểu tham chiếu
+                    }
                 }
             }
         }
@@ -80,16 +110,4 @@ public class DynamicRunner
         var result = (ValueTask<object?>)method.Invoke(null, parameterValues)!;
         return await result;
     }
-    //public static List<string> GetReferencedAssemblies(byte[] dllBytes)
-    //{
-    //    Assembly assembly = Assembly.Load(dllBytes);
-    //    var referencedAssemblies = new List<string>();
-
-    //    foreach (var assemblyName in assembly.GetReferencedAssemblies())
-    //    {
-    //        referencedAssemblies.Add(assemblyName.Name ?? "");
-    //    }
-
-    //    return referencedAssemblies;
-    //}
 }

@@ -164,12 +164,12 @@ export class ElsaFunctionDefinitionsListScreen {
               <tr class="elsa-border-t elsa-border-gray-600">
                 <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
                   <span class="lg:elsa-pl-2">
-                    <IntlMessage label="FunctionId" />
+                    <IntlMessage label="Name" />
                   </span>
                 </th>
                 <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
                   <span class="lg:elsa-pl-2">
-                    <IntlMessage label="Name" />
+                    <IntlMessage label="FunctionType" />
                   </span>
                 </th>
                 <th class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-right elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
@@ -189,6 +189,7 @@ export class ElsaFunctionDefinitionsListScreen {
                   : publishedDefinitions.find(x => x.functionId == functionDefinition.functionId);
                 const publishedVersionNumber = !!publishedVersion ? publishedVersion.version : '-';
                 let functionDisplayName = functionDefinition.displayName;
+                let functionType = functionDefinition.functionType;
                 let functionId = functionDefinition.functionId;
 
                 if (!functionDisplayName || functionDisplayName.trim().length == 0) functionDisplayName = functionDefinition.name;
@@ -264,14 +265,14 @@ export class ElsaFunctionDefinitionsListScreen {
                     <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-400">
                       <div class="elsa-flex elsa-items-center elsa-space-x-3 lg:elsa-pl-2">
                         <stencil-route-link url={editUrl} anchorClass="elsa-truncate hover:elsa-text-gray-500">
-                          <span>{functionId}</span>
+                          <span>{functionDisplayName}</span>
                         </stencil-route-link>
                       </div>
                     </td>
                     <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-400">
                       <div class="elsa-flex elsa-items-center elsa-space-x-3 lg:elsa-pl-2">
                         <stencil-route-link url={editUrl} anchorClass="elsa-truncate hover:elsa-text-gray-500">
-                          <span>{functionDisplayName}</span>
+                          <span>{functionType}</span>
                         </stencil-route-link>
                       </div>
                     </td>

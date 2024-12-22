@@ -550,7 +550,7 @@ export class ElsaWorkflowInstanceListScreen {
             <table class="elsa-min-w-full">
               <thead>
                 <tr class="elsa-border-t elsa-border-gray-600">
-                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-300 elsa-uppercase elsa-tracking-wider">
                     <input
                       type="checkbox"
                       value="true"
@@ -560,40 +560,40 @@ export class ElsaWorkflowInstanceListScreen {
                       class="focus:elsa-ring-blue-500 elsa-h-4 elsa-w-4 elsa-text-blue-600 elsa-border-gray-600 elsa-rounded"
                     />
                   </th>
-                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-300 elsa-uppercase elsa-tracking-wider">
                     {t('Table.Id')}
                   </th>
-                  <th class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+                  <th class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-300 elsa-uppercase elsa-tracking-wider">
                     {t('Table.CorrelationId')}
                   </th>
-                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-300 elsa-uppercase elsa-tracking-wider">
                     {t('Table.Workflow')}
                   </th>
-                  <th class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-right elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+                  <th class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-right elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-300 elsa-uppercase elsa-tracking-wider">
                     {t('Table.Version')}
                   </th>
-                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-300 elsa-uppercase elsa-tracking-wider">
                     {t('Table.InstanceName')}
                   </th>
-                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-300 elsa-uppercase elsa-tracking-wider">
                     {t('Table.Status')}
                   </th>
-                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-300 elsa-uppercase elsa-tracking-wider">
                     {t('Table.Created')}
                   </th>
-                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-300 elsa-uppercase elsa-tracking-wider">
                     {t('Table.Finished')}
                   </th>
-                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-300 elsa-uppercase elsa-tracking-wider">
                     {t('Table.LastExecuted')}
                   </th>
-                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider">
+                  <th class="elsa-px-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-left elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-300 elsa-uppercase elsa-tracking-wider">
                     {t('Table.Faulted')}
                   </th>
-                  <th class="elsa-pr-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-500 elsa-uppercase elsa-tracking-wider" />
+                  <th class="elsa-pr-6 elsa-py-3 elsa-border-b elsa-border-gray-600 elsa-bg-gray-700 elsa-text-xs elsa-leading-4 elsa-font-medium elsa-text-gray-300 elsa-uppercase elsa-tracking-wider" />
                 </tr>
               </thead>
-              <tbody class="elsa-bg-white elsa-divide-y elsa-divide-gray-100">
+              <tbody class="elsa-bg-gray-700 elsa-divide-y elsa-divide-gray-600">
                 {workflowInstances.map(workflowInstance => {
                   const workflowBlueprint = workflowBlueprints.find(x => x.versionId == workflowInstance.definitionVersionId) ?? {
                     name: 'Not Found',
@@ -638,7 +638,7 @@ export class ElsaWorkflowInstanceListScreen {
 
                   return (
                     <tr>
-                      <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-900">
+                      <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-300">
                         <input
                           type="checkbox"
                           value={workflowInstance.id}
@@ -647,45 +647,45 @@ export class ElsaWorkflowInstanceListScreen {
                           class="focus:elsa-ring-blue-500 elsa-h-4 elsa-w-4 elsa-text-blue-600 elsa-border-gray-300 elsa-rounded"
                         />
                       </td>
-                      <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-900">
+                      <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-300">
                         <stencil-route-link url={instanceViewUrl} anchorClass="elsa-truncate hover:elsa-text-gray-600">
                           {workflowInstance.id}
                         </stencil-route-link>
                       </td>
-                      <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-900">
+                      <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-300">
                         <stencil-route-link url={correlationListViewUrl} anchorClass="elsa-truncate hover:elsa-text-gray-600">
                           {correlationId}
                         </stencil-route-link>
                       </td>
-                      <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-900 elsa-text-left">
+                      <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-300 elsa-text-left">
                         <stencil-route-link url={blueprintViewUrl} anchorClass="elsa-truncate hover:elsa-text-gray-600">
                           {displayName}
                         </stencil-route-link>
                       </td>
-                      <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-right elsa-text-sm elsa-leading-5 elsa-text-gray-500 elsa-uppercase">
+                      <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-right elsa-text-sm elsa-text-gray-300 elsa-leading-5 elsa-uppercase">
                         {workflowInstance.version}
                       </td>
-                      <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-900 elsa-text-left">
+                      <td class="elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-font-medium elsa-text-gray-300 elsa-text-left">
                         <stencil-route-link url={instanceViewUrl} anchorClass="elsa-truncate hover:elsa-text-gray-600">
                           {instanceName}
                         </stencil-route-link>
                       </td>
-                      <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-500 elsa-text-right">
+                      <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-300 elsa-text-right">
                         <div class="elsa-flex elsa-items-center elsa-space-x-3 lg:elsa-pl-2">
                           <div class={`flex-shrink-0 elsa-w-2-5 elsa-h-2-5 elsa-rounded-full elsa-bg-${statusColor}-600`} />
                           <span>{workflowInstance.workflowStatus}</span>
                         </div>
                       </td>
-                      <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-500 elsa-text-left">
+                      <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-300 elsa-text-left">
                         {createdAt.format('DD-MM-YYYY HH:mm:ss')}
                       </td>
-                      <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-500 elsa-text-left">
+                      <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-300 elsa-text-left">
                         {!!finishedAt ? finishedAt.format('DD-MM-YYYY HH:mm:ss') : '-'}
                       </td>
-                      <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-500 elsa-text-left">
+                      <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-300 elsa-text-left">
                         {!!lastExecutedAt ? lastExecutedAt.format('DD-MM-YYYY HH:mm:ss') : '-'}
                       </td>
-                      <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-500 elsa-text-left">
+                      <td class="hidden md:elsa-table-cell elsa-px-6 elsa-py-3 elsa-whitespace-no-wrap elsa-text-sm elsa-leading-5 elsa-text-gray-300 elsa-text-left">
                         {!!faultedAt ? faultedAt.format('DD-MM-YYYY HH:mm:ss') : '-'}
                       </td>
                       <td class="elsa-pr-6">

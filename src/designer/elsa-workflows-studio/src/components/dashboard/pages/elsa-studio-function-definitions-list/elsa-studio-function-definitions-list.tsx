@@ -1,13 +1,15 @@
-import { Component, h, Prop, State } from '@stencil/core';
-import { createElsaClient } from "../../../../services";
-import { RouterHistory } from "@stencil/router";
+import { Component, h, Method, Prop, State } from '@stencil/core';
+import { createElsaClient } from '../../../../services';
+import { RouterHistory } from '@stencil/router';
 import 'i18next-wc';
-import { GetIntlMessage, IntlMessage } from "../../../i18n/intl-message";
-import { loadTranslations } from "../../../i18n/i18n-loader";
-import { resources } from "./localizations";
-import { i18n } from "i18next";
-import Tunnel from "../../../../data/dashboard";
-import { leave, toggle } from 'el-transition'
+import { GetIntlMessage, IntlMessage } from '../../../i18n/intl-message';
+import { loadTranslations } from '../../../i18n/i18n-loader';
+import { resources } from './localizations';
+import { i18n } from 'i18next';
+import Tunnel from '../../../../data/dashboard';
+import { leave, toggle } from 'el-transition';
+import Swal from 'sweetalert2';
+import axios from 'axios';
 
 @Component({
   tag: 'elsa-studio-function-definitions-list',
@@ -20,7 +22,7 @@ export class ElsaStudioFunctionDefinitionsList {
   @Prop() basePath: string;
   @Prop({ attribute: 'server-url' }) serverUrl: string;
   private i18next: i18n;
-  private functionDefinitionsListScreen: HTMLElsaFunctionDefinitionsListScreenElement
+  private functionDefinitionsListScreen: HTMLElsaFunctionDefinitionsListScreenElement;
   private menu: HTMLElement;
 
   async componentWillLoad() {
@@ -29,6 +31,51 @@ export class ElsaStudioFunctionDefinitionsList {
 
   toggleMenu(e?: Event) {
     toggle(this.menu);
+  }
+
+  @Method()
+  async updateModel() {
+    Swal.fire({
+      title: 'Please wait for update model',
+      text: 'Wait for 2-3 minutes for update model (Until next popup appear). Click OK to start update',
+      icon: 'info',
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#3b82f6',
+    }).then(async () => {
+      let result: any = null; // Biến tạm lưu trữ kết quả
+
+      try {
+        const response = await axios.post(
+          this.serverUrl + '/api/model/update',
+          {},
+          {
+            headers: {
+              'Content-Type': 'application/json', // Định dạng dữ liệu gửi
+            },
+          },
+        );
+
+        result = response.data; // Lưu trữ kết quả
+      } catch (error) {
+        if (error.response) {
+          console.error('Error response:', error.response.data);
+          result = error.response.data; // Lưu lỗi từ phản hồi
+        } else {
+          console.error('Error:', error.message);
+          result = { error: error.message }; // Trả về lỗi khác
+        }
+      }
+
+      if (result.isSuccess) {
+        Swal.fire({
+          title: result.isSuccess ? 'Successfully' : 'Failed',
+          text: result.message,
+          icon: result.isSuccess ? 'success' : 'error',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#3b82f6',
+        });
+      }
+    });
   }
 
   render() {
@@ -43,23 +90,28 @@ export class ElsaStudioFunctionDefinitionsList {
               <IntlMessage label="Title" />
             </h1>
           </div>
-          
+
           <div class="elsa-mt-4 elsa-flex elsa-items-center elsa-space-x-4 sm:elsa-mt-0 sm:elsa-ml-4">
-            <button type="button"
-              class="elsa-relative elsa-inline-flex elsa-items-center elsa-px-4 elsa-py-2 elsa-border elsa-border-transparent elsa-shadow-sm elsa-text-sm elsa-font-medium elsa-rounded-md elsa-text-white elsa-bg-blue-600 hover:elsa-bg-blue-700 focus:elsa-outline-none focus:elsa-ring-2 focus:elsa-ring-offset-2 focus:elsa-ring-blue-500 focus:elsa-z-10">
+            <button
+              type="button"
+              onClick={e => this.updateModel()}
+              class="elsa-relative elsa-inline-flex elsa-items-center elsa-px-4 elsa-py-2 elsa-border elsa-border-transparent elsa-shadow-sm elsa-text-sm elsa-font-medium elsa-rounded-md elsa-text-white elsa-bg-blue-600 hover:elsa-bg-blue-700 focus:elsa-outline-none focus:elsa-ring-2 focus:elsa-ring-offset-2 focus:elsa-ring-blue-500 focus:elsa-z-10"
+            >
               Update Model
             </button>
 
             <span class="elsa-relative elsa-z-20 elsa-inline-flex elsa-shadow-sm elsa-rounded-md">
-              <stencil-route-link url={`${basePath}/function-definitions/new`}
-                class="elsa-relative elsa-inline-flex elsa-items-center elsa-px-4 elsa-py-2 elsa-border elsa-border-transparent elsa-shadow-sm elsa-text-sm elsa-font-medium elsa-rounded-md elsa-text-white elsa-bg-blue-600 hover:elsa-bg-blue-700 focus:elsa-outline-none focus:elsa-ring-2 focus:elsa-ring-offset-2 focus:elsa-ring-blue-500 focus:elsa-z-10">
+              <stencil-route-link
+                url={`${basePath}/function-definitions/new`}
+                class="elsa-relative elsa-inline-flex elsa-items-center elsa-px-4 elsa-py-2 elsa-border elsa-border-transparent elsa-shadow-sm elsa-text-sm elsa-font-medium elsa-rounded-md elsa-text-white elsa-bg-blue-600 hover:elsa-bg-blue-700 focus:elsa-outline-none focus:elsa-ring-2 focus:elsa-ring-offset-2 focus:elsa-ring-blue-500 focus:elsa-z-10"
+              >
                 <IntlMessage label="CreateButton" />
               </stencil-route-link>
             </span>
           </div>
         </div>
 
-        <elsa-function-definitions-list-screen ref={el => this.functionDefinitionsListScreen = el} />
+        <elsa-function-definitions-list-screen ref={el => (this.functionDefinitionsListScreen = el)} />
       </div>
     );
   }

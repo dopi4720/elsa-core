@@ -48,6 +48,7 @@ export interface FunctionDefinitionSummaryModelWithoutSource {
     name: string,
     displayName: string,
     version: number,
+    functionType: string,
     isPublish: boolean
 }
 

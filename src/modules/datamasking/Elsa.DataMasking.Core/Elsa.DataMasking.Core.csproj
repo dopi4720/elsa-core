@@ -5,7 +5,7 @@
 
      <PropertyGroup>
   <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-        <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+        <TargetFrameworks>net8.0</TargetFrameworks>
         <Description>
             Elsa Data Masking is an optional part of Elsa Workflows that adds masking of recorded data to the system.
         </Description>

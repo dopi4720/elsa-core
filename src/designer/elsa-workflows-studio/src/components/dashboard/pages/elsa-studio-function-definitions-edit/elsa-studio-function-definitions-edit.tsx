@@ -9,6 +9,7 @@ import Tunnel from '../../../../data/dashboard';
 export class ElsaStudioFunctionDefinitionsEdit {
   @Prop() match: MatchResults;
   @Prop() culture: string;
+  @Prop({ attribute: 'server-url', reflect: true }) serverUrl: string;
 
   id?: string;
 
@@ -22,7 +23,7 @@ export class ElsaStudioFunctionDefinitionsEdit {
 
   render() {
     const id = this.id;
-    return <elsa-function-definition-editor-screen function-definition-id={id} />;
+    return <elsa-function-definition-editor-screen server-url={this.serverUrl} function-definition-id={id} />;
   }
 }
 

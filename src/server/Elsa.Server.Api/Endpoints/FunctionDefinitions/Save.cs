@@ -66,16 +66,16 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
                     });
                 }
 
-                var FunctionSameName = await _functionDefinitionStore.FindAsync(new FunctionDefinitionDisplayNameSpecification(compiled.ClassName ?? throw new Exception("ClassName cannot be empty")), cancellationToken);
-                if (FunctionSameName != null)
-                {
-                    return BadRequest(new FunctionGeneralView()
-                    {
-                        IsSuccess = false,
-                        Message = "Function name already exists",
-                        Data = null
-                    });
-                }
+                //var FunctionSameName = await _functionDefinitionStore.FindAsync(new FunctionDefinitionDisplayNameSpecification(compiled.ClassName ?? throw new Exception("ClassName cannot be empty")), cancellationToken);
+                //if (FunctionSameName != null)
+                //{
+                //    return BadRequest(new FunctionGeneralView()
+                //    {
+                //        IsSuccess = false,
+                //        Message = "Function name already exists",
+                //        Data = null
+                //    });
+                //}
 
                 var CurrentFunctions = await _functionDefinitionStore.FindManyAsync(new FunctionDefinitionFunctionIdSpecification(request.FunctionId ?? ""));
                 var CurrentFunction = CurrentFunctions.OrderByDescending(x => x.Version).FirstOrDefault();

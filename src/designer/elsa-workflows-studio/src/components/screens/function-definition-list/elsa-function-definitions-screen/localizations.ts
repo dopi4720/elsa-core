@@ -4,6 +4,7 @@ export const resources = {
       'Name': 'Name',
       'Instances': 'Instances',
       'FunctionId': 'Id',
+      'FunctionType': 'Type',
       'LatestVersion': 'Latest Version',
       'PublishedVersion': 'Published Version',
       'Edit': 'Edit',

@@ -16,7 +16,7 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Configs
             "System.Collections.dll",
             "System.IO.dll"
         };
-        public static string DBContextName = "HuydeptraiDBContext";
+        public static string DBContextName = "DrpContext";
 
     }
 }

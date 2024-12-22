@@ -47,12 +47,16 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
                         FunctionTemplate = @$"using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DrpSystem.Models;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Linq;
 
-public class DRPClass
+public class <<<DRPClass>>>
 {{
     //Author: HuyNT
     //Write at:
-    public static async ValueTask<object?> Execute({FunctionDefinitionConfigs.DBContextName} context)
+    public static async ValueTask<object?> Execute({FunctionDefinitionConfigs.DBContextName} drpContext)
     {{
         //Write code here
         return true;

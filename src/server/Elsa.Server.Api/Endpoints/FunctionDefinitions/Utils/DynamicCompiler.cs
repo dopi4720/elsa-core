@@ -163,13 +163,16 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
                 "System.Threading.Tasks.dll",
                 "System.Linq.dll",
                 "System.Collections.dll",
-                "System.IO.dll"
+                "System.IO.dll",
+                "DrpSystem.dll",
+                "Newtonsoft.Json.dll",
+                "Microsoft.EntityFrameworkCore.dll",
             };
 
             foreach (var dllPath in tmp)
             {
                 string RuntimePath = Path.Combine(RuntimeEnvironment.GetRuntimeDirectory(), dllPath);
-                if (File.Exists(dllPath))
+                if (File.Exists(Path.GetFullPath(dllPath)))
                 {
                     FunctionDefinitionConfigs.NeedDllFiles.Add(dllPath);
                 }

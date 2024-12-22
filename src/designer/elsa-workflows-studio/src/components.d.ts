@@ -284,12 +284,14 @@ export namespace Components {
     interface ElsaStudioFunctionDefinitionsEdit {
         "culture": string;
         "match": MatchResults;
+        "serverUrl": string;
     }
     interface ElsaStudioFunctionDefinitionsList {
         "basePath": string;
         "culture": string;
         "history": RouterHistory;
         "serverUrl": string;
+        "updateModel": () => Promise<void>;
     }
     interface ElsaStudioHome {
         "culture": string;
@@ -1282,6 +1284,7 @@ declare namespace LocalJSX {
     interface ElsaStudioFunctionDefinitionsEdit {
         "culture"?: string;
         "match"?: MatchResults;
+        "serverUrl"?: string;
     }
     interface ElsaStudioFunctionDefinitionsList {
         "basePath"?: string;

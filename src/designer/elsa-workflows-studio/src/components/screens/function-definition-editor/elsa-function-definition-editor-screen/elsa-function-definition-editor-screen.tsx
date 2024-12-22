@@ -10,7 +10,6 @@ import { loadTranslations } from '../../../i18n/i18n-loader';
 import { resources } from './localizations';
 import * as collection from 'lodash/collection';
 import { tr } from 'cronstrue/dist/i18n/locales/tr';
-import { Monaco, initializeMonacoWorker } from '../../../controls/elsa-monaco/elsa-monaco-utils';
 import { GetIntlMessage, IntlMessage } from '../../../i18n/intl-message';
 import { DrpMonacoValueChangedArgs } from './drp-monaco-editor';
 import axios from 'axios';

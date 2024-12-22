@@ -1,3 +1,4 @@
+using Elsa.Persistence.EntityFramework.SqlServer;
 using Elsa.Secrets.Persistence.EntityFramework.Core;
 using Microsoft.EntityFrameworkCore;
 
