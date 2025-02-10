@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.Filters;
 using System;
@@ -62,13 +63,20 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions
                     });
                 }
 
-                var function = DynamicCompiler.Compile(request.Source);
-                var result = await DynamicRunner.RunAsync(function.DllBytes, function.PdbBytes, function.ClassName, JsonConvert.DeserializeObject<Dictionary<string, object?>>(request.SampleInput));
+                // Cấu hình camelCase
+                var settings = new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    Formatting = Formatting.None,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+                //var function = DynamicCompiler.Compile(request.Source);
+                var result = JsonConvert.DeserializeObject<dynamic>(JsonConvert.SerializeObject(await DynamicRunner.RunAsync(compiled.DllBytes, compiled.PdbBytes, compiled.ClassName, JsonConvert.DeserializeObject<Dictionary<string, object?>>(request.SampleInput)), settings), new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore});
 
                 return Ok(new FunctionGeneralView()
                 {
                     IsSuccess = true,
-                    Message = "Save function successfully",
+                    Message = "Run function successfully",
                     Data = result
                 });
             }

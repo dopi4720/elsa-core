@@ -5,11 +5,14 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Emit;
+using Microsoft.Extensions.DependencyModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.Loader;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +38,7 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
 
                 var classDeclarations = root.DescendantNodes()
                                             .OfType<ClassDeclarationSyntax>();
-                if (classDeclarations.Count() == 0)
+                if (!classDeclarations.Any())
                 {
                     function.CompileMessage = "No class found in the source code.";
                     return function;
@@ -66,11 +69,25 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
                 }
                 #endregion
 
-                // Lấy đường dẫn đến thư mục của các assembly chuẩn
-                var references = AppDomain.CurrentDomain.GetAssemblies()
-                    .Where(a => !a.IsDynamic && !string.IsNullOrEmpty(a.Location))
-                    .Select(a => MetadataReference.CreateFromFile(a.Location))
-                    .ToList();
+                // Lấy danh sách các assembly từ DependencyContext
+                var references = new List<MetadataReference>();
+
+                foreach (var library in DependencyContext.Default.RuntimeLibraries)
+                {
+                    foreach (var runtimeGroup in library.RuntimeAssemblyGroups)
+                    {
+                        foreach (var assemblyPath in runtimeGroup.AssetPaths)
+                        {
+                            // Xây dựng đường dẫn đầy đủ đến assembly
+                            var fullPath = Path.Combine(RuntimeEnvironment.GetRuntimeDirectory(), assemblyPath);
+
+                            if (File.Exists(fullPath))
+                            {
+                                references.Add(MetadataReference.CreateFromFile(fullPath));
+                            }
+                        }
+                    }
+                }
 
                 // Thêm các tham chiếu từ danh sách đường dẫn DLL được truyền vào
                 foreach (var dllPath in FunctionDefinitionConfigs.NeedDllFiles)
@@ -84,10 +101,10 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
                     {
                         references.Add(MetadataReference.CreateFromFile(RuntimePath));
                     }
-                    else
-                    {
-                        throw new Exception("Cannot find the specified DLL file.");
-                    }
+                    //else
+                    //{
+                    //    throw new Exception($"Cannot find the specified DLL file: {dllPath}");
+                    //}
                 }
 
                 // Tạo một CSharpCompilation từ syntax tree
@@ -123,17 +140,25 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
                 function.DllBytes = File.ReadAllBytes(OutputPath);
                 function.PdbBytes = File.ReadAllBytes(pdbPath);
 
-                //Delete the temporary files
+                // Tải assembly bằng AssemblyLoadContext
+                //var assemblyLoadContext = new CustomAssemblyLoadContext();
+                //using (var dllStream = new MemoryStream(function.DllBytes))
+                //using (var pdbStream = new MemoryStream(function.PdbBytes))
+                //{
+                //    var assembly = assemblyLoadContext.LoadFromStream(dllStream, pdbStream);
+                //    function.LoadedAssembly = assembly;
+                //}
+
+                // Delete temporary files nếu không phải class dùng chung
                 if (File.Exists(OutputPath) && File.Exists(pdbPath) && function.IsCompiled && !string.IsNullOrEmpty(SharedClassName))
                 {
-                    //Save dll and pdb file if the class is shared
-                    //if (!Directory.Exists("SharedClasses"))
-                    //{
-                    //    Directory.CreateDirectory("SharedClasses");
-                    //}
-
                     string sharedDllPath = Path.Combine("SharedClasses", SharedClassName + ".dll");
                     string sharedPdbPath = Path.Combine("SharedClasses", SharedClassName + ".pdb");
+
+                    if (!Directory.Exists("SharedClasses"))
+                    {
+                        Directory.CreateDirectory("SharedClasses");
+                    }
 
                     File.Move(OutputPath, sharedDllPath, true);
                     File.Move(pdbPath, sharedPdbPath, true);
@@ -147,9 +172,13 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
 
                 return function;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception($"Compilation failed: {ex.Message}", ex);
+            }
+            finally
+            {
+                GC.Collect();
             }
         }
 
@@ -200,6 +229,21 @@ namespace Elsa.Server.Api.Endpoints.FunctionDefinitions.Utils
             foreach (var item in CoreDllPath.Where(x => !string.IsNullOrWhiteSpace(x)))
             {
                 FunctionDefinitionConfigs.NeedDllFiles.Add(item);
+            }
+        }
+        private class CustomAssemblyLoadContext : AssemblyLoadContext
+        {
+            public CustomAssemblyLoadContext() : base(isCollectible: true) { }
+
+            protected override Assembly? Load(AssemblyName assemblyName)
+            {
+                // Tìm và tải assembly phụ thuộc
+                string dependencyPath = Path.Combine("SharedClasses", $"{assemblyName.Name}.dll");
+                if (File.Exists(dependencyPath))
+                {
+                    return LoadFromAssemblyPath(dependencyPath);
+                }
+                return null; // Không tải nếu không tìm thấy
             }
         }
     }

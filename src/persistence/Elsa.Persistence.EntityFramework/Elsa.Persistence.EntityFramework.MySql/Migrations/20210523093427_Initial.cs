@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Elsa.Persistence.EntityFramework.MySql.Migrations
@@ -36,6 +36,38 @@ namespace Elsa.Persistence.EntityFramework.MySql.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bookmarks", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+            migrationBuilder.CreateTable(
+                name: "FunctionDefinitions",
+                schema: "Elsa",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(450)", nullable: false) // VARCHAR(450) để phù hợp với PK trong MySQL
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FunctionId = table.Column<string>(type: "varchar(450)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DisplayName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FunctionType = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Catalog = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Source = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Binary = table.Column<byte[]>(type: "longblob", nullable: false),
+                    Pdb = table.Column<byte[]>(type: "longblob", nullable: false),
+                    Version = table.Column<int>(type: "int", nullable: false),
+                    IsPublish = table.Column<bool>(type: "tinyint(1)", nullable: false), // BOOL trong MySQL được biểu diễn bằng TINYINT(1)
+                    LastUpdate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    SampleInput = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FunctionDefinitions", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 

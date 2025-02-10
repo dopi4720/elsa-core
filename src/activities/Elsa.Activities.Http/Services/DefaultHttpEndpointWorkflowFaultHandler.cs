@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using Elsa.Abstractions.DevPortal.Views;
 using Elsa.Activities.Http.Contracts;
 using Elsa.Activities.Http.Models;
 using Microsoft.AspNetCore.Http;
@@ -18,23 +19,33 @@ public class DefaultHttpEndpointWorkflowFaultHandler : IHttpEndpointWorkflowFaul
         httpContext.Response.ContentType = MediaTypeNames.Application.Json;
         httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
 
-        var faults = new List<object>();
+        //var faults = new List<object>();
 
-        foreach (var fault in workflowInstance.Faults)
+        //foreach (var fault in workflowInstance.Faults)
+        //{
+        //    faults.Add(new
+        //    {
+        //        errorMessage = $"Workflow faulted at {workflowInstance.FaultedAt!} with error: {fault?.Message}",
+        //        exception = fault?.Exception,
+        //        workflow = new
+        //        {
+        //            name = workflowInstance.Name,
+        //            version = workflowInstance.Version,
+        //            instanceId = workflowInstance.Id
+        //        }
+        //    });
+        //}
+
+        var response = new DrpErrorView()
         {
-            faults.Add(new
-            {
-                errorMessage = $"Workflow faulted at {workflowInstance.FaultedAt!} with error: {fault?.Message}",
-                exception = fault?.Exception,
-                workflow = new
-                {
-                    name = workflowInstance.Name,
-                    version = workflowInstance.Version,
-                    instanceId = workflowInstance.Id
-                }
-            });
-        }        
-        var faultedResponse = JsonConvert.SerializeObject(faults);
+            IsSuccess = false,
+            Message = "An error while executing API Endpoint",
+            Data = null,
+            InstanceId = workflowInstance.Id
+        };
+
+        var faultedResponse = JsonConvert.SerializeObject(response);
+        //var faultedResponse = JsonConvert.SerializeObject(faults);
 
         await httpContext.Response.WriteAsync(faultedResponse, context.CancellationToken);
     }
